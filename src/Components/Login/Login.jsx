@@ -14,29 +14,36 @@ class Login extends React.Component {
   };
 
   render() {
+    const loginMethodHeaders = [
+      {
+        id: "logIn",
+        className: this.state.loginSelected ? style.selected : style.unselected,
+        textContent: "Log In",
+      },
+      {
+        id: "signUp",
+        className: !this.state.loginSelected
+          ? style.selected
+          : style.unselected,
+        textContent: "Sign Up",
+      },
+    ];
+
     return (
       <div id="homepageContainer">
         <header>Welcome to codeCommerce!</header>
         <div id={style.homepageOptions}>
-          <header
-            id="logIn"
-            className={
-              this.state.loginSelected ? style.selected : style.unselected
-            }
-            onClick={this.selectLoginMethod}
-          >
-            Log In
-          </header>
-          <header
-            id="signUp"
-            className={
-              !this.state.loginSelected ? style.selected : style.unselected
-            }
-            onClick={this.selectLoginMethod}
-          >
-            Sign Up
-          </header>
+          {loginMethodHeaders.map((option) => (
+            <header
+              id={option.id}
+              className={option.className}
+              onClick={this.selectLoginMethod}
+            >
+              {option.textContent}
+            </header>
+          ))}
         </div>
+        {/* Next, display certain form options, depending on truthiness of loginSelected */}
       </div>
     );
   }
