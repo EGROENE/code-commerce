@@ -4,25 +4,27 @@ import style from "./Login.module.css";
 class Login extends React.Component {
   constructor() {
     super();
-    this.state = { loginSelected: true };
+    this.state = { loginMethodSelected: true };
   }
 
   selectLoginMethod = (e) => {
     e.target.id === "logIn"
-      ? this.setState({ loginSelected: true })
-      : this.setState({ loginSelected: false });
+      ? this.setState({ loginMethodSelected: true })
+      : this.setState({ loginMethodSelected: false });
   };
 
   render() {
     const loginMethodHeaders = [
       {
         id: "logIn",
-        className: this.state.loginSelected ? style.selected : style.unselected,
+        className: this.state.loginMethodSelected
+          ? style.selected
+          : style.unselected,
         textContent: "Log In",
       },
       {
         id: "signUp",
-        className: !this.state.loginSelected
+        className: !this.state.loginMethodSelected
           ? style.selected
           : style.unselected,
         textContent: "Sign Up",
@@ -43,7 +45,7 @@ class Login extends React.Component {
             </header>
           ))}
         </div>
-        {/* Next, display certain form options, depending on truthiness of loginSelected */}
+        {/* Next, display certain form options, depending on truthiness of loginMethodSelected */}
       </div>
     );
   }
