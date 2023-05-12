@@ -18,7 +18,8 @@
 
 #homepageOptions {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    margin-top: var(--size-12);
 }
 
 #homepageOptions header {
@@ -37,4 +38,35 @@
 .selected {
     color: var(--theme-color);
     border-bottom: 4px solid var(--theme-color);
+}
+
+#loginBtnsContainer {
+    margin: var(--size-42) var(--size-8);
+}
+
+#loginBtnsContainer p {
+    margin: 1rem;
+}
+
+#facebookLogin {
+    background-color: #1877F2;
+    color: white;
+}
+
+#facebookLogin i {
+    margin-right: var(--size-20);
+    line-height: var(--size-28);
+}
+
+#termsLinksContainer {
+    display: flex;
+    margin-top: 20px;
+}
+
+.termsAndConditionsLinks {
+    background: none;
+    padding: 0;
+    color: white;
+    text-decoration: underline;
+    font-size: var(--size-12);
 }
