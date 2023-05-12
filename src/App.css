@@ -1,3 +1,21 @@
+:root {
+  --theme-color: rgb(75, 255, 171);
+  --size-4: 0.25rem;
+  --size-8: 0.5rem;
+  --size-12: 0.75rem;
+  --size-16: 1rem;
+  --size-20: 1.25rem;
+  --size-24: 1.5rem;
+  --size-28: 1.75rem;
+  --size-32: 2rem;
+  --size-36: 2.25rem;
+  --size-40: 2.5rem;
+  --size-42: 2.75rem;
+  --size-48: 3rem;
+  --size-56: 3.5rem;
+  --size-64: 4rem;
+}
+
 .App {
   text-align: center;
 }
@@ -9,7 +27,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 1s linear;
+    animation: App-logo-spin infinite 2s linear;
   }
 }
 
@@ -24,7 +42,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: rgb(75, 255, 171);
 }
 
 @keyframes App-logo-spin {
@@ -39,4 +57,64 @@
 h1 {
   margin: 0;
   font-size: 1.5rem;
+}
+
+main {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, rgba(255, 255,255, 0.1), rgba(255, 255, 255, 0));
+  padding: 2rem;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 var(--size-8) var(--size-32) 0 rgba(0, 0, 0, 0.37);
+  border:1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--size-32);
+  margin-top: var(--size-12);
+  width: 43vw;
+  max-width: 43vw;
+}
+
+label {
+  text-align: left;
+  margin: var(--size-4) 4rem;
+}
+
+label p {
+  margin: 0;
+  font-size: var(--size-24);
+}
+
+input {
+  width: 100%;
+  max-width: 100%;
+  padding: var(--size-4);
+  background: black;
+  border: 1px solid var(--theme-color);
+  color: white;
+  font-size: var(--size-20);
+}
+
+form button,
+form a {
+  border: none;
+  display: inline-flex;
+  justify-content: center;
+  width: 75%;
+  background: var(--theme-color);
+  padding: var(--size-12);
+  font-size: var(--size-20);
+}
+
+form button:hover,
+form a:hover {
+  cursor: pointer;
+  opacity: 0.5;
 }
