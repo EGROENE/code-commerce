@@ -107,7 +107,7 @@ class Login extends React.Component {
               />
             </label>
           ))}
-          <div id="loginBtnsContainer">
+          <div id={style.loginBtnsContainer}>
             <button>
               {this.state.loginMethodSelected ? "Log In" : "Create Account"}
             </button>
