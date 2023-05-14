@@ -8,6 +8,16 @@ class Login extends React.Component {
       loginMethodSelected: true,
       passwordPlaceholder: "Enter your password",
       passwordFieldInputType: "password",
+      isOpenEye: true,
+      eyeLogo: (
+        <i
+          id="openEye"
+          className={`far fa-eye ${style.eye}`}
+          title="Show Password"
+          onClick={this.showHidePassword}
+        ></i>
+      ),
+      passwordFieldInputType: "password",
     };
   }
 
@@ -23,9 +33,34 @@ class Login extends React.Component {
         });
   };
 
-  // Method that hides/reveals content of password fields:
-  // Call in onClick of eye logo in password fields
-  // Conditional rendering inside map function may be necessary to add the eye
+  // Method that hides/reveals content of password fields & changes icon & its title:
+  showHidePassword = () => {
+    this.state.isOpenEye
+      ? this.setState({
+          isOpenEye: false,
+          eyeLogo: (
+            <i
+              id="slashedEye"
+              className={`far fa-eye-slash ${style.eye}`}
+              title="Hide Password"
+              onClick={this.showHidePassword}
+            ></i>
+          ),
+          passwordFieldInputType: "text",
+        })
+      : this.setState({
+          isOpenEye: true,
+          eyeLogo: (
+            <i
+              id="openEye"
+              className={`far fa-eye ${style.eye}`}
+              title="Show Password"
+              onClick={this.showHidePassword}
+            ></i>
+          ),
+          passwordFieldInputType: "password",
+        });
+  };
 
   render() {
     const { isDisplayedPage } = this.props;
@@ -87,7 +122,7 @@ class Login extends React.Component {
     ];
 
     return (
-      <main hidden={!isDisplayedPage} id="homepageContainer">
+      <main hidden={isDisplayedPage} id="homepageContainer">
         <header>Welcome to codeCommerce!</header>
         <div id={style.homepageOptions}>
           {loginMethodHeaders.map((option) => (
@@ -105,10 +140,15 @@ class Login extends React.Component {
           {formInputs.map((input) => (
             <label key={input.labelText} hidden={input.isHidden}>
               <p key={input.labelText + "1"}>{input.labelText}</p>
+              {input.labelText.includes("Password") && this.state.eyeLogo}
               <input
                 key={input.labelText + "2"}
                 placeholder={input.placeholder}
-                type={input.inputType}
+                type={
+                  input.labelText.includes("Password")
+                    ? this.state.passwordFieldInputType
+                    : input.inputType
+                }
                 required
               />
             </label>
