@@ -21,6 +21,9 @@ class Login extends React.Component {
   }
 
   selectLoginMethod = (e) => {
+    if (!this.state.isOpenEye) {
+      this.showHidePassword();
+    }
     e.target.id === "logIn"
       ? this.setState({
           loginMethodSelected: true,
