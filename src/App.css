@@ -74,6 +74,10 @@ button {
   font-family: var(--theme-font);
 }
 
+input::placeholder {
+  font-family: var(--theme-font);
+}
+
 form {
   display: flex;
   flex-direction: column;
