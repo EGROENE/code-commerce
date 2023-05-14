@@ -7,7 +7,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDisplayedPage: false,
+      isLoginHidden: false,
+      isCartHidden: true,
+      isShippingHidden: true,
+      isDeliveryHidden: true,
+      isConfirmationHidden: true,
     };
   }
 
@@ -21,7 +25,7 @@ class App extends React.Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1>codeCommerce</h1>
-          <Login isDisplayedPage={this.state.isDisplayedPage} />
+          <Login isLoginHidden={this.state.isLoginHidden} />
         </header>
       </div>
     );

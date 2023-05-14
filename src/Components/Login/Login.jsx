@@ -17,7 +17,6 @@ class Login extends React.Component {
           onClick={this.showHidePassword}
         ></i>
       ),
-      passwordFieldInputType: "password",
     };
   }
 
@@ -63,7 +62,7 @@ class Login extends React.Component {
   };
 
   render() {
-    const { isDisplayedPage } = this.props;
+    const { isLoginHidden } = this.props;
 
     const loginMethodHeaders = [
       {
@@ -122,7 +121,7 @@ class Login extends React.Component {
     ];
 
     return (
-      <main hidden={isDisplayedPage} id="homepageContainer">
+      <main hidden={isLoginHidden} id="homepageContainer">
         <header>Welcome to codeCommerce!</header>
         <div id={style.homepageOptions}>
           {loginMethodHeaders.map((option) => (
