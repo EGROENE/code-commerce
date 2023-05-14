@@ -23,7 +23,13 @@ class Login extends React.Component {
         });
   };
 
+  // Method that hides/reveals content of password fields:
+  // Call in onClick of eye logo in password fields
+  // Conditional rendering inside map function may be necessary to add the eye
+
   render() {
+    const { isDisplayedPage } = this.props;
+
     const loginMethodHeaders = [
       {
         id: "logIn",
@@ -81,7 +87,7 @@ class Login extends React.Component {
     ];
 
     return (
-      <main id="homepageContainer">
+      <main hidden={!isDisplayedPage} id="homepageContainer">
         <header>Welcome to codeCommerce!</header>
         <div id={style.homepageOptions}>
           {loginMethodHeaders.map((option) => (
