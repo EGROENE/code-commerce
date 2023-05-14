@@ -70,3 +70,14 @@
     text-decoration: underline;
     font-size: var(--size-12);
 }
+
+.eye {
+    position: absolute;
+    right: 1%;
+    top: 59%;
+    font-size: 20px;
+}
+
+.eye:hover {
+    cursor: pointer;
+}
