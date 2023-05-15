@@ -17,6 +17,15 @@ class Login extends React.Component {
           onClick={this.showHidePassword}
         ></i>
       ),
+      // Object containing error message for each form field:
+      errors: {
+        emailError: "",
+        passwordError: "",
+        confirmPasswordError: "",
+        firstNameError: "",
+        lastNameError: "",
+        postalCodeError: "",
+      },
     };
   }
 
@@ -64,6 +73,44 @@ class Login extends React.Component {
         });
   };
 
+  // Validate email address:
+  validateEmail = (e) => {
+    let value = e.target.value;
+    if (
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        value.trim()
+      )
+    ) {
+      console.log("valid");
+      // Update email error state value. Will need to access previous state values.
+      // something like: ...prevState.errors, emailError: ""
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          emailError: "",
+        },
+      }));
+    } else {
+      console.log("invalid");
+      // Update email error state value. Will need to access previous state values.
+      // something like: ...prevState.errors, emailError: "Please enter a valid email address"
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          emailError: "Please enter a valid email address",
+        },
+      }));
+    }
+  };
+
+  // Validate password(s):
+
+  // Validate first name:
+
+  // Validate last name:
+
+  // Validate postal code:
+
   render() {
     const { isLoginHidden } = this.props;
 
@@ -90,36 +137,43 @@ class Login extends React.Component {
         labelText: "Email Address:",
         placeholder: "Enter your email address",
         inputType: "email",
+        onChange: this.validateEmail,
+        field: "email",
       },
       {
         isHidden: false,
         labelText: "Password:",
         placeholder: this.state.passwordPlaceholder,
         inputType: this.state.passwordFieldInputType,
+        field: "password",
       },
       {
         isHidden: this.state.loginMethodSelected,
         labelText: "Confirm Password:",
         placeholder: "Confirm Password",
         inputType: this.state.passwordFieldInputType,
+        field: "confirmPassword",
       },
       {
         isHidden: this.state.loginMethodSelected,
         labelText: "First Name:",
         placeholder: "Enter your first name",
         inputType: "text",
+        field: "firstName",
       },
       {
         isHidden: this.state.loginMethodSelected,
         labelText: "Last Name:",
         placeholder: "Enter your last name",
         inputType: "text",
+        field: "lastName",
       },
       {
         isHidden: this.state.loginMethodSelected,
         labelText: "Postal Code:",
         placeholder: "Enter your postal code",
         inputType: "text",
+        field: "postalCode",
       },
     ];
 
@@ -151,8 +205,10 @@ class Login extends React.Component {
                     ? this.state.passwordFieldInputType
                     : input.inputType
                 }
+                onChange={input.onChange}
                 required
               />
+              <p>{this.state.errors[`${input.field}Error`]}</p>
             </label>
           ))}
           <div id={style.loginBtnsContainer}>
