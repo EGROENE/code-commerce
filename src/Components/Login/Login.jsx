@@ -76,14 +76,14 @@ class Login extends React.Component {
   // Validate email address:
   validateEmail = (e) => {
     let value = e.target.value;
+    // If value of email field matches regex:
     if (
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
         value.trim()
       )
     ) {
       console.log("valid");
-      // Update email error state value. Will need to access previous state values.
-      // something like: ...prevState.errors, emailError: ""
+      // Update email error state value to "". Will need to access previous state values.
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -92,8 +92,7 @@ class Login extends React.Component {
       }));
     } else {
       console.log("invalid");
-      // Update email error state value. Will need to access previous state values.
-      // something like: ...prevState.errors, emailError: "Please enter a valid email address"
+      // Update email error state value to an error message. Will need to access previous state values.
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
