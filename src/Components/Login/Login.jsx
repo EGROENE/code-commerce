@@ -102,7 +102,34 @@ class Login extends React.Component {
     }
   };
 
-  // Validate password(s):
+  // Validate password:
+  validatePassword = (e) => {
+    let value = e.target.value;
+    if (
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/.test(
+        value.trim()
+      )
+    ) {
+      console.log("valid pw");
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          passwordError: "",
+        },
+      }));
+    } else {
+      console.log("invalid pw");
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          passwordError:
+            "Password must contain at least 1 uppercase & 1 lowercase English letter, at least 1 digit, at least 1 special character (#, ?, !, @, $, %, ^, &, *, -), & be 8-20 characters long",
+        },
+      }));
+    }
+  };
+
+  // Validate password confirmation:
 
   // Validate first name:
 
@@ -144,6 +171,7 @@ class Login extends React.Component {
         labelText: "Password:",
         placeholder: this.state.passwordPlaceholder,
         inputType: this.state.passwordFieldInputType,
+        onChange: this.validatePassword,
         field: "password",
       },
       {
