@@ -283,7 +283,7 @@ class Login extends React.Component {
             </header>
           ))}
         </div>
-        <form>
+        <form onSubmit={toNextPage}>
           {formInputs.map((input) => (
             <label key={input.labelText} hidden={input.isHidden}>
               <header key={input.labelText + "1"}>{input.labelText}</header>
@@ -303,7 +303,7 @@ class Login extends React.Component {
             </label>
           ))}
           <div id={style.loginBtnsContainer}>
-            <button onClick={toNextPage}>
+            <button type="submit">
               {loginMethodSelected ? "Log In" : "Create Account"}
             </button>
             <p>or</p>
