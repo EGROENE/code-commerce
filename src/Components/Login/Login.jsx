@@ -222,7 +222,7 @@ class Login extends React.Component {
         <form>
           {formInputs.map((input) => (
             <label key={input.labelText} hidden={input.isHidden}>
-              <p key={input.labelText + "1"}>{input.labelText}</p>
+              <header key={input.labelText + "1"}>{input.labelText}</header>
               {input.labelText.includes("Password") && this.state.eyeLogo}
               <input
                 key={input.labelText + "2"}
