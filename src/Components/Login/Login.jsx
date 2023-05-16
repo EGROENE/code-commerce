@@ -199,21 +199,20 @@ class Login extends React.Component {
   };
 
   render() {
-    const { isLoginHidden } = this.props;
+    const { isLoginHidden, toNextPage } = this.props;
+
+    const { loginMethodSelected, eyeLogo, passwordFieldInputType, errors } =
+      this.state;
 
     const loginMethodHeaders = [
       {
         id: "logIn",
-        className: this.state.loginMethodSelected
-          ? style.selected
-          : style.unselected,
+        className: loginMethodSelected ? style.selected : style.unselected,
         textContent: "Log In",
       },
       {
         id: "signUp",
-        className: !this.state.loginMethodSelected
-          ? style.selected
-          : style.unselected,
+        className: !loginMethodSelected ? style.selected : style.unselected,
         textContent: "Sign Up",
       },
     ];
@@ -288,24 +287,24 @@ class Login extends React.Component {
           {formInputs.map((input) => (
             <label key={input.labelText} hidden={input.isHidden}>
               <header key={input.labelText + "1"}>{input.labelText}</header>
-              {input.labelText.includes("Password") && this.state.eyeLogo}
+              {input.labelText.includes("Password") && eyeLogo}
               <input
                 key={input.labelText + "2"}
                 placeholder={input.placeholder}
                 type={
                   input.labelText.includes("Password")
-                    ? this.state.passwordFieldInputType
+                    ? passwordFieldInputType
                     : input.inputType
                 }
                 onChange={input.onChange}
                 required
               />
-              <p>{this.state.errors[`${input.field}Error`]}</p>
+              <p>{errors[`${input.field}Error`]}</p>
             </label>
           ))}
           <div id={style.loginBtnsContainer}>
-            <button>
-              {this.state.loginMethodSelected ? "Log In" : "Create Account"}
+            <button onClick={toNextPage}>
+              {loginMethodSelected ? "Log In" : "Create Account"}
             </button>
             <p>or</p>
             <a href="#" id={style.facebookLogin}>
