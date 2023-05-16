@@ -20,9 +20,14 @@ class App extends React.Component {
 
   // Method to move to next page:
   // Pass to Login.jsx for onClick of Sign in or Create Account btn
-  // Only move on if there are no errors in error object
   // Must change this.state.isLoginHidden to true
-  toNextPage = () => {
+  toNextPage = (e) => {
+    e.preventDefault();
+
+    // Only move on if there are no errors in error object! ---- if each error === ""
+    // May need to pass errors object from each comp to App.js or init this in App.js then export as prop to components
+    // Or, find a way to only call this in each comp if its own error state object contains no errors (if all Object.values of this.state.errors === "", then call this onClick. Requires conditional rendering in this onClick)
+
     /* let pageDisplayed = Object.entries(this.state.pageDisplayOptions).find(
       (pair) => pair[1] === false
     );
