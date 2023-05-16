@@ -26,6 +26,7 @@ class Login extends React.Component {
         lastNameError: "",
         postalCodeError: "",
       },
+      password: "",
     };
   }
 
@@ -116,6 +117,7 @@ class Login extends React.Component {
           ...prevState.errors,
           passwordError: "",
         },
+        password: value,
       }));
     } else {
       console.log("invalid pw");
@@ -125,11 +127,32 @@ class Login extends React.Component {
           passwordError:
             "Password must contain at least 1 uppercase & 1 lowercase English letter, at least 1 digit, at least 1 special character (#, ?, !, @, $, %, ^, &, *, -), & be 8-20 characters long",
         },
+        password: "",
       }));
     }
   };
 
   // Validate password confirmation:
+  validatePasswordConfirmation = (e) => {
+    let value = e.target.value;
+    if (this.state.password !== value) {
+      console.log("no match");
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          confirmPasswordError: "Passwords do not match",
+        },
+      }));
+    } else {
+      console.log("match");
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          confirmPasswordError: "",
+        },
+      }));
+    }
+  };
 
   // Validate first name:
 
@@ -179,6 +202,7 @@ class Login extends React.Component {
         labelText: "Confirm Password:",
         placeholder: "Confirm Password",
         inputType: this.state.passwordFieldInputType,
+        onChange: this.validatePasswordConfirmation,
         field: "confirmPassword",
       },
       {
