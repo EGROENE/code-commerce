@@ -22,8 +22,7 @@ class Login extends React.Component {
         emailError: "",
         passwordError: "",
         confirmPasswordError: "",
-        firstNameError: "",
-        lastNameError: "",
+        nameError: "",
         postalCodeError: "",
       },
       password: "",
@@ -154,9 +153,28 @@ class Login extends React.Component {
     }
   };
 
-  // Validate first name:
-
-  // Validate last name:
+  // Validate name:
+  validateNames = (e) => {
+    let value = e.target.value;
+    if (/^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value)) {
+      console.log("valid name");
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          nameError: "",
+        },
+      }));
+    } else {
+      console.log("invalid name");
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          nameError:
+            "Enter only alphanumeric characters & any hyphens b/t names",
+        },
+      }));
+    }
+  };
 
   // Validate postal code:
 
@@ -210,14 +228,16 @@ class Login extends React.Component {
         labelText: "First Name:",
         placeholder: "Enter your first name",
         inputType: "text",
-        field: "firstName",
+        onChange: this.validateNames,
+        field: "name",
       },
       {
         isHidden: this.state.loginMethodSelected,
         labelText: "Last Name:",
         placeholder: "Enter your last name",
         inputType: "text",
-        field: "lastName",
+        onChange: this.validateNames,
+        field: "name",
       },
       {
         isHidden: this.state.loginMethodSelected,
