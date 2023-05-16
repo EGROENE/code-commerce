@@ -177,6 +177,26 @@ class Login extends React.Component {
   };
 
   // Validate postal code:
+  validatePostalCode = (e) => {
+    let value = e.target.value;
+    if (/^[0-9]{5}$/i.test(value)) {
+      console.log("valid zip");
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          postalCodeError: "",
+        },
+      }));
+    } else {
+      console.log("invalid zip");
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          postalCodeError: "Enter first 5 digits of US postal code",
+        },
+      }));
+    }
+  };
 
   render() {
     const { isLoginHidden } = this.props;
@@ -242,8 +262,9 @@ class Login extends React.Component {
       {
         isHidden: this.state.loginMethodSelected,
         labelText: "Postal Code:",
-        placeholder: "Enter your postal code",
+        placeholder: "US postal code (ex. 12345)",
         inputType: "text",
+        onChange: this.validatePostalCode,
         field: "postalCode",
       },
     ];
