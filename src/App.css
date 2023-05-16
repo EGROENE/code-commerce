@@ -98,9 +98,14 @@ label {
   position: relative;
 }
 
-label p {
+label header {
   margin: 0;
   font-size: var(--size-24);
+}
+
+label p {
+  font-size: var(--size-16);
+  margin: 0;
 }
 
 input {
