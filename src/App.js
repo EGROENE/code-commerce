@@ -12,7 +12,7 @@ class App extends React.Component {
         isLoginHidden: false,
         isCartHidden: true,
         isShippingHidden: true,
-        isDeliveryHidden: true,
+        isPaymentHidden: true,
         isConfirmationHidden: true,
       },
     };
