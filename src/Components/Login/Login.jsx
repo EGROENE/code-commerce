@@ -26,6 +26,7 @@ class Login extends React.Component {
         postalCodeError: "",
       },
       password: "",
+      isRequired: false,
     };
   }
 
@@ -37,10 +38,12 @@ class Login extends React.Component {
       ? this.setState({
           loginMethodSelected: true,
           passwordPlaceholder: "Enter your password",
+          isRequired: false,
         })
       : this.setState({
           loginMethodSelected: false,
           passwordPlaceholder: "Create a password",
+          isRequired: true,
         });
   };
 
@@ -225,6 +228,7 @@ class Login extends React.Component {
         inputType: "email",
         onChange: this.validateEmail,
         field: "email",
+        required: true,
       },
       {
         isHidden: false,
@@ -233,6 +237,7 @@ class Login extends React.Component {
         inputType: this.state.passwordFieldInputType,
         onChange: this.validatePassword,
         field: "password",
+        required: true,
       },
       {
         isHidden: this.state.loginMethodSelected,
@@ -241,6 +246,7 @@ class Login extends React.Component {
         inputType: this.state.passwordFieldInputType,
         onChange: this.validatePasswordConfirmation,
         field: "confirmPassword",
+        required: this.state.isRequired,
       },
       {
         isHidden: this.state.loginMethodSelected,
@@ -249,6 +255,7 @@ class Login extends React.Component {
         inputType: "text",
         onChange: this.validateNames,
         field: "name",
+        required: this.state.isRequired,
       },
       {
         isHidden: this.state.loginMethodSelected,
@@ -257,6 +264,7 @@ class Login extends React.Component {
         inputType: "text",
         onChange: this.validateNames,
         field: "name",
+        required: this.state.isRequired,
       },
       {
         isHidden: this.state.loginMethodSelected,
@@ -265,11 +273,12 @@ class Login extends React.Component {
         inputType: "text",
         onChange: this.validatePostalCode,
         field: "postalCode",
+        required: this.state.isRequired,
       },
     ];
 
     return (
-      <main hidden={isLoginHidden} id="homepageContainer">
+      <div hidden={isLoginHidden} id="homepageContainer">
         <header>Welcome to codeCommerce!</header>
         <div id={style.homepageOptions}>
           {loginMethodHeaders.map((option) => (
@@ -297,7 +306,7 @@ class Login extends React.Component {
                     : input.inputType
                 }
                 onChange={input.onChange}
-                required
+                required={input.required}
               />
               <p>{errors[`${input.field}Error`]}</p>
             </label>
@@ -320,7 +329,7 @@ class Login extends React.Component {
             </div>
           </div>
         </form>
-      </main>
+      </div>
     );
   }
 }
