@@ -1,28 +1,25 @@
 import React from "react";
+import { roundToHundredth } from "../../methods";
 
 class Cart extends React.Component {
   constructor() {
     super();
     this.state = {
-      totalItemPrices: {
-        hawaiianRainbowWomensTee: 24.99,
-        alaskanSkyMensTee: 29.99,
+      quantityFieldsChangeTally: 0, // May not be needed
+      quantities: {
+        hawaiianRainbowWomensTee: 2,
+        alaskanSkyMensTee: 1,
       },
     };
   }
 
-  // Method to get total price for each item (quantity x price):
-  // Assign calc to state value
-  // Run onChange of quantity input field
-  // Round to 2 decimals!
-  // Also, quantity only appears when number is changed, so maybe run this method on pageload or set quantity as state value for each item
-  getTotalItemPrice = (e, unitPrice, itemName) => {
-    let quantity = e.target.value;
-    let totalItemPrice = quantity * unitPrice;
+  // Method to update item quantity state values. Called onChange of quantity field:
+  updateItemQuantity = (e, itemName) => {
+    let quantity = Number(e.target.value);
     this.setState((prevState) => ({
-      totalItemPrices: {
-        ...prevState.totalItemPrices,
-        [itemName]: totalItemPrice,
+      quantities: {
+        ...prevState.quantities,
+        [itemName]: quantity,
       },
     }));
   };
@@ -41,6 +38,7 @@ class Cart extends React.Component {
         size: "S",
         unitPrice: 24.99,
         totalItemPrice: 24.99,
+        itemQuantity: this.state.quantities.hawaiianRainbowWomensTee,
       },
       /* {
         itemName: "Desert Sunset Women's Eco Tee",
@@ -72,6 +70,7 @@ class Cart extends React.Component {
         size: "M",
         unitPrice: 29.99,
         totalItemPrice: 29.99,
+        itemQuantity: this.state.quantities.alaskanSkyMensTee,
       },
       /* {
         itemName: "Hibiscus Men's Tee",
@@ -91,32 +90,40 @@ class Cart extends React.Component {
         <h1>Cart</h1>
         <div id="cartPageContainer">
           <div id="itemsInCart">
-            {itemsAddedToCart.map((item) => (
-              <div id={item.itemName} className="itemInCart">
-                <img alt="" src={item.itemImage} />
-                <div id="itemInfo">
-                  <p>{item.gender}</p>
-                  <p>{item.itemName}</p>
-                  <p>Color: {item.color}</p>
-                  <p>Size: {item.size}</p>
-                </div>
-                <p>{item.unitPrice}</p>
-                <input
-                  type="number"
-                  min={1}
-                  step={1}
-                  //onChange={this.getTotalItemPrice(item.unitPrice)}
-                  onChange={(e) =>
-                    this.getTotalItemPrice(
-                      e,
-                      item.unitPrice,
-                      item.itemNameCamelCase
-                    )
-                  }
-                />
-                <p>{this.state.totalItemPrices[`${item.itemNameCamelCase}`]}</p>
-              </div>
-            ))}
+            {itemsAddedToCart.map(
+              (item) =>
+                this.state.quantities[`${item.itemNameCamelCase}`] !== 0 && (
+                  <div id={item.itemName} className="itemInCart">
+                    <img alt="" src={item.itemImage} />
+                    <div id="itemInfo">
+                      <p>{item.gender}</p>
+                      <p>{item.itemName}</p>
+                      <p>Color: {item.color}</p>
+                      <p>Size: {item.size}</p>
+                    </div>
+                    <p>{item.unitPrice}</p>
+                    <input
+                      value={this.state.quantities[`${item.itemNameCamelCase}`]}
+                      type="number"
+                      min={1}
+                      step={1}
+                      onChange={(e) =>
+                        this.updateItemQuantity(e, item.itemNameCamelCase)
+                      }
+                    />
+                    <p>
+                      {"$" +
+                        roundToHundredth(
+                          this.state.quantities[`${item.itemNameCamelCase}`] *
+                            item.unitPrice
+                        ).toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                    </p>
+                  </div>
+                )
+            )}
           </div>
           <div id="cartSummary"></div>
         </div>
