@@ -5,7 +5,7 @@ class Login extends React.Component {
   constructor() {
     super();
     this.state = {
-      loginMethodSelected: true,
+      isLoginMethodSelected: true,
       passwordPlaceholder: "Enter your password",
       passwordFieldInputType: "password",
       isOpenEye: true,
@@ -36,12 +36,12 @@ class Login extends React.Component {
     }
     e.target.id === "logIn"
       ? this.setState({
-          loginMethodSelected: true,
+          isLoginMethodSelected: true,
           passwordPlaceholder: "Enter your password",
           isRequired: false,
         })
       : this.setState({
-          loginMethodSelected: false,
+          isLoginMethodSelected: false,
           passwordPlaceholder: "Create a password",
           isRequired: true,
         });
@@ -204,18 +204,18 @@ class Login extends React.Component {
   render() {
     const { isLoginHidden, toNextPage } = this.props;
 
-    const { loginMethodSelected, eyeLogo, passwordFieldInputType, errors } =
+    const { isLoginMethodSelected, eyeLogo, passwordFieldInputType, errors } =
       this.state;
 
     const loginMethodHeaders = [
       {
         id: "logIn",
-        className: loginMethodSelected ? style.selected : style.unselected,
+        className: isLoginMethodSelected ? style.selected : style.unselected,
         textContent: "Log In",
       },
       {
         id: "signUp",
-        className: !loginMethodSelected ? style.selected : style.unselected,
+        className: !isLoginMethodSelected ? style.selected : style.unselected,
         textContent: "Sign Up",
       },
     ];
@@ -240,7 +240,7 @@ class Login extends React.Component {
         required: true,
       },
       {
-        isHidden: this.state.loginMethodSelected,
+        isHidden: this.state.isLoginMethodSelected,
         labelText: "Confirm Password:",
         placeholder: "Confirm Password",
         inputType: this.state.passwordFieldInputType,
@@ -249,7 +249,7 @@ class Login extends React.Component {
         required: this.state.isRequired,
       },
       {
-        isHidden: this.state.loginMethodSelected,
+        isHidden: this.state.isLoginMethodSelected,
         labelText: "First Name:",
         placeholder: "Enter your first name",
         inputType: "text",
@@ -258,7 +258,7 @@ class Login extends React.Component {
         required: this.state.isRequired,
       },
       {
-        isHidden: this.state.loginMethodSelected,
+        isHidden: this.state.isLoginMethodSelected,
         labelText: "Last Name:",
         placeholder: "Enter your last name",
         inputType: "text",
@@ -267,7 +267,7 @@ class Login extends React.Component {
         required: this.state.isRequired,
       },
       {
-        isHidden: this.state.loginMethodSelected,
+        isHidden: this.state.isLoginMethodSelected,
         labelText: "Postal Code:",
         placeholder: "US postal code (ex. 12345)",
         inputType: "text",
@@ -313,7 +313,7 @@ class Login extends React.Component {
           ))}
           <div id={style.loginBtnsContainer}>
             <button type="submit">
-              {loginMethodSelected ? "Log In" : "Create Account"}
+              {isLoginMethodSelected ? "Log In" : "Create Account"}
             </button>
             <p>or</p>
             <a href="#" id={style.facebookLogin}>
