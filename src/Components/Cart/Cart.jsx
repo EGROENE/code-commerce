@@ -56,6 +56,9 @@ class Cart extends React.Component {
           <div id={style.itemsInCart}>
             {this.state.itemsInCart.map((item) => (
               <div id={item.itemNameCamelCase} className={style.itemInCart}>
+                <p>
+                  <i class="fas fa-times-circle"></i>
+                </p>
                 <img alt="" src={item.itemImage} />
                 <div className={style.itemInfo}>
                   <p>{item.gender}</p>
