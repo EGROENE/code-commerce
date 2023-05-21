@@ -9,31 +9,18 @@ class Cart extends React.Component {
     super(props);
     this.state = {
       itemsInCart: ITEMS_IN_CART,
+      discount: 0,
     };
   }
 
-  componentDidMount = () => {
-    console.log(this.state.itemsInCart);
-    console.log(this.state.itemsInCart[0]);
-    console.log(this.state.itemsInCart[1]);
-    /* const itemsInCartWithQuantity = [...this.state.itemsInCart].map((item) => ({
-      ...item,
-      quantity: 1,
-    }));
-    console.log(itemsInCartWithQuantity);
-    this.setState({ itemsInCart: itemsInCartWithQuantity }); */
-  };
-
-  // Method to update prices onChange of quantity field:
-  // Also set state value of item's quantity to what is in the field:
-  updatePrices = (e, itemNameCamelCase) => {
+  // Method to update item quantities onChange of quantity field:
+  updateQuantities = (e, itemNameCamelCase) => {
     let newQuantity = Number(e.target.value);
     let selectedItem = this.state.itemsInCart.filter((item) => {
       return item.itemNameCamelCase === itemNameCamelCase;
     })[0];
 
     let selectedItemIndex = this.state.itemsInCart.indexOf(selectedItem);
-    console.log(this.state.itemsInCart[selectedItemIndex]);
 
     this.setState((prevState) => ({
       ...prevState,
@@ -45,15 +32,6 @@ class Cart extends React.Component {
     }));
   };
 
-  // Method to update prices.
-  // Update item quantity state values.
-  // Called onChange of quantity field:
-  updateItemQuantityPriceCartTotals = (e, item, itemName) => {};
-
-  // Method to update cart totals:
-  // Also call on change of quantity field.
-  updateTotals = () => {};
-
   // Check input in promo code box to see if it matches an available promo. Update prices accordingly.
   // Should set discount value in state and change cartTotal if match.
   // Call onClick of apply button.
@@ -61,7 +39,16 @@ class Cart extends React.Component {
 
   render() {
     const { isCartHidden } = this.props;
+    // Calculate totals based on state values of unit prices & quantity
+    // Could put these calcs into function(s), which could be defined in separate doc then imported to all components that require them.
+    let cartSubtotal = this.state.itemsInCart.map(
+      (item) =>
+        //roundToHundredth(item.unitPrice * item.quantity)
+        item.unitPrice * item.quantity
+    );
+    cartSubtotal = roundToHundredth(cartSubtotal.reduce((a, b) => a + b));
 
+    let cartTotal = roundToHundredth(cartSubtotal - this.state.discount);
     return (
       <div hidden={isCartHidden}>
         <h1>Cart</h1>
@@ -76,27 +63,30 @@ class Cart extends React.Component {
                   <p>Color: {item.color}</p>
                   <p>Size: {item.size}</p>
                 </div>
-                <p>{"$" + item.unitPrice}</p>
+                <p>
+                  {"$" +
+                    item.unitPrice.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                </p>
                 <input
                   value={item.quantity}
                   type="number"
                   min={1}
                   step={1}
                   onChange={(e) => {
-                    this.updatePrices(e, item.itemNameCamelCase);
+                    this.updateQuantities(e, item.itemNameCamelCase);
                   }}
                 />
                 <p>
-                  {/* Set total item price here w/ this.state.totalItemPrices[itemNameCamelCase], which is updated in updatetotalItemPrices method */}
-                  {/* {"$" +
-                        roundToHundredth(
-                          this.state.quantities[`${item.itemNameCamelCase}`] *
-                            item.unitPrice
-                        ).toLocaleString(undefined, {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })} */}
-                  {}
+                  {"$" +
+                    roundToHundredth(
+                      item.quantity * item.unitPrice
+                    ).toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                 </p>
               </div>
             ))}
@@ -108,10 +98,24 @@ class Cart extends React.Component {
               <input type="text" />
               <button id={style.applyPromo}>Apply</button>
             </label>
-            <p>Cart Subtotal: {}</p>
+            <p>
+              Cart Subtotal:
+              {" $" +
+                cartSubtotal.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+            </p>
             <p>Shipping & Handling: -</p>
-            <p>Discount: {}</p>
-            <p>Cart Total: {}</p>
+            <p>Discount: {this.state.discount}</p>
+            <p>
+              Cart Total:
+              {" $" +
+                cartTotal.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+            </p>
           </div>
         </div>
       </div>
