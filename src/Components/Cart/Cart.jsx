@@ -32,6 +32,25 @@ class Cart extends React.Component {
     }));
   };
 
+  // Method to delete item from cart:
+  // On initial loading, only render items in cart whose quantity is over 0. This method should change that, so, upon re-rendering, the item whose delete btn was clicked will not display.
+  deleteItem = (e, itemNameCamelCase) => {
+    let itemToDelete = this.state.itemsInCart.filter((item) => {
+      return item.itemNameCamelCase === itemNameCamelCase;
+    })[0];
+
+    let itemToDeleteIndex = this.state.itemsInCart.indexOf(itemToDelete);
+
+    this.setState((prevState) => ({
+      ...prevState,
+      itemsInCart: prevState.itemsInCart.map((item) =>
+        this.state.itemsInCart.indexOf(item) === itemToDeleteIndex
+          ? { ...item, quantity: 0 }
+          : item
+      ),
+    }));
+  };
+
   // Check input in promo code box to see if it matches an available promo. Update prices accordingly.
   // Should set discount value in state and change cartTotal if match.
   // Call onClick of apply button.
@@ -54,45 +73,56 @@ class Cart extends React.Component {
         <h1>Cart</h1>
         <div id="cartPageContainer">
           <div id={style.itemsInCart}>
-            {this.state.itemsInCart.map((item) => (
-              <div id={item.itemNameCamelCase} className={style.itemInCart}>
-                <p>
-                  <i class="fas fa-times-circle"></i>
-                </p>
-                <img alt="" src={item.itemImage} />
-                <div className={style.itemInfo}>
-                  <p>{item.gender}</p>
-                  <p>{item.itemName}</p>
-                  <p>Color: {item.color}</p>
-                  <p>Size: {item.size}</p>
-                </div>
-                <p>
-                  {"$" +
-                    item.unitPrice.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
-                </p>
-                <input
-                  value={item.quantity}
-                  type="number"
-                  min={1}
-                  step={1}
-                  onChange={(e) => {
-                    this.updateQuantities(e, item.itemNameCamelCase);
-                  }}
-                />
-                <p>
-                  {"$" +
-                    roundToHundredth(
-                      item.quantity * item.unitPrice
-                    ).toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
-                </p>
-              </div>
-            ))}
+            {this.state.itemsInCart.map(
+              (item) =>
+                item.quantity > 0 && (
+                  <div id={item.itemNameCamelCase} className={style.itemInCart}>
+                    <p
+                      className={style.deleteItemButton}
+                      title="Remove from cart"
+                    >
+                      <i
+                        onClick={(e) => {
+                          this.deleteItem(e, item.itemNameCamelCase);
+                        }}
+                        class="fas fa-times-circle"
+                      ></i>
+                    </p>
+                    <img alt="" src={item.itemImage} />
+                    <div className={style.itemInfo}>
+                      <p>{item.gender}</p>
+                      <p>{item.itemName}</p>
+                      <p>Color: {item.color}</p>
+                      <p>Size: {item.size}</p>
+                    </div>
+                    <p>
+                      {"$" +
+                        item.unitPrice.toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                    </p>
+                    <input
+                      value={item.quantity}
+                      type="number"
+                      min={1}
+                      step={1}
+                      onChange={(e) => {
+                        this.updateQuantities(e, item.itemNameCamelCase);
+                      }}
+                    />
+                    <p>
+                      {"$" +
+                        roundToHundredth(
+                          item.quantity * item.unitPrice
+                        ).toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                    </p>
+                  </div>
+                )
+            )}
           </div>
           <div id="cartSummary">
             <header>Cart Summary</header>
