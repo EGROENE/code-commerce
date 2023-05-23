@@ -51,6 +51,13 @@ class Cart extends React.Component {
     }));
   };
 
+  // Method that checks if all item.quantities are zero (no items in cart)
+  // If returns true, then display message saying there are no items in cart
+  isCartEmpty = () => {
+    let allItemQuantities = this.state.itemsInCart.map((item) => item.quantity);
+    return allItemQuantities.some((quantity) => quantity > 0) ? false : true;
+  };
+
   // Check input in promo code box to see if it matches an available promo. Update prices accordingly.
   // Should set discount value in state and change cartTotal if match.
   // Call onClick of apply button.
@@ -73,55 +80,62 @@ class Cart extends React.Component {
         <h1>Cart</h1>
         <div id="cartPageContainer">
           <div id={style.itemsInCart}>
-            {this.state.itemsInCart.map(
-              (item) =>
-                item.quantity > 0 && (
-                  <div id={item.itemNameCamelCase} className={style.itemInCart}>
-                    <p
-                      className={style.deleteItemButton}
-                      title="Remove from cart"
+            {this.isCartEmpty() ? (
+              <p>Cart is empty</p>
+            ) : (
+              this.state.itemsInCart.map(
+                (item) =>
+                  item.quantity > 0 && (
+                    <div
+                      id={item.itemNameCamelCase}
+                      className={style.itemInCart}
                     >
-                      <i
-                        onClick={(e) => {
-                          this.deleteItem(e, item.itemNameCamelCase);
+                      <p
+                        className={style.deleteItemButton}
+                        title="Remove from cart"
+                      >
+                        <i
+                          onClick={(e) => {
+                            this.deleteItem(e, item.itemNameCamelCase);
+                          }}
+                          className="fas fa-times-circle"
+                        ></i>
+                      </p>
+                      <img alt="" src={item.itemImage} />
+                      <div className={style.itemInfo}>
+                        <p>{item.gender}</p>
+                        <p>{item.itemName}</p>
+                        <p>Color: {item.color}</p>
+                        <p>Size: {item.size}</p>
+                      </div>
+                      <p>
+                        {"$" +
+                          item.unitPrice.toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                      </p>
+                      <input
+                        value={item.quantity}
+                        type="number"
+                        min={1}
+                        step={1}
+                        onChange={(e) => {
+                          this.updateQuantities(e, item.itemNameCamelCase);
                         }}
-                        className="fas fa-times-circle"
-                      ></i>
-                    </p>
-                    <img alt="" src={item.itemImage} />
-                    <div className={style.itemInfo}>
-                      <p>{item.gender}</p>
-                      <p>{item.itemName}</p>
-                      <p>Color: {item.color}</p>
-                      <p>Size: {item.size}</p>
+                      />
+                      <p>
+                        {"$" +
+                          roundToHundredth(
+                            item.quantity * item.unitPrice
+                          ).toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                      </p>
                     </div>
-                    <p>
-                      {"$" +
-                        item.unitPrice.toLocaleString(undefined, {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}
-                    </p>
-                    <input
-                      value={item.quantity}
-                      type="number"
-                      min={1}
-                      step={1}
-                      onChange={(e) => {
-                        this.updateQuantities(e, item.itemNameCamelCase);
-                      }}
-                    />
-                    <p>
-                      {"$" +
-                        roundToHundredth(
-                          item.quantity * item.unitPrice
-                        ).toLocaleString(undefined, {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}
-                    </p>
-                  </div>
-                )
+                  )
+              )
             )}
           </div>
           <div id="cartSummary">
