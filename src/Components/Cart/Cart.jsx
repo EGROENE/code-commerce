@@ -9,6 +9,15 @@ class Cart extends React.Component {
     super(props);
     this.state = {
       itemsInCart: ITEMS_IN_CART,
+      promoCodes: [
+        "ilikebeachballs",
+        "codeislyfe",
+        "devslopes",
+        "jd911",
+        "etlb17",
+      ],
+      inputPromoCode: "",
+      acceptedPromoCode: "",
       discount: 0,
     };
   }
@@ -58,21 +67,82 @@ class Cart extends React.Component {
     return allItemQuantities.some((quantity) => quantity > 0) ? false : true;
   };
 
-  // Check input in promo code box to see if it matches an available promo. Update prices accordingly.
-  // Should set discount value in state and change cartTotal if match.
-  // Call onClick of apply button.
-  checkPromoCode = (e) => {};
+  // Set state value inputPromoCode to what user inputs:
+  getPromoCode = (e) => {
+    let inputCode = e.target.value.trim().toLowerCase();
+    this.setState((prevState) => ({
+      ...prevState,
+      inputPromoCode: inputCode,
+    }));
+  };
+
+  // Check input promo code to see if it matches an available promo, then apply appropriate discount:
+  checkPromoCode = (cartSubtotal) => {
+    let inputPromoCode = this.state.inputPromoCode;
+    if (this.state.promoCodes.includes(inputPromoCode)) {
+      if (inputPromoCode === "ilikebeachballs") {
+        this.setState((prevState) => ({
+          ...prevState,
+          acceptedPromoCode: inputPromoCode,
+          discount: cartSubtotal * 0.1,
+          isInvalidPromo: false,
+        }));
+      } else if (inputPromoCode === "codeislyfe") {
+        this.setState((prevState) => ({
+          ...prevState,
+          acceptedPromoCode: inputPromoCode,
+          discount: cartSubtotal * 0.25,
+          isInvalidPromo: false,
+        }));
+      } else if (inputPromoCode === "devslopes") {
+        this.setState((prevState) => ({
+          ...prevState,
+          acceptedPromoCode: inputPromoCode,
+          discount: cartSubtotal * 0.5,
+          isInvalidPromo: false,
+        }));
+      } else if (inputPromoCode === "jd911") {
+        this.setState((prevState) => ({
+          ...prevState,
+          acceptedPromoCode: inputPromoCode,
+          discount: cartSubtotal * 0.75,
+          isInvalidPromo: false,
+        }));
+      } else if (inputPromoCode === "etlb17") {
+        this.setState((prevState) => ({
+          ...prevState,
+          acceptedPromoCode: inputPromoCode,
+          discount: cartSubtotal * 0.99,
+          isInvalidPromo: false,
+        }));
+      }
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        discount: 0,
+        isInvalidPromo: true,
+      }));
+    }
+  };
+
+  // Method to remove discount:
+  removeDiscount = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      discount: 0,
+      isInvalidPromo: false,
+    }));
+  };
 
   render() {
     const { isCartHidden } = this.props;
     // Calculate totals based on state values of unit prices & quantity
     // Could put these calcs into function(s), which could be defined in separate doc then imported to all components that require them.
     let cartSubtotal = this.state.itemsInCart.map(
-      (item) =>
-        //roundToHundredth(item.unitPrice * item.quantity)
-        item.unitPrice * item.quantity
+      (item) => item.unitPrice * item.quantity
     );
     cartSubtotal = roundToHundredth(cartSubtotal.reduce((a, b) => a + b));
+    console.log(cartSubtotal);
 
     let cartTotal = roundToHundredth(cartSubtotal - this.state.discount);
     return (
@@ -142,8 +212,22 @@ class Cart extends React.Component {
             <header>Cart Summary</header>
             <label htmlFor="">
               <p>Do you have a promo code?</p>
-              <input type="text" />
-              <button id={style.applyPromo}>Apply</button>
+              <input
+                disabled={this.state.discount > 0}
+                onChange={(e) => {
+                  this.getPromoCode(e);
+                }}
+                type="text"
+              />
+              {this.state.isInvalidPromo && <p>Invalid code</p>}
+              <button
+                onClick={(e) => {
+                  this.checkPromoCode(cartSubtotal);
+                }}
+                id={style.applyPromo}
+              >
+                Apply
+              </button>
             </label>
             <p>
               Cart Subtotal:
@@ -154,7 +238,24 @@ class Cart extends React.Component {
                 })}
             </p>
             <p>Shipping & Handling: -</p>
-            <p>Discount: {this.state.discount}</p>
+            <p>
+              Discount:
+              {" $" +
+                this.state.discount.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              {this.state.discount > 0 && (
+                <span className={style.acceptedPromoCode}>
+                  {this.state.acceptedPromoCode}
+                  <i
+                    onClick={this.removeDiscount}
+                    title="Remove discount"
+                    className="fas fa-times"
+                  ></i>
+                </span>
+              )}
+            </p>
             <p>
               Cart Total:
               {" $" +
