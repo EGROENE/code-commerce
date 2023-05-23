@@ -85,7 +85,7 @@ class Cart extends React.Component {
                         onClick={(e) => {
                           this.deleteItem(e, item.itemNameCamelCase);
                         }}
-                        class="fas fa-times-circle"
+                        className="fas fa-times-circle"
                       ></i>
                     </p>
                     <img alt="" src={item.itemImage} />
