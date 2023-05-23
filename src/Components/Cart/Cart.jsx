@@ -221,7 +221,7 @@ class Cart extends React.Component {
               />
               {this.state.isInvalidPromo && <p>Invalid code</p>}
               <button
-                onClick={(e) => {
+                onClick={() => {
                   this.checkPromoCode(cartSubtotal);
                 }}
                 id={style.applyPromo}
