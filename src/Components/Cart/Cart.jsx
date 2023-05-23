@@ -18,7 +18,7 @@ class Cart extends React.Component {
       ],
       inputPromoCode: "",
       acceptedPromoCode: "",
-      discount: 0,
+      discountRate: 0,
     };
   }
 
@@ -84,42 +84,42 @@ class Cart extends React.Component {
         this.setState((prevState) => ({
           ...prevState,
           acceptedPromoCode: inputPromoCode,
-          discount: cartSubtotal * 0.1,
+          discountRate: 0.1,
           isInvalidPromo: false,
         }));
       } else if (inputPromoCode === "codeislyfe") {
         this.setState((prevState) => ({
           ...prevState,
           acceptedPromoCode: inputPromoCode,
-          discount: cartSubtotal * 0.25,
+          discountRate: 0.25,
           isInvalidPromo: false,
         }));
       } else if (inputPromoCode === "devslopes") {
         this.setState((prevState) => ({
           ...prevState,
           acceptedPromoCode: inputPromoCode,
-          discount: cartSubtotal * 0.5,
+          discountRate: 0.5,
           isInvalidPromo: false,
         }));
       } else if (inputPromoCode === "jd911") {
         this.setState((prevState) => ({
           ...prevState,
           acceptedPromoCode: inputPromoCode,
-          discount: cartSubtotal * 0.75,
+          discountRate: 0.75,
           isInvalidPromo: false,
         }));
       } else if (inputPromoCode === "etlb17") {
         this.setState((prevState) => ({
           ...prevState,
           acceptedPromoCode: inputPromoCode,
-          discount: cartSubtotal * 0.99,
+          discountRate: 0.99,
           isInvalidPromo: false,
         }));
       }
     } else {
       this.setState((prevState) => ({
         ...prevState,
-        discount: 0,
+        discountRate: 0,
         isInvalidPromo: true,
       }));
     }
@@ -129,7 +129,7 @@ class Cart extends React.Component {
   removeDiscount = () => {
     this.setState((prevState) => ({
       ...prevState,
-      discount: 0,
+      discountRate: 0,
       isInvalidPromo: false,
     }));
   };
@@ -144,7 +144,10 @@ class Cart extends React.Component {
     cartSubtotal = roundToHundredth(cartSubtotal.reduce((a, b) => a + b));
     console.log(cartSubtotal);
 
-    let cartTotal = roundToHundredth(cartSubtotal - this.state.discount);
+    let cartTotal = roundToHundredth(
+      cartSubtotal - cartSubtotal * this.state.discountRate
+    );
+
     return (
       <div hidden={isCartHidden}>
         <h1>Cart</h1>
@@ -213,7 +216,7 @@ class Cart extends React.Component {
             <label htmlFor="">
               <p>Do you have a promo code?</p>
               <input
-                disabled={this.state.discount > 0}
+                disabled={this.state.discountRate > 0}
                 onChange={(e) => {
                   this.getPromoCode(e);
                 }}
@@ -241,11 +244,14 @@ class Cart extends React.Component {
             <p>
               Discount:
               {" $" +
-                this.state.discount.toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-              {this.state.discount > 0 && (
+                (cartSubtotal * this.state.discountRate).toLocaleString(
+                  undefined,
+                  {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }
+                )}
+              {this.state.discountRate > 0 && (
                 <span className={style.acceptedPromoCode}>
                   {this.state.acceptedPromoCode}
                   <i
