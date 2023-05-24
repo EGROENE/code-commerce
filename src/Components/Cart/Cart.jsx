@@ -216,7 +216,7 @@ class Cart extends React.Component {
             <label htmlFor="">
               <p>Do you have a promo code?</p>
               <input
-                disabled={this.state.discountRate > 0}
+                disabled={this.state.discountRate > 0 || this.isCartEmpty()}
                 onChange={(e) => {
                   this.getPromoCode(e);
                 }}
