@@ -312,7 +312,15 @@ class Login extends React.Component {
                 onBlur={input.onBlur}
                 required={input.required}
               />
-              <p>{errors[`${input.field}Error`]}</p>
+              {input.labelText === "Password:" && !isLoginMethodSelected ? (
+                <p>
+                  Must contain at least 1 uppercase & 1 lowercase English
+                  letter, at least 1 digit, at least 1 special character (#, ?,
+                  !, @, $, %, ^, &, *, -), & be 8-20 characters long
+                </p>
+              ) : (
+                <p>{errors[`${input.field}Error`]}</p>
+              )}
             </label>
           ))}
           <div id={style.loginBtnsContainer}>
