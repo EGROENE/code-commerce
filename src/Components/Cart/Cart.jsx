@@ -271,6 +271,7 @@ class Cart extends React.Component {
                 })}
             </p>
             <button
+              disabled={this.isCartEmpty()}
               onClick={(e) => {
                 toNextPage(e, "isCartHidden", "isShippingHidden");
               }}
