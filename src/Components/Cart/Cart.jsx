@@ -135,7 +135,7 @@ class Cart extends React.Component {
   };
 
   render() {
-    const { isCartHidden } = this.props;
+    const { isCartHidden, toNextPage } = this.props;
     // Calculate totals based on state values of unit prices & quantity
     // Could put these calcs into function(s), which could be defined in separate doc then imported to all components that require them.
     let cartSubtotal = this.state.itemsInCart.map(
@@ -270,6 +270,14 @@ class Cart extends React.Component {
                   maximumFractionDigits: 2,
                 })}
             </p>
+            <button
+              onClick={(e) => {
+                toNextPage(e, "isCartHidden", "isShippingHidden");
+              }}
+              id="toNextPageBtn"
+            >
+              To Shipping
+            </button>
           </div>
         </div>
       </div>
