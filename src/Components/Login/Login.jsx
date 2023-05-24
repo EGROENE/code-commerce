@@ -292,7 +292,11 @@ class Login extends React.Component {
             </header>
           ))}
         </div>
-        <form onSubmit={toNextPage}>
+        <form
+          onSubmit={(e) => {
+            toNextPage(e, "isLoginHidden", "isCartHidden");
+          }}
+        >
           {formInputs.map((input) => (
             <label key={input.labelText} hidden={input.isHidden}>
               <header key={input.labelText + "1"}>{input.labelText}</header>
