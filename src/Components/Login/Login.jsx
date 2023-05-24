@@ -127,7 +127,7 @@ class Login extends React.Component {
         errors: {
           ...prevState.errors,
           passwordError:
-            "Password must contain at least 1 uppercase & 1 lowercase English letter, at least 1 digit, at least 1 special character (#, ?, !, @, $, %, ^, &, *, -), & be 8-20 characters long",
+            "Password must contain >= 1 uppercase & 1 lowercase English letter, >= 1 digit, >= 1 special character (#, ?, !, @, $, %, ^, &, *, -), & be 8-20 characters long",
         },
         password: "",
       }));
@@ -226,7 +226,7 @@ class Login extends React.Component {
         labelText: "Email Address:",
         placeholder: "Enter your email address",
         inputType: "email",
-        onChange: this.validateEmail,
+        onBlur: this.validateEmail,
         field: "email",
         required: true,
       },
@@ -235,7 +235,7 @@ class Login extends React.Component {
         labelText: "Password:",
         placeholder: this.state.passwordPlaceholder,
         inputType: this.state.passwordFieldInputType,
-        onChange: this.validatePassword,
+        onBlur: this.validatePassword,
         field: "password",
         required: true,
       },
@@ -244,7 +244,7 @@ class Login extends React.Component {
         labelText: "Confirm Password:",
         placeholder: "Confirm Password",
         inputType: this.state.passwordFieldInputType,
-        onChange: this.validatePasswordConfirmation,
+        onBlur: this.validatePasswordConfirmation,
         field: "confirmPassword",
         required: this.state.isRequired,
       },
@@ -253,7 +253,7 @@ class Login extends React.Component {
         labelText: "First Name:",
         placeholder: "Enter your first name",
         inputType: "text",
-        onChange: this.validateNames,
+        onBlur: this.validateNames,
         field: "name",
         required: this.state.isRequired,
       },
@@ -262,7 +262,7 @@ class Login extends React.Component {
         labelText: "Last Name:",
         placeholder: "Enter your last name",
         inputType: "text",
-        onChange: this.validateNames,
+        onBlur: this.validateNames,
         field: "name",
         required: this.state.isRequired,
       },
@@ -271,7 +271,7 @@ class Login extends React.Component {
         labelText: "Postal Code:",
         placeholder: "US postal code (ex. 12345)",
         inputType: "text",
-        onChange: this.validatePostalCode,
+        onBlur: this.validatePostalCode,
         field: "postalCode",
         required: this.state.isRequired,
       },
@@ -309,7 +309,7 @@ class Login extends React.Component {
                     ? passwordFieldInputType
                     : input.inputType
                 }
-                onChange={input.onChange}
+                onBlur={input.onBlur}
                 required={input.required}
               />
               <p>{errors[`${input.field}Error`]}</p>
