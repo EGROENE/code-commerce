@@ -150,11 +150,11 @@ class Cart extends React.Component {
 
     return (
       <div hidden={isCartHidden}>
-        <h1>Cart</h1>
-        <div id="cartPageContainer">
+        <header className="pageHeader">Cart</header>
+        <div id={style.cartPageContainer}>
           <div id={style.itemsInCart}>
             {this.isCartEmpty() ? (
-              <p>Cart is empty</p>
+              <p id={style.cartIsEmpty}>Cart is empty</p>
             ) : (
               this.state.itemsInCart.map(
                 (item) =>
@@ -176,13 +176,16 @@ class Cart extends React.Component {
                       </p>
                       <img alt="" src={item.itemImage} />
                       <div className={style.itemInfo}>
-                        <p>{item.gender}</p>
-                        <p>{item.itemName}</p>
-                        <p>Color: {item.color}</p>
-                        <p>Size: {item.size}</p>
+                        <p className={style.productTitle}>{item.itemName}</p>
+                        <p>Category: {item.category}</p>
+                        <p>Language: {item.language}</p>
                       </div>
                       <p>
-                        {"$" +
+                        <span className={style.itemInfoHeader}>
+                          Unit Price:
+                        </span>
+                        <br />
+                        {" $" +
                           item.unitPrice.toLocaleString(undefined, {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
@@ -198,6 +201,10 @@ class Cart extends React.Component {
                         }}
                       />
                       <p>
+                        <span className={style.itemInfoHeader}>
+                          Item Total:
+                        </span>
+                        <br />
                         {"$" +
                           roundToHundredth(
                             item.quantity * item.unitPrice
@@ -211,11 +218,12 @@ class Cart extends React.Component {
               )
             )}
           </div>
-          <div id="cartSummary">
+          <div id={style.cartSummary}>
             <header>Cart Summary</header>
             <label htmlFor="">
               <p>Do you have a promo code?</p>
               <input
+                placeholder="Enter promo code"
                 disabled={this.state.discountRate > 0 || this.isCartEmpty()}
                 onChange={(e) => {
                   this.getPromoCode(e);
@@ -224,6 +232,7 @@ class Cart extends React.Component {
               />
               {this.state.isInvalidPromo && <p>Invalid code</p>}
               <button
+                title="Apply promo code"
                 onClick={() => {
                   this.checkPromoCode(cartSubtotal);
                 }}
@@ -251,17 +260,17 @@ class Cart extends React.Component {
                     maximumFractionDigits: 2,
                   }
                 )}
-              {this.state.discountRate > 0 && (
-                <span className={style.acceptedPromoCode}>
-                  {this.state.acceptedPromoCode}
-                  <i
-                    onClick={this.removeDiscount}
-                    title="Remove discount"
-                    className="fas fa-times"
-                  ></i>
-                </span>
-              )}
             </p>
+            {this.state.discountRate > 0 && (
+              <p className={style.acceptedPromoCode}>
+                {this.state.acceptedPromoCode}
+                <i
+                  onClick={this.removeDiscount}
+                  title="Remove discount"
+                  className="fas fa-times"
+                ></i>
+              </p>
+            )}
             <p>
               Cart Total:
               {" $" +
@@ -271,6 +280,7 @@ class Cart extends React.Component {
                 })}
             </p>
             <button
+              title="To Shipping"
               disabled={this.isCartEmpty()}
               onClick={(e) => {
                 toNextPage(e, "isCartHidden", "isShippingHidden");

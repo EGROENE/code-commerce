@@ -1,0 +1,131 @@
+#cartPageContainer {
+    display: flex;
+    margin: 0.75rem 1rem;
+}
+
+#cartIsEmpty {
+    width: 42rem;
+}
+
+#itemsInCart {
+  border: 2px solid var(--theme-color);
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.itemInCart {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  align-items: center;
+  margin: 1rem auto;
+}
+
+.itemInCart img {
+  height: 9rem;
+}
+
+.itemInCart .productTitle {
+    color: var(--theme-color);
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.itemInCart input {
+  height: 3rem;
+  width: 4rem;
+  margin-left: 3rem;
+}
+
+.itemInCart p {
+    font-size: 1.25rem;
+    margin: 0.75rem auto;
+}
+
+.itemInfo {
+  text-align: left;
+  font-size: 1rem;
+}
+
+.itemInfoHeader {
+    color: var(--theme-color);
+    text-transform: uppercase;
+}
+
+.deleteItemButton:hover {
+  cursor: pointer;
+}
+
+#cartSummary {
+    padding: 0 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 33rem;
+    align-items: center;
+}
+
+#cartSummary header {
+    margin-bottom: 1.5rem;
+}
+
+#cartSummary label {
+    position: relative;
+    text-align: center;
+    margin: 0;
+}
+
+#cartSummary p {
+    font-size: 1rem;
+}
+
+#cartSummary input {
+    margin: 0.75rem auto 0.25rem auto;
+}
+
+#cartSummary button {
+    border: none;
+    display: inline-flex;
+    justify-content: center;
+    width: 75%;
+    background: var(--theme-color);
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+#cartSummary button:disabled {
+    opacity: 0.8;
+    color: black;
+    background-color: black;
+    color: gray;
+}
+
+#cartSummary button:disabled:hover {
+    cursor: not-allowed;
+}
+
+#cartSummary #applyPromo {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+    margin: 0.75rem auto;
+}
+
+.acceptedPromoCode {
+    background-color: gray;
+    color: white;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    display: inline-flex;
+    margin: 0;
+}
+
+.acceptedPromoCode i {
+  margin-left: 0.5rem;
+  line-height: 1.25rem;
+}
+
+.acceptedPromoCode i:hover {
+  cursor: pointer;
+}
