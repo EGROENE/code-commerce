@@ -232,6 +232,7 @@ class Cart extends React.Component {
               />
               {this.state.isInvalidPromo && <p>Invalid code</p>}
               <button
+                disabled={this.state.discountRate > 0}
                 title="Apply promo code"
                 onClick={() => {
                   this.checkPromoCode(cartSubtotal);
