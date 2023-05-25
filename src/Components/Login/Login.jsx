@@ -279,7 +279,7 @@ class Login extends React.Component {
 
     return (
       <div hidden={isLoginHidden} id="homepageContainer">
-        <header>Welcome to codeCommerce!</header>
+        <header className="pageHeader">Welcome to codeCommerce!</header>
         <div id={style.homepageOptions}>
           {loginMethodHeaders.map((option) => (
             <header
