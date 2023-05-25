@@ -59,11 +59,16 @@
 h1 {
   margin: 0;
   font-size: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 main {
   margin-top: 1rem;
   margin-bottom: 2rem;
+}
+
+.pageHeader {
+  font-size: 2.5rem;
 }
 
 a {
@@ -72,6 +77,10 @@ a {
 
 button {
   font-family: var(--theme-font);
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 input::placeholder {
@@ -116,6 +125,16 @@ input {
   border: 1px solid var(--theme-color);
   color: white;
   font-size: var(--size-20);
+  font-family: var(--theme-font);
+}
+
+input:disabled {
+  background-color: black;
+  color: rgb(73, 72, 72);
+}
+
+input:disabled:hover {
+  cursor: not-allowed
 }
 
 form button,
