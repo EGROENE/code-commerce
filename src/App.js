@@ -53,6 +53,11 @@ class App extends React.Component {
           />
           <Cart
             isCartHidden={this.state.pageDisplayOptions.isCartHidden}
+            isShippingHidden={this.state.pageDisplayOptions.isShippingHidden}
+            isPaymentHidden={this.state.pageDisplayOptions.isPaymentHidden}
+            isConfirmationHidden={
+              this.state.pageDisplayOptions.isConfirmationHidden
+            }
             toNextPage={this.toNextPage}
           />
         </header>
