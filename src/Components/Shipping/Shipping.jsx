@@ -8,15 +8,27 @@ class Shipping extends React.Component {
 
   // Method to validate ZIP code:
 
+  // Method to validate first 3 digits of US phone number:
+
+  // Method to validate remaining 7 digits of US phone number:
+
   render() {
     const { isShippingHidden, toNextPage, itemsInCart, discountRate } =
       this.props;
 
     // Add onBlur property (the field's validation method, which will be called onBlur) to each object:
     const titleNameAddressDataFields = [
-      { label: "Title", placeholder: "Recipient title", onBlur: "" },
-      { label: "Name", placeholder: "Recipient name", onBlur: "" },
-      { label: "Street Address", placeholder: "Delivery address", onBlur: "" },
+      {
+        label: "Recipient Title: ",
+        placeholder: "Recipient title",
+        onBlur: "",
+      },
+      { label: "Recipient Name: ", placeholder: "Recipient name", onBlur: "" },
+      {
+        label: "Street Address: ",
+        placeholder: "Delivery address",
+        onBlur: "",
+      },
     ];
 
     return (
@@ -33,7 +45,7 @@ class Shipping extends React.Component {
               />
             </label>
           ))}
-          <div>
+          <div id={style.moreAddressDetails}>
             <label htmlFor="">
               <header>ZIP Code</header>
               <input type="text" />
@@ -44,7 +56,7 @@ class Shipping extends React.Component {
             </label>
             <label>
               <header>State: </header>
-              <select id="state" name="state">
+              <select>
                 <option disabled selected>
                   -- territory or state --
                 </option>
@@ -113,10 +125,10 @@ class Shipping extends React.Component {
           </div>
           <label>
             <header>Phone: </header>
-            <>
+            <div className={style.phoneNumber}>
               <input type="text" />
               <input type="text" />
-            </>
+            </div>
           </label>
         </form>
       </div>
