@@ -48,11 +48,11 @@ class Shipping extends React.Component {
           <div id={style.moreAddressDetails}>
             <label htmlFor="">
               <header>ZIP Code</header>
-              <input type="text" />
+              <input placeholder="5-digit ZIP code" type="text" />
             </label>
             <label>
               <header>City: </header>
-              <input type="text" />
+              <input placeholder="Enter city" type="text" />
             </label>
             <label>
               <header>State: </header>
@@ -126,8 +126,8 @@ class Shipping extends React.Component {
           <label>
             <header>Phone: </header>
             <div className={style.phoneNumber}>
-              <input type="text" />
-              <input type="text" />
+              <input placeholder="123" type="text" />
+              <input placeholder="4567890" type="text" />
             </div>
           </label>
         </form>
