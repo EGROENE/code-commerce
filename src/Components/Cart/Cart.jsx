@@ -2,6 +2,7 @@ import React from "react";
 import style from "./Cart.module.css";
 import { ITEMS_IN_CART } from "../../Constants/itemsAddedToCart.js";
 import { roundToHundredth } from "../../methods";
+import Shipping from "../Shipping/Shipping.jsx";
 
 class Cart extends React.Component {
   constructor(props) {
@@ -133,7 +134,13 @@ class Cart extends React.Component {
   };
 
   render() {
-    const { isCartHidden, toNextPage } = this.props;
+    const {
+      isCartHidden,
+      isShippingHidden,
+      isPaymentHidden,
+      isConfirmationHidden,
+      toNextPage,
+    } = this.props;
     // Calculate totals based on current state values of unit prices & quantity:
     let cartSubtotal = this.state.itemsInCart.map(
       (item) => item.unitPrice * item.quantity
@@ -145,147 +152,155 @@ class Cart extends React.Component {
     );
 
     return (
-      <div hidden={isCartHidden}>
-        <header className="pageHeader">Cart</header>
-        <div id={style.cartPageContainer}>
-          <div id={style.itemsInCart}>
-            {this.isCartEmpty() ? (
-              <p id={style.cartIsEmpty}>Cart is empty</p>
-            ) : (
-              this.state.itemsInCart.map(
-                (item) =>
-                  item.quantity > 0 && (
-                    <div
-                      id={item.itemNameCamelCase}
-                      className={style.itemInCart}
-                    >
-                      <p
-                        className={style.deleteItemButton}
-                        title="Remove from cart"
+      <div id="checkout">
+        <div hidden={isCartHidden}>
+          <header className="pageHeader">Cart</header>
+          <div id={style.cartPageContainer}>
+            <div id={style.itemsInCart}>
+              {this.isCartEmpty() ? (
+                <p id={style.cartIsEmpty}>Cart is empty</p>
+              ) : (
+                this.state.itemsInCart.map(
+                  (item) =>
+                    item.quantity > 0 && (
+                      <div
+                        id={item.itemNameCamelCase}
+                        className={style.itemInCart}
                       >
-                        <i
-                          onClick={(e) => {
-                            this.deleteItem(e, item.itemNameCamelCase);
+                        <p
+                          className={style.deleteItemButton}
+                          title="Remove from cart"
+                        >
+                          <i
+                            onClick={(e) => {
+                              this.deleteItem(e, item.itemNameCamelCase);
+                            }}
+                            className="fas fa-times-circle"
+                          ></i>
+                        </p>
+                        <img alt="" src={item.itemImage} />
+                        <div className={style.itemInfo}>
+                          <p className={style.productTitle}>{item.itemName}</p>
+                          <p>Category: {item.category}</p>
+                          <p>Language: {item.language}</p>
+                        </div>
+                        <p>
+                          <span className={style.itemInfoHeader}>
+                            Unit Price:
+                          </span>
+                          <br />
+                          {" $" +
+                            item.unitPrice.toLocaleString(undefined, {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}
+                        </p>
+                        <input
+                          value={item.quantity}
+                          type="number"
+                          min={1}
+                          step={1}
+                          onChange={(e) => {
+                            this.updateQuantities(e, item.itemNameCamelCase);
                           }}
-                          className="fas fa-times-circle"
-                        ></i>
-                      </p>
-                      <img alt="" src={item.itemImage} />
-                      <div className={style.itemInfo}>
-                        <p className={style.productTitle}>{item.itemName}</p>
-                        <p>Category: {item.category}</p>
-                        <p>Language: {item.language}</p>
+                        />
+                        <p>
+                          <span className={style.itemInfoHeader}>
+                            Item Total:
+                          </span>
+                          <br />
+                          {"$" +
+                            roundToHundredth(
+                              item.quantity * item.unitPrice
+                            ).toLocaleString(undefined, {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}
+                        </p>
                       </div>
-                      <p>
-                        <span className={style.itemInfoHeader}>
-                          Unit Price:
-                        </span>
-                        <br />
-                        {" $" +
-                          item.unitPrice.toLocaleString(undefined, {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          })}
-                      </p>
-                      <input
-                        value={item.quantity}
-                        type="number"
-                        min={1}
-                        step={1}
-                        onChange={(e) => {
-                          this.updateQuantities(e, item.itemNameCamelCase);
-                        }}
-                      />
-                      <p>
-                        <span className={style.itemInfoHeader}>
-                          Item Total:
-                        </span>
-                        <br />
-                        {"$" +
-                          roundToHundredth(
-                            item.quantity * item.unitPrice
-                          ).toLocaleString(undefined, {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          })}
-                      </p>
-                    </div>
-                  )
-              )
-            )}
-          </div>
-          <div id={style.cartSummary}>
-            <header>Cart Summary</header>
-            <label htmlFor="">
-              <p>Do you have a promo code?</p>
-              <input
-                placeholder="Enter promo code"
-                disabled={this.state.discountRate > 0 || this.isCartEmpty()}
-                onChange={(e) => {
-                  this.getPromoCode(e);
-                }}
-                type="text"
-              />
-              {this.state.isInvalidPromo && <p>Invalid code</p>}
-              <button
-                disabled={this.state.discountRate > 0}
-                title="Apply promo code"
-                onClick={this.checkPromoCode}
-                id={style.applyPromo}
-              >
-                Apply
-              </button>
-            </label>
-            <p>
-              Cart Subtotal:
-              {" $" +
-                cartSubtotal.toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-            </p>
-            <p>Shipping & Handling: -</p>
-            <p>
-              Discount:
-              {" $" +
-                (cartSubtotal * this.state.discountRate).toLocaleString(
-                  undefined,
-                  {
+                    )
+                )
+              )}
+            </div>
+            <div id={style.cartSummary}>
+              <header>Cart Summary</header>
+              <label htmlFor="">
+                <p>Do you have a promo code?</p>
+                <input
+                  placeholder="Enter promo code"
+                  disabled={this.state.discountRate > 0 || this.isCartEmpty()}
+                  onChange={(e) => {
+                    this.getPromoCode(e);
+                  }}
+                  type="text"
+                />
+                {this.state.isInvalidPromo && <p>Invalid code</p>}
+                <button
+                  disabled={this.state.discountRate > 0}
+                  title="Apply promo code"
+                  onClick={this.checkPromoCode}
+                  id={style.applyPromo}
+                >
+                  Apply
+                </button>
+              </label>
+              <p>
+                Cart Subtotal:
+                {" $" +
+                  cartSubtotal.toLocaleString(undefined, {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
-                  }
-                )}
-            </p>
-            {this.state.discountRate > 0 && (
-              <p className={style.acceptedPromoCode}>
-                {this.state.acceptedPromoCode}
-                <i
-                  onClick={this.removeDiscount}
-                  title="Remove discount"
-                  className="fas fa-times"
-                ></i>
+                  })}
               </p>
-            )}
-            <p>
-              Cart Total:
-              {" $" +
-                cartTotal.toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-            </p>
-            <button
-              title="To Shipping"
-              disabled={this.isCartEmpty()}
-              onClick={(e) => {
-                toNextPage(e, "isCartHidden", "isShippingHidden");
-              }}
-              id="toNextPageBtn"
-            >
-              To Shipping
-            </button>
+              <p>Shipping & Handling: -</p>
+              <p>
+                Discount:
+                {" $" +
+                  (cartSubtotal * this.state.discountRate).toLocaleString(
+                    undefined,
+                    {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    }
+                  )}
+              </p>
+              {this.state.discountRate > 0 && (
+                <p className={style.acceptedPromoCode}>
+                  {this.state.acceptedPromoCode}
+                  <i
+                    onClick={this.removeDiscount}
+                    title="Remove discount"
+                    className="fas fa-times"
+                  ></i>
+                </p>
+              )}
+              <p>
+                Cart Total:
+                {" $" +
+                  cartTotal.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+              </p>
+              <button
+                title="To Shipping"
+                disabled={this.isCartEmpty()}
+                onClick={(e) => {
+                  toNextPage(e, "isCartHidden", "isShippingHidden");
+                }}
+                id="toNextPageBtn"
+              >
+                To Shipping
+              </button>
+            </div>
           </div>
         </div>
+        <Shipping
+          itemsInCart={this.state.itemsInCart}
+          discountRate={this.state.discountRate}
+          isShippingHidden={isShippingHidden}
+          toNextPage={toNextPage}
+        />
       </div>
     );
   }
