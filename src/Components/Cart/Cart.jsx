@@ -4,7 +4,6 @@ import { ITEMS_IN_CART } from "../../Constants/itemsAddedToCart.js";
 import { roundToHundredth } from "../../methods";
 
 class Cart extends React.Component {
-  // Should addedItems array be here, then mapped through in init of state below?
   constructor(props) {
     super(props);
     this.state = {
@@ -22,7 +21,7 @@ class Cart extends React.Component {
     };
   }
 
-  // Method to update item quantities onChange of quantity field:
+  // Method to update item quantities state values onChange of quantity field:
   updateQuantities = (e, itemNameCamelCase) => {
     let newQuantity = Number(e.target.value);
     let selectedItem = this.state.itemsInCart.filter((item) => {
@@ -42,7 +41,6 @@ class Cart extends React.Component {
   };
 
   // Method to delete item from cart:
-  // On initial loading, only render items in cart whose quantity is over 0. This method should change that, so, upon re-rendering, the item whose delete btn was clicked will not display.
   deleteItem = (e, itemNameCamelCase) => {
     let itemToDelete = this.state.itemsInCart.filter((item) => {
       return item.itemNameCamelCase === itemNameCamelCase;
@@ -52,6 +50,7 @@ class Cart extends React.Component {
 
     this.setState((prevState) => ({
       ...prevState,
+      // If passed-in itemToDeleteIndex is equal to the index of that item in this.state.itemsInCart array, set the previous state values of that object, but change the quantity to 0. If indices are not equal, then item does not change.
       itemsInCart: prevState.itemsInCart.map((item) =>
         this.state.itemsInCart.indexOf(item) === itemToDeleteIndex
           ? { ...item, quantity: 0 }
@@ -61,7 +60,6 @@ class Cart extends React.Component {
   };
 
   // Method that checks if all item.quantities are zero (no items in cart)
-  // If returns true, then display message saying there are no items in cart
   isCartEmpty = () => {
     let allItemQuantities = this.state.itemsInCart.map((item) => item.quantity);
     return allItemQuantities.some((quantity) => quantity > 0) ? false : true;
@@ -77,7 +75,7 @@ class Cart extends React.Component {
   };
 
   // Check input promo code to see if it matches an available promo, then apply appropriate discount:
-  checkPromoCode = (cartSubtotal) => {
+  checkPromoCode = () => {
     let inputPromoCode = this.state.inputPromoCode;
     if (this.state.promoCodes.includes(inputPromoCode)) {
       if (inputPromoCode === "ilikebeachballs") {
@@ -136,13 +134,11 @@ class Cart extends React.Component {
 
   render() {
     const { isCartHidden, toNextPage } = this.props;
-    // Calculate totals based on state values of unit prices & quantity
-    // Could put these calcs into function(s), which could be defined in separate doc then imported to all components that require them.
+    // Calculate totals based on current state values of unit prices & quantity:
     let cartSubtotal = this.state.itemsInCart.map(
       (item) => item.unitPrice * item.quantity
     );
     cartSubtotal = roundToHundredth(cartSubtotal.reduce((a, b) => a + b));
-    console.log(cartSubtotal);
 
     let cartTotal = roundToHundredth(
       cartSubtotal - cartSubtotal * this.state.discountRate
@@ -234,9 +230,7 @@ class Cart extends React.Component {
               <button
                 disabled={this.state.discountRate > 0}
                 title="Apply promo code"
-                onClick={() => {
-                  this.checkPromoCode(cartSubtotal);
-                }}
+                onClick={this.checkPromoCode}
                 id={style.applyPromo}
               >
                 Apply
