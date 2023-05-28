@@ -154,6 +154,9 @@ class Shipping extends React.Component {
                 type="text"
                 onBlur={this.validatePostalCode}
               />
+              {this.state.errors.postalCodeError && (
+                <p>{this.state.errors.postalCodeError}</p>
+              )}
             </label>
             <label>
               <header>City: </header>
