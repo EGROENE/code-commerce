@@ -172,8 +172,7 @@ class Login extends React.Component {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
-          nameError:
-            "Enter only alphanumeric characters & any hyphens b/t names",
+          nameError: "Enter only alphabetic characters & any hyphens b/t names",
         },
       }));
     }
