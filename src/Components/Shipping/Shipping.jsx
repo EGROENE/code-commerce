@@ -2,7 +2,34 @@ import React from "react";
 import style from "./Shipping.module.css";
 
 class Shipping extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      errors: { nameError: "", streetAddressError: "" },
+    };
+  }
+
   // Method to validate title, name, city:
+  validateName = (e) => {
+    let value = e.target.value;
+    if (/^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value)) {
+      console.log("valid ");
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          nameError: "",
+        },
+      }));
+    } else {
+      console.log("invalid");
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          nameError: "Enter only alphabetic characters",
+        },
+      }));
+    }
+  };
 
   // Method to validate street address:
 
@@ -19,15 +46,25 @@ class Shipping extends React.Component {
     // Add onBlur property (the field's validation method, which will be called onBlur) to each object:
     const titleNameAddressDataFields = [
       {
+        id: "title",
         label: "Recipient Title: ",
         placeholder: "Recipient title",
-        onBlur: "",
+        onBlur: this.validateName,
+        isRequired: false,
       },
-      { label: "Recipient Name: ", placeholder: "Recipient name", onBlur: "" },
       {
+        id: "name",
+        label: "Recipient Name: ",
+        placeholder: "Recipient name",
+        onBlur: this.validateName,
+        isRequired: true,
+      },
+      {
+        id: "streetAddress",
         label: "Street Address: ",
         placeholder: "Delivery address",
         onBlur: "",
+        isRequired: true,
       },
     ];
 
@@ -39,10 +76,14 @@ class Shipping extends React.Component {
             <label>
               <header>{field.label}</header>
               <input
+                required={field.isRequired}
                 placeholder={field.placeholder}
                 type="text"
                 onBlur={field.onBlur}
               />
+              {this.state.errors[`${field.id}Error`] && (
+                <p>{this.state.errors[`${field.id}Error`]}</p>
+              )}
             </label>
           ))}
           <div id={style.moreAddressDetails}>
