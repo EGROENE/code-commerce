@@ -5,7 +5,12 @@ class Shipping extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      errors: { nameError: "", streetAddressError: "" },
+      errors: {
+        titleError: "",
+        nameError: "",
+        streetAddressError: "",
+        postalCodeError: "",
+      },
     };
   }
 
@@ -34,8 +39,29 @@ class Shipping extends React.Component {
   // Method to validate street address:
 
   // Method to validate ZIP code:
+  validatePostalCode = (e) => {
+    let value = e.target.value;
+    if (/^[0-9]{5}$/i.test(value)) {
+      console.log("valid zip");
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          postalCodeError: "",
+        },
+      }));
+    } else {
+      console.log("invalid zip");
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          postalCodeError: "Enter first 5 digits of US postal code",
+        },
+      }));
+    }
+  };
 
   // Method to validate first 3 digits of US phone number:
+  // Get all area codes and loop thru to make sure what's entered is included in this array
 
   // Method to validate remaining 7 digits of US phone number:
 
@@ -72,7 +98,7 @@ class Shipping extends React.Component {
       <div hidden={isShippingHidden}>
         <header className="pageHeader">Shipping</header>
         <form id={style.shippingForm}>
-          {titleNameAddressDataFields.map((field) => (
+          {/* {titleNameAddressDataFields.map((field) => (
             <label>
               <header>{field.label}</header>
               <input
@@ -85,11 +111,49 @@ class Shipping extends React.Component {
                 <p>{this.state.errors[`${field.id}Error`]}</p>
               )}
             </label>
-          ))}
+          ))} */}
+          <div id={style.titleName}>
+            <label htmlFor="">
+              <header>Title: </header>
+              <select>
+                <option disabled selected>
+                  -- select --
+                </option>
+                <option value="Mr.">Mr.</option>
+                <option value="Mrs.">Mrs.</option>
+                <option value="Ms.">Ms.</option>
+                <option value="Dr.">Dr.</option>
+                <option value="Lord.">Lord</option>
+                <option value="Lady">Lady</option>
+              </select>
+            </label>
+            <label>
+              <div>
+                <header>Name: </header>
+                <input
+                  type="text"
+                  onBlur={this.validateName}
+                  placeholder="Enter recipient name"
+                  required
+                />
+              </div>
+              {this.state.errors.nameError && (
+                <p>{this.state.errors.nameError}</p>
+              )}
+            </label>
+          </div>
+          <label>
+            <header>Street address: </header>
+            <input type="text" required placeholder="Delivery address" />
+          </label>
           <div id={style.moreAddressDetails}>
             <label htmlFor="">
               <header>ZIP Code</header>
-              <input placeholder="5-digit ZIP code" type="text" />
+              <input
+                placeholder="5-digit ZIP code"
+                type="text"
+                onBlur={this.validatePostalCode}
+              />
             </label>
             <label>
               <header>City: </header>
