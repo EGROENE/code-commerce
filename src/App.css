@@ -137,6 +137,18 @@ input:disabled:hover {
   cursor: not-allowed
 }
 
+select {
+  font-family: var(--theme-font);
+  background: black;
+  color: var(--theme-color);
+  padding: 7px;
+  border: 1px solid var(--theme-color);
+}
+
+select:hover {
+  cursor: pointer;
+}
+
 form button,
 form a {
   border: none;
