@@ -128,15 +128,9 @@ class Shipping extends React.Component {
     }
   };
 
-  // Method to validate first 3 digits of US phone number:
-  // Get all area codes and loop thru to make sure what's entered is included in this array
-
-  // Method to validate remaining 7 digits of US phone number:
-
   // Method to validate phone number:
   validatePhoneNumber = (e) => {
     let value = e.target.value.trim();
-    let field = e.target.id;
     if (
       /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/i.test(value)
     ) {
@@ -147,18 +141,19 @@ class Shipping extends React.Component {
         },
         details: {
           ...prevState.details,
-          [field]: value,
+          phoneNumber: value.replace(/[^\d]/g, ""),
         },
       }));
     } else {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
-          phoneNumber: "Invalid phone number",
+          phoneNumber:
+            "Enter 10-digit number. You may use parentheses, hyphens, spaces, or periods to format it, or just type in full number.",
         },
         details: {
           ...prevState.details,
-          [field]: "",
+          phoneNumber: "",
         },
       }));
     }
