@@ -37,6 +37,25 @@ class Shipping extends React.Component {
   };
 
   // Method to validate street address:
+  validateStreetAddress = (e) => {
+    let value = e.target.value;
+    if (/[^A-Za-z0-9# -]+/i.test(value)) {
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          streetAddressError:
+            "Street address may only contain digits & English letters",
+        },
+      }));
+    } else {
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          streetAddressError: "",
+        },
+      }));
+    }
+  };
 
   // Method to validate ZIP code:
   validatePostalCode = (e) => {
@@ -144,7 +163,15 @@ class Shipping extends React.Component {
           </div>
           <label>
             <header>Street address: </header>
-            <input type="text" required placeholder="Delivery address" />
+            <input
+              type="text"
+              required
+              placeholder="Delivery address"
+              onBlur={this.validateStreetAddress}
+            />
+            {this.state.errors.streetAddressError && (
+              <p>{this.state.errors.streetAddressError}</p>
+            )}
           </label>
           <div id={style.moreAddressDetails}>
             <label htmlFor="">
