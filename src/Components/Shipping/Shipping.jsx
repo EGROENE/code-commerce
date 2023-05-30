@@ -11,6 +11,16 @@ class Shipping extends React.Component {
         streetAddress: "",
         postalCode: "",
         city: "",
+        phoneNumber: "",
+      },
+      details: {
+        title: "",
+        name: "",
+        streetAddress: "",
+        postalCode: "",
+        city: "",
+        stateOrTerritory: "",
+        phoneNumber: "",
       },
     };
   }
@@ -85,6 +95,28 @@ class Shipping extends React.Component {
 
   // Method to validate remaining 7 digits of US phone number:
 
+  // Method to validate phone number:
+  validatePhoneNumber = (e) => {
+    let value = e.target.value.trim();
+    if (
+      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/i.test(value)
+    ) {
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          phoneNumber: "",
+        },
+      }));
+    } else {
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          phoneNumber: "Invalid phone number",
+        },
+      }));
+    }
+  };
+
   render() {
     const { isShippingHidden, toNextPage, itemsInCart, discountRate } =
       this.props;
@@ -135,7 +167,7 @@ class Shipping extends React.Component {
           <div id={style.titleName}>
             <label htmlFor="">
               <header>Title: </header>
-              <select>
+              <select id="title">
                 <option disabled selected>
                   -- select --
                 </option>
@@ -151,6 +183,7 @@ class Shipping extends React.Component {
               <div>
                 <header>Name: </header>
                 <input
+                  id="name"
                   type="text"
                   onBlur={(e) => {
                     this.validateNameCity(e, "name");
@@ -165,6 +198,7 @@ class Shipping extends React.Component {
           <label>
             <header>Street address: </header>
             <input
+              id="streetAddress"
               type="text"
               required
               placeholder="Delivery address"
@@ -178,6 +212,7 @@ class Shipping extends React.Component {
             <label htmlFor="">
               <header>ZIP Code</header>
               <input
+                id="postalCode"
                 placeholder="5-digit ZIP code"
                 type="text"
                 onBlur={this.validatePostalCode}
@@ -190,6 +225,7 @@ class Shipping extends React.Component {
             <label>
               <header>City: </header>
               <input
+                id="city"
                 placeholder="Enter city"
                 type="text"
                 onBlur={(e) => {
@@ -201,7 +237,7 @@ class Shipping extends React.Component {
             </label>
             <label>
               <header>State: </header>
-              <select>
+              <select id="stateOrTerritory">
                 <option disabled selected>
                   -- territory or state --
                 </option>
@@ -270,10 +306,15 @@ class Shipping extends React.Component {
           </div>
           <label>
             <header>Phone: </header>
-            <div className={style.phoneNumber}>
-              <input placeholder="123" type="text" required />
-              <input placeholder="4567890" type="text" required />
-            </div>
+            <input
+              id="phoneNumber"
+              placeholder="Enter US phone number"
+              type="text"
+              onBlur={this.validatePhoneNumber}
+            />
+            {this.state.errors.phoneNumber !== "" && (
+              <p>{this.state.errors.phoneNumber}</p>
+            )}
           </label>
         </form>
       </div>
