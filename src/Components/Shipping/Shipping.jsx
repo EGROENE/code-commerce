@@ -15,7 +15,7 @@ class Shipping extends React.Component {
   }
 
   // Method to validate title, name, city:
-  validateName = (e) => {
+  validateNameCity = (e) => {
     let value = e.target.value;
     if (/^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value)) {
       console.log("valid ");
@@ -94,14 +94,14 @@ class Shipping extends React.Component {
         id: "title",
         label: "Recipient Title: ",
         placeholder: "Recipient title",
-        onBlur: this.validateName,
+        onBlur: this.validateNameCity,
         isRequired: false,
       },
       {
         id: "name",
         label: "Recipient Name: ",
         placeholder: "Recipient name",
-        onBlur: this.validateName,
+        onBlur: this.validateNameCity,
         isRequired: true,
       },
       {
@@ -151,7 +151,7 @@ class Shipping extends React.Component {
                 <header>Name: </header>
                 <input
                   type="text"
-                  onBlur={this.validateName}
+                  onBlur={this.validateNameCity}
                   placeholder="Enter recipient name"
                   required
                 />
@@ -180,6 +180,7 @@ class Shipping extends React.Component {
                 placeholder="5-digit ZIP code"
                 type="text"
                 onBlur={this.validatePostalCode}
+                required
               />
               {this.state.errors.postalCodeError && (
                 <p>{this.state.errors.postalCodeError}</p>
@@ -187,7 +188,12 @@ class Shipping extends React.Component {
             </label>
             <label>
               <header>City: </header>
-              <input placeholder="Enter city" type="text" />
+              <input
+                placeholder="Enter city"
+                type="text"
+                onBlur={this.validateNameCity}
+                required
+              />
             </label>
             <label>
               <header>State: </header>
@@ -261,8 +267,8 @@ class Shipping extends React.Component {
           <label>
             <header>Phone: </header>
             <div className={style.phoneNumber}>
-              <input placeholder="123" type="text" />
-              <input placeholder="4567890" type="text" />
+              <input placeholder="123" type="text" required />
+              <input placeholder="4567890" type="text" required />
             </div>
           </label>
         </form>
