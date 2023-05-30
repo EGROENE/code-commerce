@@ -25,6 +25,18 @@ class Shipping extends React.Component {
     };
   }
 
+  // Method to set state values of dropdown fields (initially, at least, 'title' & 'state/territory'):
+  setStateValuesOfDropdownFields = (e) => {
+    let value = e.target.value;
+    let field = e.target.id;
+    this.setState((prevState) => ({
+      details: {
+        ...prevState.details,
+        [field]: value,
+      },
+    }));
+  };
+
   // Method to validate title, name, city:
   validateNameCity = (e, field) => {
     let value = e.target.value.trim();
@@ -35,6 +47,10 @@ class Shipping extends React.Component {
           ...prevState.errors,
           [field]: "",
         },
+        details: {
+          ...prevState.details,
+          [field]: value,
+        },
       }));
     } else {
       console.log("invalid");
@@ -43,6 +59,10 @@ class Shipping extends React.Component {
           ...prevState.errors,
           [field]: "Enter only alphabetic characters",
         },
+        details: {
+          ...prevState.details,
+          [field]: "",
+        },
       }));
     }
   };
@@ -50,12 +70,17 @@ class Shipping extends React.Component {
   // Method to validate street address:
   validateStreetAddress = (e) => {
     let value = e.target.value.trim().trim();
+    let field = e.target.id;
     if (/[^A-Za-z0-9# -]+/i.test(value)) {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
           streetAddress:
             "Street address may only contain digits & English letters",
+        },
+        details: {
+          ...prevState.details,
+          [field]: value,
         },
       }));
     } else {
@@ -64,6 +89,10 @@ class Shipping extends React.Component {
           ...prevState.errors,
           streetAddress: "",
         },
+        details: {
+          ...prevState.details,
+          [field]: "",
+        },
       }));
     }
   };
@@ -71,12 +100,17 @@ class Shipping extends React.Component {
   // Method to validate ZIP code:
   validatePostalCode = (e) => {
     let value = e.target.value.trim();
+    let field = e.target.id;
     if (/^[0-9]{5}$/i.test(value)) {
       console.log("valid zip");
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
           postalCode: "",
+        },
+        details: {
+          ...prevState.details,
+          [field]: value,
         },
       }));
     } else {
@@ -85,6 +119,10 @@ class Shipping extends React.Component {
         errors: {
           ...prevState.errors,
           postalCode: "Enter first 5 digits of US postal code",
+        },
+        details: {
+          ...prevState.details,
+          [field]: "",
         },
       }));
     }
@@ -98,6 +136,7 @@ class Shipping extends React.Component {
   // Method to validate phone number:
   validatePhoneNumber = (e) => {
     let value = e.target.value.trim();
+    let field = e.target.id;
     if (
       /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/i.test(value)
     ) {
@@ -106,12 +145,20 @@ class Shipping extends React.Component {
           ...prevState.errors,
           phoneNumber: "",
         },
+        details: {
+          ...prevState.details,
+          [field]: value,
+        },
       }));
     } else {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
           phoneNumber: "Invalid phone number",
+        },
+        details: {
+          ...prevState.details,
+          [field]: "",
         },
       }));
     }
@@ -167,7 +214,7 @@ class Shipping extends React.Component {
           <div id={style.titleName}>
             <label htmlFor="">
               <header>Title: </header>
-              <select id="title">
+              <select id="title" onChange={this.setStateValuesOfDropdownFields}>
                 <option disabled selected>
                   -- select --
                 </option>
@@ -237,7 +284,10 @@ class Shipping extends React.Component {
             </label>
             <label>
               <header>State: </header>
-              <select id="stateOrTerritory">
+              <select
+                id="stateOrTerritory"
+                onChange={this.setStateValuesOfDropdownFields}
+              >
                 <option disabled selected>
                   -- territory or state --
                 </option>
