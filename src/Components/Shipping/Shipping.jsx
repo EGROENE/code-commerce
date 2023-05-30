@@ -16,7 +16,7 @@ class Shipping extends React.Component {
 
   // Method to validate title, name, city:
   validateNameCity = (e) => {
-    let value = e.target.value;
+    let value = e.target.value.trim();
     if (/^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value)) {
       console.log("valid ");
       this.setState((prevState) => ({
@@ -38,7 +38,7 @@ class Shipping extends React.Component {
 
   // Method to validate street address:
   validateStreetAddress = (e) => {
-    let value = e.target.value;
+    let value = e.target.value.trim().trim();
     if (/[^A-Za-z0-9# -]+/i.test(value)) {
       this.setState((prevState) => ({
         errors: {
@@ -59,7 +59,7 @@ class Shipping extends React.Component {
 
   // Method to validate ZIP code:
   validatePostalCode = (e) => {
-    let value = e.target.value;
+    let value = e.target.value.trim();
     if (/^[0-9]{5}$/i.test(value)) {
       console.log("valid zip");
       this.setState((prevState) => ({
