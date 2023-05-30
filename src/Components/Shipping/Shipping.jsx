@@ -6,23 +6,24 @@ class Shipping extends React.Component {
     super(props);
     this.state = {
       errors: {
-        titleError: "",
-        nameError: "",
-        streetAddressError: "",
-        postalCodeError: "",
+        title: "",
+        name: "",
+        streetAddress: "",
+        postalCode: "",
+        city: "",
       },
     };
   }
 
   // Method to validate title, name, city:
-  validateNameCity = (e) => {
+  validateNameCity = (e, field) => {
     let value = e.target.value.trim();
     if (/^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value)) {
       console.log("valid ");
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
-          nameError: "",
+          [field]: "",
         },
       }));
     } else {
@@ -30,7 +31,7 @@ class Shipping extends React.Component {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
-          nameError: "Enter only alphabetic characters",
+          [field]: "Enter only alphabetic characters",
         },
       }));
     }
@@ -43,7 +44,7 @@ class Shipping extends React.Component {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
-          streetAddressError:
+          streetAddress:
             "Street address may only contain digits & English letters",
         },
       }));
@@ -51,7 +52,7 @@ class Shipping extends React.Component {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
-          streetAddressError: "",
+          streetAddress: "",
         },
       }));
     }
@@ -65,7 +66,7 @@ class Shipping extends React.Component {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
-          postalCodeError: "",
+          postalCode: "",
         },
       }));
     } else {
@@ -73,7 +74,7 @@ class Shipping extends React.Component {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
-          postalCodeError: "Enter first 5 digits of US postal code",
+          postalCode: "Enter first 5 digits of US postal code",
         },
       }));
     }
@@ -151,14 +152,14 @@ class Shipping extends React.Component {
                 <header>Name: </header>
                 <input
                   type="text"
-                  onBlur={this.validateNameCity}
+                  onBlur={(e) => {
+                    this.validateNameCity(e, "name");
+                  }}
                   placeholder="Enter recipient name"
                   required
                 />
               </div>
-              {this.state.errors.nameError && (
-                <p>{this.state.errors.nameError}</p>
-              )}
+              {this.state.errors.name !== "" && <p>{this.state.errors.name}</p>}
             </label>
           </div>
           <label>
@@ -169,8 +170,8 @@ class Shipping extends React.Component {
               placeholder="Delivery address"
               onBlur={this.validateStreetAddress}
             />
-            {this.state.errors.streetAddressError && (
-              <p>{this.state.errors.streetAddressError}</p>
+            {this.state.errors.streetAddress !== "" && (
+              <p>{this.state.errors.streetAddress}</p>
             )}
           </label>
           <div id={style.moreAddressDetails}>
@@ -182,8 +183,8 @@ class Shipping extends React.Component {
                 onBlur={this.validatePostalCode}
                 required
               />
-              {this.state.errors.postalCodeError && (
-                <p>{this.state.errors.postalCodeError}</p>
+              {this.state.errors.postalCode !== "" && (
+                <p>{this.state.errors.postalCode}</p>
               )}
             </label>
             <label>
@@ -191,9 +192,12 @@ class Shipping extends React.Component {
               <input
                 placeholder="Enter city"
                 type="text"
-                onBlur={this.validateNameCity}
+                onBlur={(e) => {
+                  this.validateNameCity(e, "city");
+                }}
                 required
               />
+              {this.state.errors.city !== "" && <p>{this.state.errors.city}</p>}
             </label>
             <label>
               <header>State: </header>
