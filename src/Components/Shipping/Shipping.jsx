@@ -22,7 +22,6 @@ class Shipping extends React.Component {
         stateOrTerritory: "",
         phoneNumber: "",
       },
-      isExpeditedDeliverySelected: true,
       shippingAndHandling: 50,
     };
   }
@@ -164,13 +163,11 @@ class Shipping extends React.Component {
     if (e.target.id === "expeditedDelivery") {
       this.setState((prevState) => ({
         ...prevState,
-        isExpeditedDeliverySelected: true,
         shippingAndHandling: 50,
       }));
     } else {
       this.setState((prevState) => ({
         ...prevState,
-        isExpeditedDeliverySelected: false,
         shippingAndHandling: 10,
       }));
     }
@@ -387,7 +384,7 @@ class Shipping extends React.Component {
               id="expeditedDelivery"
               name="deliveryOption"
               type="radio"
-              checked={this.state.isExpeditedDeliverySelected}
+              checked={this.state.shippingAndHandling === 50}
             />
             <p>Expedited (less than 3 hours): $50</p>
           </label>
@@ -397,7 +394,7 @@ class Shipping extends React.Component {
               id="standardDelivery"
               name="deliveryOption"
               type="radio"
-              checked={!this.state.isExpeditedDeliverySelected}
+              checked={this.state.shippingAndHandling === 10}
             />
             <p>Standard (within 3 days): $10</p>
           </label>
