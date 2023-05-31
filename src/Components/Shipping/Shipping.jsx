@@ -69,8 +69,7 @@ class Shipping extends React.Component {
 
   // Method to validate street address:
   validateStreetAddress = (e) => {
-    let value = e.target.value.trim().trim();
-    let field = e.target.id;
+    let value = e.target.value.trim();
     if (/[^A-Za-z0-9# -]+/i.test(value)) {
       this.setState((prevState) => ({
         errors: {
@@ -80,7 +79,7 @@ class Shipping extends React.Component {
         },
         details: {
           ...prevState.details,
-          [field]: value,
+          streetAddress: "",
         },
       }));
     } else {
@@ -91,7 +90,7 @@ class Shipping extends React.Component {
         },
         details: {
           ...prevState.details,
-          [field]: "",
+          streetAddress: value,
         },
       }));
     }
@@ -349,7 +348,7 @@ class Shipping extends React.Component {
               </select>
             </label>
           </div>
-          <label>
+          <label id={style.phoneField}>
             <header>Phone: </header>
             <input
               id="phoneNumber"
