@@ -101,7 +101,6 @@ class Shipping extends React.Component {
     let value = e.target.value.trim();
     let field = e.target.id;
     if (/^[0-9]{5}$/i.test(value)) {
-      console.log("valid zip");
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -113,11 +112,10 @@ class Shipping extends React.Component {
         },
       }));
     } else {
-      console.log("invalid zip");
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
-          postalCode: "Enter first 5 digits of US postal code",
+          postalCode: "5-digit US postal code",
         },
         details: {
           ...prevState.details,
