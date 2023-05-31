@@ -22,6 +22,7 @@ class Shipping extends React.Component {
         stateOrTerritory: "",
         phoneNumber: "",
       },
+      isExpeditedDeliverySelected: true,
     };
   }
 
@@ -214,7 +215,7 @@ class Shipping extends React.Component {
                 <option value="Mrs.">Mrs.</option>
                 <option value="Ms.">Ms.</option>
                 <option value="Dr.">Dr.</option>
-                <option value="Lord.">Lord</option>
+                <option value="Lord">Lord</option>
                 <option value="Lady">Lady</option>
               </select>
             </label>
@@ -359,6 +360,25 @@ class Shipping extends React.Component {
             )}
           </label>
         </form>
+        <div id={style.deliveryOptions}>
+          <header>Delivery Options</header>
+          <label>
+            <input
+              name="deliveryOption"
+              type="radio"
+              checked={this.state.isExpeditedDeliverySelected}
+            />
+            <p>Expedited (less than 3 hours): $50</p>
+          </label>
+          <label>
+            <input
+              name="deliveryOption"
+              type="radio"
+              checked={!this.state.isExpeditedDeliverySelected}
+            />
+            <p>Standard (within 3 days): $10</p>
+          </label>
+        </div>
       </div>
     );
   }
