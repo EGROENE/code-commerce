@@ -1,0 +1,51 @@
+#shippingForm {
+    display: flex;
+    flex-direction: column; 
+    padding: 2rem;
+    width: unset;
+    max-width: unset;
+    display: flex;
+    flex-direction: column;
+    background: unset;
+    padding: 2rem;
+    backdrop-filter: unset;
+    box-shadow: unset;
+    border: none;
+    border-radius: none;
+}
+
+#titleName {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#titleName label {
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+}
+
+#titleName label div {
+    display: flex;
+    margin-right: var(--size-12);
+}
+
+#moreAddressDetails {
+    display: flex;
+    align-items: flex-start;
+}
+
+#phoneField {
+    width: 31%;
+}
+
+.phoneNumber {
+    display: flex;
+    width: 34%
+}
+
+.phoneNumber input:first-child {
+    width: 4rem;
+    margin-right: 2rem;
+}
