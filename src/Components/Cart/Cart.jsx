@@ -24,7 +24,7 @@ class Cart extends React.Component {
 
   // Method to update item quantities state values onChange of quantity field:
   updateQuantities = (e, itemNameCamelCase) => {
-    let newQuantity = Number(e.target.value);
+    let newQuantity = Number(e.target.value.trim());
     let selectedItem = this.state.itemsInCart.filter((item) => {
       return item.itemNameCamelCase === itemNameCamelCase;
     })[0];
@@ -68,7 +68,7 @@ class Cart extends React.Component {
 
   // Set state value inputPromoCode to what user inputs:
   getPromoCode = (e) => {
-    let inputCode = e.target.value.trim().toLowerCase();
+    let inputCode = e.target.value.trim().trim().toLowerCase();
     this.setState((prevState) => ({
       ...prevState,
       inputPromoCode: inputCode,

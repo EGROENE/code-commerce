@@ -78,7 +78,7 @@ class Login extends React.Component {
 
   // Validate email address:
   validateEmail = (e) => {
-    let value = e.target.value;
+    let value = e.target.value.trim();
     // If value of email field matches regex:
     if (
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
@@ -107,7 +107,7 @@ class Login extends React.Component {
 
   // Validate password:
   validatePassword = (e) => {
-    let value = e.target.value;
+    let value = e.target.value.trim();
     if (
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/.test(
         value.trim()
@@ -136,7 +136,7 @@ class Login extends React.Component {
 
   // Validate password confirmation:
   validatePasswordConfirmation = (e) => {
-    let value = e.target.value;
+    let value = e.target.value.trim();
     if (this.state.password !== value) {
       console.log("no match");
       this.setState((prevState) => ({
@@ -158,7 +158,7 @@ class Login extends React.Component {
 
   // Validate name:
   validateNames = (e) => {
-    let value = e.target.value;
+    let value = e.target.value.trim();
     if (/^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value)) {
       console.log("valid name");
       this.setState((prevState) => ({
@@ -180,7 +180,7 @@ class Login extends React.Component {
 
   // Validate postal code:
   validatePostalCode = (e) => {
-    let value = e.target.value;
+    let value = e.target.value.trim();
     if (/^[0-9]{5}$/i.test(value)) {
       console.log("valid zip");
       this.setState((prevState) => ({
