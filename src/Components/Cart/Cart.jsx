@@ -2,7 +2,7 @@ import React from "react";
 import style from "./Cart.module.css";
 import { ITEMS_IN_CART } from "../../Constants/itemsAddedToCart.js";
 import { roundToHundredth } from "../../methods";
-import Shipping from "../Shipping/Shipping.jsx";
+import Shipping from "../Shipping/Shipping";
 
 class Cart extends React.Component {
   constructor(props) {
