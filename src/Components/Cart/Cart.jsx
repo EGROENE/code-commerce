@@ -9,6 +9,7 @@ class Cart extends React.Component {
     super(props);
     this.state = {
       itemsInCart: ITEMS_IN_CART,
+      numberOfItemsInCart: ITEMS_IN_CART.length,
       promoCodes: [
         "ilikebeachballs",
         "codeislyfe",
@@ -49,6 +50,8 @@ class Cart extends React.Component {
 
     let itemToDeleteIndex = this.state.itemsInCart.indexOf(itemToDelete);
 
+    let numberOfItemsInCart = this.state.numberOfItemsInCart - 1;
+
     this.setState((prevState) => ({
       ...prevState,
       // If passed-in itemToDeleteIndex is equal to the index of that item in this.state.itemsInCart array, set the previous state values of that object, but change the quantity to 0. If indices are not equal, then item does not change.
@@ -57,6 +60,7 @@ class Cart extends React.Component {
           ? { ...item, quantity: 0 }
           : item
       ),
+      numberOfItemsInCart: numberOfItemsInCart,
     }));
   };
 
@@ -297,6 +301,7 @@ class Cart extends React.Component {
         </div>
         <Shipping
           itemsInCart={this.state.itemsInCart}
+          numberOfItemsInCart={this.state.numberOfItemsInCart}
           discountRate={this.state.discountRate}
           isShippingHidden={isShippingHidden}
           toNextPage={toNextPage}
