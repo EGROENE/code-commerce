@@ -23,6 +23,7 @@ class Shipping extends React.Component {
         phoneNumber: "",
       },
       isExpeditedDeliverySelected: true,
+      shippingAndHandling: 50,
     };
   }
 
@@ -153,6 +154,24 @@ class Shipping extends React.Component {
           ...prevState.details,
           phoneNumber: "",
         },
+      }));
+    }
+  };
+
+  // Method to update shipping & handling state value:
+  // Should also toggle state value isExpeditedDeliverySelected
+  handleDeliveryOptionSelection = (e) => {
+    if (e.target.id === "expeditedDelivery") {
+      this.setState((prevState) => ({
+        ...prevState,
+        isExpeditedDeliverySelected: true,
+        shippingAndHandling: 50,
+      }));
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        isExpeditedDeliverySelected: false,
+        shippingAndHandling: 10,
       }));
     }
   };
@@ -364,6 +383,8 @@ class Shipping extends React.Component {
           <header>Delivery Options</header>
           <label>
             <input
+              onChange={this.handleDeliveryOptionSelection}
+              id="expeditedDelivery"
               name="deliveryOption"
               type="radio"
               checked={this.state.isExpeditedDeliverySelected}
@@ -372,6 +393,8 @@ class Shipping extends React.Component {
           </label>
           <label>
             <input
+              onChange={this.handleDeliveryOptionSelection}
+              id="standardDelivery"
               name="deliveryOption"
               type="radio"
               checked={!this.state.isExpeditedDeliverySelected}
