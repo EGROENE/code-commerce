@@ -1,23 +1,28 @@
 #shippingForm {
     display: flex;
-    flex-direction: column; 
-    padding: 2rem;
+    flex-direction: column;
     width: unset;
     max-width: unset;
     display: flex;
     flex-direction: column;
     background: unset;
-    padding: 2rem;
+    padding: 0;
+    width: 85vw;
     backdrop-filter: unset;
     box-shadow: unset;
     border: none;
     border-radius: none;
 }
 
+#shippingForm label {
+    margin: 0.5rem 0;
+}
+
 #titleName {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
+    width: 53%;
 }
 
 #titleName label {
@@ -34,6 +39,7 @@
 #moreAddressDetails {
     display: flex;
     align-items: flex-start;
+    justify-content: space-between;
 }
 
 #phoneField {
@@ -48,4 +54,18 @@
 .phoneNumber input:first-child {
     width: 4rem;
     margin-right: 2rem;
+}
+
+#deliveryOptions {
+    text-align: left;
+}
+
+#deliveryOptions label {
+    display: flex;
+    margin: 0;
+}
+
+#deliveryOptions input {
+    width: unset;
+    max-width: unset;
 }
