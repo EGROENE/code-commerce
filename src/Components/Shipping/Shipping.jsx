@@ -1,5 +1,6 @@
 import React from "react";
 import style from "./Shipping.module.css";
+import { roundToHundredth } from "../../methods";
 
 class Shipping extends React.Component {
   constructor(props) {
@@ -182,6 +183,16 @@ class Shipping extends React.Component {
       discountRate,
     } = this.props;
 
+    // Calculate totals based on current state values of unit prices & quantity:
+    let cartSubtotal = itemsInCart.map(
+      (item) => item.unitPrice * item.quantity
+    );
+    cartSubtotal = roundToHundredth(cartSubtotal.reduce((a, b) => a + b));
+
+    let discount = roundToHundredth(cartSubtotal * discountRate);
+
+    let cartTotal = cartSubtotal - discount + this.state.shippingAndHandling;
+
     // Add onBlur property (the field's validation method, which will be called onBlur) to each object:
     const titleNameAddressDataFields = [
       {
@@ -210,9 +221,10 @@ class Shipping extends React.Component {
     return (
       <div hidden={isShippingHidden}>
         <header className="pageHeader">Shipping</header>
-        <div>
-          <form id={style.shippingForm}>
-            {/* {titleNameAddressDataFields.map((field) => (
+        <div id={style.shippingPageMainItems}>
+          <div>
+            <form id="shippingForm" className={style.shippingForm}>
+              {/* {titleNameAddressDataFields.map((field) => (
             <label>
               <header>{field.label}</header>
               <input
@@ -226,202 +238,274 @@ class Shipping extends React.Component {
               )}
             </label>
           ))} */}
-            <div id={style.titleName}>
-              <label htmlFor="">
-                <header>Title: </header>
-                <select
-                  id="title"
-                  onChange={this.setStateValuesOfDropdownFields}
-                >
-                  <option disabled selected>
-                    -- select --
-                  </option>
-                  <option value="Mr.">Mr.</option>
-                  <option value="Mrs.">Mrs.</option>
-                  <option value="Ms.">Ms.</option>
-                  <option value="Dr.">Dr.</option>
-                  <option value="Lord">Lord</option>
-                  <option value="Lady">Lady</option>
-                </select>
-              </label>
+              <div id={style.titleName}>
+                <label htmlFor="">
+                  <header>Title: </header>
+                  <select
+                    id="title"
+                    onChange={this.setStateValuesOfDropdownFields}
+                  >
+                    <option disabled selected>
+                      -- select --
+                    </option>
+                    <option value="Mr.">Mr.</option>
+                    <option value="Mrs.">Mrs.</option>
+                    <option value="Ms.">Ms.</option>
+                    <option value="Dr.">Dr.</option>
+                    <option value="Lord">Lord</option>
+                    <option value="Lady">Lady</option>
+                  </select>
+                </label>
+                <label>
+                  <div>
+                    <header>Name: </header>
+                    <input
+                      id="name"
+                      type="text"
+                      onBlur={(e) => {
+                        this.validateNameCity(e, "name");
+                      }}
+                      placeholder="Enter recipient name"
+                      required
+                    />
+                  </div>
+                  {this.state.errors.name !== "" && (
+                    <p>{this.state.errors.name}</p>
+                  )}
+                </label>
+              </div>
               <label>
-                <div>
-                  <header>Name: </header>
+                <header>Street address: </header>
+                <input
+                  id="streetAddress"
+                  type="text"
+                  required
+                  placeholder="Delivery address"
+                  onBlur={this.validateStreetAddress}
+                />
+                {this.state.errors.streetAddress !== "" && (
+                  <p>{this.state.errors.streetAddress}</p>
+                )}
+              </label>
+              <div id={style.moreAddressDetails}>
+                <label htmlFor="">
+                  <header>ZIP Code</header>
                   <input
-                    id="name"
+                    id="postalCode"
+                    placeholder="5-digit ZIP code"
                     type="text"
-                    onBlur={(e) => {
-                      this.validateNameCity(e, "name");
-                    }}
-                    placeholder="Enter recipient name"
+                    onBlur={this.validatePostalCode}
                     required
                   />
-                </div>
-                {this.state.errors.name !== "" && (
-                  <p>{this.state.errors.name}</p>
+                  {this.state.errors.postalCode !== "" && (
+                    <p>{this.state.errors.postalCode}</p>
+                  )}
+                </label>
+                <label>
+                  <header>City: </header>
+                  <input
+                    id="city"
+                    placeholder="Enter city"
+                    type="text"
+                    onBlur={(e) => {
+                      this.validateNameCity(e, "city");
+                    }}
+                    required
+                  />
+                  {this.state.errors.city !== "" && (
+                    <p>{this.state.errors.city}</p>
+                  )}
+                </label>
+                <label>
+                  <header>State: </header>
+                  <select
+                    id="stateOrTerritory"
+                    onChange={this.setStateValuesOfDropdownFields}
+                    required
+                  >
+                    <option disabled selected>
+                      -- territory or state --
+                    </option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AS">American Samoa</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="AA">Armed Forces Americas</option>
+                    <option value="AP">Armed Forces Pacific</option>
+                    <option value="AE">Armed Forces Others</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District Of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="GU">Guam</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="MP">Northern Mariana Islands</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="PR">Puerto Rico</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UM">
+                      United States Minor Outlying Islands
+                    </option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA">Virginia</option>
+                    <option value="VI">Virgin Islands</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                  </select>
+                </label>
+              </div>
+              <label id={style.phoneField}>
+                <header>Phone: </header>
+                <input
+                  id="phoneNumber"
+                  placeholder="Enter US phone number"
+                  type="text"
+                  onBlur={this.validatePhoneNumber}
+                />
+                {this.state.errors.phoneNumber !== "" && (
+                  <p>{this.state.errors.phoneNumber}</p>
                 )}
               </label>
-            </div>
-            <label>
-              <header>Street address: </header>
-              <input
-                id="streetAddress"
-                type="text"
-                required
-                placeholder="Delivery address"
-                onBlur={this.validateStreetAddress}
-              />
-              {this.state.errors.streetAddress !== "" && (
-                <p>{this.state.errors.streetAddress}</p>
-              )}
-            </label>
-            <div id={style.moreAddressDetails}>
-              <label htmlFor="">
-                <header>ZIP Code</header>
+            </form>
+            <div id={style.deliveryOptions}>
+              <header>Delivery Options</header>
+              <label>
                 <input
-                  id="postalCode"
-                  placeholder="5-digit ZIP code"
-                  type="text"
-                  onBlur={this.validatePostalCode}
-                  required
+                  onChange={this.handleDeliveryOptionSelection}
+                  id="expeditedDelivery"
+                  name="deliveryOption"
+                  type="radio"
+                  checked={this.state.shippingAndHandling === 50}
                 />
-                {this.state.errors.postalCode !== "" && (
-                  <p>{this.state.errors.postalCode}</p>
-                )}
+                <p>Expedited (less than 3 hours): $50</p>
               </label>
               <label>
-                <header>City: </header>
                 <input
-                  id="city"
-                  placeholder="Enter city"
-                  type="text"
-                  onBlur={(e) => {
-                    this.validateNameCity(e, "city");
-                  }}
-                  required
+                  onChange={this.handleDeliveryOptionSelection}
+                  id="standardDelivery"
+                  name="deliveryOption"
+                  type="radio"
+                  checked={this.state.shippingAndHandling === 10}
                 />
-                {this.state.errors.city !== "" && (
-                  <p>{this.state.errors.city}</p>
-                )}
-              </label>
-              <label>
-                <header>State: </header>
-                <select
-                  id="stateOrTerritory"
-                  onChange={this.setStateValuesOfDropdownFields}
-                >
-                  <option disabled selected>
-                    -- territory or state --
-                  </option>
-                  <option value="AL">Alabama</option>
-                  <option value="AK">Alaska</option>
-                  <option value="AS">American Samoa</option>
-                  <option value="AZ">Arizona</option>
-                  <option value="AR">Arkansas</option>
-                  <option value="AA">Armed Forces Americas</option>
-                  <option value="AP">Armed Forces Pacific</option>
-                  <option value="AE">Armed Forces Others</option>
-                  <option value="CA">California</option>
-                  <option value="CO">Colorado</option>
-                  <option value="CT">Connecticut</option>
-                  <option value="DE">Delaware</option>
-                  <option value="DC">District Of Columbia</option>
-                  <option value="FL">Florida</option>
-                  <option value="GA">Georgia</option>
-                  <option value="GU">Guam</option>
-                  <option value="HI">Hawaii</option>
-                  <option value="ID">Idaho</option>
-                  <option value="IL">Illinois</option>
-                  <option value="IN">Indiana</option>
-                  <option value="IA">Iowa</option>
-                  <option value="KS">Kansas</option>
-                  <option value="KY">Kentucky</option>
-                  <option value="LA">Louisiana</option>
-                  <option value="ME">Maine</option>
-                  <option value="MD">Maryland</option>
-                  <option value="MA">Massachusetts</option>
-                  <option value="MI">Michigan</option>
-                  <option value="MN">Minnesota</option>
-                  <option value="MS">Mississippi</option>
-                  <option value="MO">Missouri</option>
-                  <option value="MT">Montana</option>
-                  <option value="MP">Northern Mariana Islands</option>
-                  <option value="NE">Nebraska</option>
-                  <option value="NV">Nevada</option>
-                  <option value="NH">New Hampshire</option>
-                  <option value="NJ">New Jersey</option>
-                  <option value="NM">New Mexico</option>
-                  <option value="NY">New York</option>
-                  <option value="NC">North Carolina</option>
-                  <option value="ND">North Dakota</option>
-                  <option value="OH">Ohio</option>
-                  <option value="OK">Oklahoma</option>
-                  <option value="OR">Oregon</option>
-                  <option value="PA">Pennsylvania</option>
-                  <option value="PR">Puerto Rico</option>
-                  <option value="RI">Rhode Island</option>
-                  <option value="SC">South Carolina</option>
-                  <option value="SD">South Dakota</option>
-                  <option value="TN">Tennessee</option>
-                  <option value="TX">Texas</option>
-                  <option value="UM">
-                    United States Minor Outlying Islands
-                  </option>
-                  <option value="UT">Utah</option>
-                  <option value="VT">Vermont</option>
-                  <option value="VA">Virginia</option>
-                  <option value="VI">Virgin Islands</option>
-                  <option value="WA">Washington</option>
-                  <option value="WV">West Virginia</option>
-                  <option value="WI">Wisconsin</option>
-                  <option value="WY">Wyoming</option>
-                </select>
+                <p>Standard (within 3 days): $10</p>
               </label>
             </div>
-            <label id={style.phoneField}>
-              <header>Phone: </header>
-              <input
-                id="phoneNumber"
-                placeholder="Enter US phone number"
-                type="text"
-                onBlur={this.validatePhoneNumber}
-              />
-              {this.state.errors.phoneNumber !== "" && (
-                <p>{this.state.errors.phoneNumber}</p>
-              )}
-            </label>
-          </form>
-          <div id={style.deliveryOptions}>
-            <header>Delivery Options</header>
-            <label>
-              <input
-                onChange={this.handleDeliveryOptionSelection}
-                id="expeditedDelivery"
-                name="deliveryOption"
-                type="radio"
-                checked={this.state.shippingAndHandling === 50}
-              />
-              <p>Expedited (less than 3 hours): $50</p>
-            </label>
-            <label>
-              <input
-                onChange={this.handleDeliveryOptionSelection}
-                id="standardDelivery"
-                name="deliveryOption"
-                type="radio"
-                checked={this.state.shippingAndHandling === 10}
-              />
-              <p>Standard (within 3 days): $10</p>
-            </label>
           </div>
-        </div>
-        <div>
-          <header>Order Summary</header>
-          {numberOfItemsInCart === 1 ? (
-            <p>{numberOfItemsInCart} item in cart</p>
-          ) : (
-            <p>{numberOfItemsInCart} items in cart</p>
-          )}
+          <div id={style.cartSummary}>
+            <div id={style.cartSummaryHeaders}>
+              <header>Order Summary</header>
+              {numberOfItemsInCart === 1 ? (
+                <p>{numberOfItemsInCart} item in cart</p>
+              ) : (
+                <p>{numberOfItemsInCart} items in cart</p>
+              )}
+            </div>
+            <div id={style.cartSummaryTotals}>
+              <p>
+                Cart Subtotal:
+                {" $" +
+                  cartSubtotal.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+              </p>
+              <p>
+                Discount:
+                {" $" +
+                  discount.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+              </p>
+              <p>
+                Shipping & Handling:
+                {" $" +
+                  this.state.shippingAndHandling.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+              </p>
+              <p>
+                Cart Total:
+                {" $" +
+                  cartTotal.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+              </p>
+              <div id={style.shippingBackNextBtnContainer}>
+                <button title="Back to Cart">Back to Cart</button>
+                <button id="shippingForm" type="submit" title="To Payment">
+                  To Payment
+                </button>
+              </div>
+            </div>
+            <div>
+              {itemsInCart.map(
+                (item) =>
+                  item.quantity > 0 && (
+                    <div className={style.itemInCartSummary}>
+                      <img src={item.itemImage} alt="Item" />
+                      <div className={style.itemDetailsShippingPage}>
+                        <p>{item.itemName}</p>
+                        <p>Category: {item.category}</p>
+                        <p>Language: {item.language}</p>
+                        <p>Quantity: {item.quantity}</p>
+                        <p>
+                          <span className={style.itemInfoHeader}>
+                            Item Total:
+                          </span>
+                          {" $" +
+                            roundToHundredth(
+                              item.quantity * item.unitPrice
+                            ).toLocaleString(undefined, {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}
+                        </p>
+                      </div>
+                    </div>
+                  )
+              )}
+            </div>
+          </div>
         </div>
       </div>
     );
