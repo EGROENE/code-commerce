@@ -224,20 +224,6 @@ class Shipping extends React.Component {
         <div id={style.shippingPageMainItems}>
           <div>
             <form id="shippingForm" className={style.shippingForm}>
-              {/* {titleNameAddressDataFields.map((field) => (
-            <label>
-              <header>{field.label}</header>
-              <input
-                required={field.isRequired}
-                placeholder={field.placeholder}
-                type="text"
-                onBlur={field.onBlur}
-              />
-              {this.state.errors[`${field.id}Error`] && (
-                <p>{this.state.errors[`${field.id}Error`]}</p>
-              )}
-            </label>
-          ))} */}
               <div id={style.titleName}>
                 <label htmlFor="">
                   <header>Title: </header>
