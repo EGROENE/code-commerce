@@ -77,7 +77,7 @@ class Shipping extends React.Component {
         errors: {
           ...prevState.errors,
           streetAddress:
-            "Street address may only contain digits & English letters",
+            "Enter only digits, English letters, '#', '/', or '-'.",
         },
         details: {
           ...prevState.details,
