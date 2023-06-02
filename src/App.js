@@ -24,10 +24,6 @@ class App extends React.Component {
   toNextPage = (e, selectedPageHidden, nextPageHidden) => {
     e.preventDefault();
 
-    // Only move on if there are no errors in error object! ---- if each error === ""
-    // May need to pass errors object from each comp to App.js or init this in App.js then export as prop to components
-    // Or, find a way to only call this in each comp if its own error state object contains no errors (if all Object.values of this.state.errors === "", then call this onClick. Requires conditional rendering in this onClick)
-
     if (!this.state.pageDisplayOptions[selectedPageHidden]) {
       this.setState((prevState) => ({
         pageDisplayOptions: {
