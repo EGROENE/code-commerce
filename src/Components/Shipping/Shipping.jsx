@@ -181,6 +181,7 @@ class Shipping extends React.Component {
     );
     const {
       isShippingHidden,
+      toPreviousPage,
       toNextPage,
       itemsInCart,
       numberOfItemsInCart,
@@ -463,7 +464,14 @@ class Shipping extends React.Component {
                 </p>
               ))}
               <div id={style.shippingBackNextBtnContainer}>
-                <button title="Back to Cart">Back to Cart</button>
+                <button
+                  title="Back to Cart"
+                  onClick={(e) => {
+                    toPreviousPage(e, "isCartHidden", "isShippingHidden");
+                  }}
+                >
+                  Back to Cart
+                </button>
                 <button
                   form="shippingForm"
                   type={!areNoErrors ? "button" : "submit"}
