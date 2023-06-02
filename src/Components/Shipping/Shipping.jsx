@@ -218,6 +218,19 @@ class Shipping extends React.Component {
       },
     ];
 
+    const deliveryOptions = [
+      {
+        id: "expeditedDelivery",
+        deliveryPrice: 50,
+        label: "Expedited (within 3 hours): $50",
+      },
+      {
+        id: "standardDelivery",
+        deliveryPrice: 10,
+        label: "Expedited (within 3 days): $10",
+      },
+    ];
+
     return (
       <div hidden={isShippingHidden}>
         <header className="pageHeader">Shipping</header>
@@ -392,26 +405,20 @@ class Shipping extends React.Component {
             </form>
             <div id={style.deliveryOptions}>
               <header>Delivery Options</header>
-              <label>
-                <input
-                  onChange={this.handleDeliveryOptionSelection}
-                  id="expeditedDelivery"
-                  name="deliveryOption"
-                  type="radio"
-                  checked={this.state.shippingAndHandling === 50}
-                />
-                <p>Expedited (less than 3 hours): $50</p>
-              </label>
-              <label>
-                <input
-                  onChange={this.handleDeliveryOptionSelection}
-                  id="standardDelivery"
-                  name="deliveryOption"
-                  type="radio"
-                  checked={this.state.shippingAndHandling === 10}
-                />
-                <p>Standard (within 3 days): $10</p>
-              </label>
+              {deliveryOptions.map((item) => (
+                <label>
+                  <input
+                    type="radio"
+                    id={item.id}
+                    name="deliveryOption"
+                    checked={
+                      this.state.shippingAndHandling === item.deliveryPrice
+                    }
+                    onChange={this.handleDeliveryOptionSelection}
+                  />
+                  <p>{item.label}</p>
+                </label>
+              ))}
             </div>
           </div>
           <div id={style.cartSummary}>
