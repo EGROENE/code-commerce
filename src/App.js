@@ -19,8 +19,6 @@ class App extends React.Component {
   }
 
   // Method to move to next page:
-  // Pass to Login.jsx for onClick of Sign in or Create Account btn
-  // Must change this.state.isLoginHidden to true
   toNextPage = (e, selectedPageHidden, nextPageHidden) => {
     e.preventDefault();
 
