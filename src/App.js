@@ -36,6 +36,19 @@ class App extends React.Component {
   };
 
   // Method to go to previous page:
+  toPreviousPage = (e, previousPageHidden, selectedPageHidden) => {
+    e.preventDefault();
+
+    if (!this.state.pageDisplayOptions[selectedPageHidden]) {
+      this.setState((prevState) => ({
+        pageDisplayOptions: {
+          ...prevState.pageDisplayOptions,
+          [previousPageHidden]: false,
+          [selectedPageHidden]: true,
+        },
+      }));
+    }
+  };
 
   render() {
     return (
@@ -55,6 +68,7 @@ class App extends React.Component {
               this.state.pageDisplayOptions.isConfirmationHidden
             }
             toNextPage={this.toNextPage}
+            toPreviousPage={this.toPreviousPage}
           />
         </header>
       </div>
