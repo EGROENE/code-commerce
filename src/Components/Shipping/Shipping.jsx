@@ -159,7 +159,6 @@ class Shipping extends React.Component {
   };
 
   // Method to update shipping & handling state value:
-  // Should also toggle state value isExpeditedDeliverySelected
   handleDeliveryOptionSelection = (e) => {
     if (e.target.id === "expeditedDelivery") {
       this.setState((prevState) => ({
@@ -175,10 +174,6 @@ class Shipping extends React.Component {
   };
 
   render() {
-    console.log(Object.values(this.state.errors));
-    console.log(
-      Object.values(this.state.errors).every((element) => element === "")
-    );
     const {
       isShippingHidden,
       toPreviousPage,
