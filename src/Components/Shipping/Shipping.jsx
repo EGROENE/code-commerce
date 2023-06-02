@@ -231,6 +231,13 @@ class Shipping extends React.Component {
       },
     ];
 
+    const summaryTotals = [
+      { label: "Cart Subtotal:", value: cartSubtotal },
+      { label: "Discount:", value: discount },
+      { label: "Shipping & Handling:", value: this.state.shippingAndHandling },
+      { label: "Cart Total:", value: cartTotal },
+    ];
+
     return (
       <div hidden={isShippingHidden}>
         <header className="pageHeader">Shipping</header>
@@ -431,38 +438,16 @@ class Shipping extends React.Component {
               )}
             </div>
             <div id={style.cartSummaryTotals}>
-              <p>
-                Cart Subtotal:
-                {" $" +
-                  cartSubtotal.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-              </p>
-              <p>
-                Discount:
-                {" $" +
-                  discount.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-              </p>
-              <p>
-                Shipping & Handling:
-                {" $" +
-                  this.state.shippingAndHandling.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-              </p>
-              <p>
-                Cart Total:
-                {" $" +
-                  cartTotal.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-              </p>
+              {summaryTotals.map((item) => (
+                <p>
+                  {item.label}
+                  {" $" +
+                    item.value.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                </p>
+              ))}
               <div id={style.shippingBackNextBtnContainer}>
                 <button title="Back to Cart">Back to Cart</button>
                 <button id="shippingForm" type="submit" title="To Payment">
