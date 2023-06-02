@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./Shipping.module.css";
-import { roundToHundredth } from "../../methods";
+import { alertShippingFormErrors, roundToHundredth } from "../../methods";
 
 class Shipping extends React.Component {
   constructor(props) {
@@ -175,6 +175,10 @@ class Shipping extends React.Component {
   };
 
   render() {
+    console.log(Object.values(this.state.errors));
+    console.log(
+      Object.values(this.state.errors).every((element) => element === "")
+    );
     const {
       isShippingHidden,
       toNextPage,
@@ -238,12 +242,22 @@ class Shipping extends React.Component {
       { label: "Cart Total:", value: cartTotal },
     ];
 
+    let areNoErrors = Object.values(this.state.errors).every(
+      (element) => element === ""
+    );
+
     return (
       <div hidden={isShippingHidden}>
         <header className="pageHeader">Shipping</header>
         <div id={style.shippingPageMainItems}>
           <div>
-            <form id="shippingForm" className={style.shippingForm}>
+            <form
+              id="shippingForm"
+              className={style.shippingForm}
+              onSubmit={(e) => {
+                toNextPage(e, "isShippingHidden", "isPaymentHidden");
+              }}
+            >
               <div id={style.titleName}>
                 <label htmlFor="">
                   <header>Title: </header>
@@ -450,7 +464,12 @@ class Shipping extends React.Component {
               ))}
               <div id={style.shippingBackNextBtnContainer}>
                 <button title="Back to Cart">Back to Cart</button>
-                <button id="shippingForm" type="submit" title="To Payment">
+                <button
+                  form="shippingForm"
+                  type={!areNoErrors ? "button" : "submit"}
+                  title="To Payment"
+                  onClick={!areNoErrors ? alertShippingFormErrors : undefined}
+                >
                   To Payment
                 </button>
               </div>
