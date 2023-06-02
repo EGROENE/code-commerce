@@ -144,6 +144,7 @@ class Cart extends React.Component {
       isPaymentHidden,
       isConfirmationHidden,
       toNextPage,
+      toPreviousPage,
     } = this.props;
     // Calculate totals based on current state values of unit prices & quantity:
     let cartSubtotal = this.state.itemsInCart.map(
@@ -305,6 +306,7 @@ class Cart extends React.Component {
           discountRate={this.state.discountRate}
           isShippingHidden={isShippingHidden}
           toNextPage={toNextPage}
+          toPreviousPage={toPreviousPage}
         />
       </div>
     );
