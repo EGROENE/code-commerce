@@ -328,7 +328,9 @@ class Login extends React.Component {
             </button>
             <p>or</p>
             <a href="#" id={style.facebookLogin}>
-              <i className="fab fa-facebook-f"></i>Log in with Facebook
+              <button>
+                <i className="fab fa-facebook-f"></i>Log in with Facebook
+              </button>
             </a>
             <div id={style.termsLinksContainer}>
               <a href="#" className={style.termsAndConditionsLinks}>
