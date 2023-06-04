@@ -421,7 +421,9 @@ class Shipping extends React.Component {
               </label>
             </form>
             <div id={style.deliveryOptions}>
-              <header>Delivery Options</header>
+              <header>
+                Delivery Options <a href="#">Shipping Details</a>
+              </header>
               {deliveryOptions.map((item) => (
                 <label>
                   <input
