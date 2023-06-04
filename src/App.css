@@ -160,8 +160,18 @@ form a {
   font-size: var(--size-20);
 }
 
-form button:hover,
-form a:hover {
+a, form a {
+  background: none;
+  padding: 0;
+  color: white;
+  text-decoration: underline;
+  font-size: var(--size-12);
+  background: none;
+  color: var(--theme-color);
+}
+
+button:hover,
+a:hover {
   cursor: pointer;
   opacity: 0.5;
 }

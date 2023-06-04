@@ -51,6 +51,7 @@
 #facebookLogin {
     background-color: #1877F2;
     color: white;
+    text-decoration: none;
 }
 
 #facebookLogin i {
@@ -58,18 +59,23 @@
     line-height: var(--size-28);
 }
 
+#facebookLogin button {
+    background: none;
+    color: white;
+}
+
 #termsLinksContainer {
     display: flex;
     margin-top: 20px;
 }
 
-.termsAndConditionsLinks {
+/* .termsAndConditionsLinks {
     background: none;
     padding: 0;
     color: white;
     text-decoration: underline;
     font-size: var(--size-12);
-}
+} */
 
 .eye {
     position: absolute;
