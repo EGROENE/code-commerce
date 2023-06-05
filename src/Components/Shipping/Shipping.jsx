@@ -309,7 +309,7 @@ class Shipping extends React.Component {
               </label>
               <div id={style.moreAddressDetails}>
                 <label htmlFor="">
-                  <header>ZIP Code</header>
+                  <header>ZIP Code: </header>
                   <input
                     id="postalCode"
                     placeholder="5-digit ZIP code"
