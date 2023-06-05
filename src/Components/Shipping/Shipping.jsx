@@ -136,9 +136,7 @@ class Shipping extends React.Component {
   // Method to validate phone number:
   validatePhoneNumber = (e) => {
     let value = e.target.value.trim();
-    if (
-      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/i.test(value)
-    ) {
+    if (/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/i.test(value)) {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -200,7 +198,7 @@ class Shipping extends React.Component {
     let cartTotal = cartSubtotal - discount + this.state.shippingAndHandling;
 
     // Add onBlur property (the field's validation method, which will be called onBlur) to each object:
-    const titleNameAddressDataFields = [
+    /* const titleNameAddressDataFields = [
       {
         id: "title",
         label: "Recipient Title: ",
@@ -222,7 +220,7 @@ class Shipping extends React.Component {
         onBlur: "",
         isRequired: true,
       },
-    ];
+    ]; */
 
     const deliveryOptions = [
       {
