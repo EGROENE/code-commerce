@@ -24,6 +24,12 @@ class Shipping extends React.Component {
         phoneNumber: "",
       },
       shippingAndHandling: 50,
+      /* progressBarStatus: {
+        cart: true,
+        shipping: false,
+        payment: false,
+        confirmation: false,
+      }, */
     };
   }
 
@@ -242,8 +248,33 @@ class Shipping extends React.Component {
       (element) => element === ""
     );
 
+    /* const progressBarInfo = [
+      { id: "cart", class: "fas fa-shopping-cart" },
+      { id: "shipping", class: "fas fa-shipping-fast" },
+      { id: "payment", class: "fas fa-money-check-alt" },
+      { id: "confirmation", class: "fas fa-check" },
+    ]; */
+
     return (
       <div hidden={isShippingHidden}>
+        <div className="progressBar">
+          <i
+            /*
+          IS THERE A WAY TO POPULATE THIS WITH MAP, USING progressBarInfo array & this.state.progressBarStatus values?
+            className={
+              this.state.progressBarStatus.cart
+                ? "fas fa-shopping-cart completed"
+                : "fas fa-shopping-cart"
+            } */
+            className="fas fa-shopping-cart completed"
+          ></i>
+          <div className="progressBarConnector completed"></div>
+          <i className="fas fa-shipping-fast"></i>
+          <div className="progressBarConnector"></div>
+          <i className="fas fa-money-check-alt"></i>
+          <div className="progressBarConnector"></div>
+          <i className="fas fa-check"></i>
+        </div>
         <header className="pageHeader">Shipping</header>
         <div id={style.shippingPageMainItems}>
           <div>

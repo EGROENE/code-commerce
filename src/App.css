@@ -14,7 +14,7 @@
   --size-48: 3rem;
   --size-56: 3.5rem;
   --size-64: 4rem;
-  --theme-font: 'Source Code Pro', monospace;
+  --theme-font: "Source Code Pro", monospace;
 }
 
 .App {
@@ -90,11 +90,15 @@ input::placeholder {
 form {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, rgba(255, 255,255, 0.1), rgba(255, 255, 255, 0));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0)
+  );
   padding: 2rem;
   backdrop-filter: blur(20px);
   box-shadow: 0 var(--size-8) var(--size-32) 0 rgba(0, 0, 0, 0.37);
-  border:1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: var(--size-32);
   margin-top: var(--size-12);
   width: 43vw;
@@ -134,7 +138,7 @@ input:disabled {
 }
 
 input:disabled:hover {
-  cursor: not-allowed
+  cursor: not-allowed;
 }
 
 select {
@@ -160,7 +164,8 @@ form a {
   font-size: var(--size-20);
 }
 
-a, form a {
+a,
+form a {
   background: none;
   padding: 0;
   color: white;
@@ -174,4 +179,47 @@ button:hover,
 a:hover {
   cursor: pointer;
   opacity: 0.5;
+}
+
+.progressBar {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: var(--size-24) 0;
+  margin: auto 5rem;
+}
+
+.progressBar i {
+  color: white;
+  border: 2px solid var(--theme-color);
+  padding: var(--size-24);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  font-size: var(--size-24);
+  width: var(--size-24);
+  height: var(--size-24);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 100px;
+  vertical-align: middle;
+}
+
+.progressBar i.completed {
+  background-color: var(--theme-color);
+  color: black;
+}
+
+.progressBarConnector {
+  height: var(--size-12);
+  width: 26%;
+  background-color: transparent;
+  border-top: 2px solid var(--theme-color);
+  border-bottom: 2px solid var(--theme-color);
+  margin: 0 -2px;
+}
+
+.progressBarConnector.completed {
+  background-color: var(--theme-color);
 }
