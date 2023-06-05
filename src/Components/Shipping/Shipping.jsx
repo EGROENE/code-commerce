@@ -197,31 +197,6 @@ class Shipping extends React.Component {
 
     let cartTotal = cartSubtotal - discount + this.state.shippingAndHandling;
 
-    // Add onBlur property (the field's validation method, which will be called onBlur) to each object:
-    /* const titleNameAddressDataFields = [
-      {
-        id: "title",
-        label: "Recipient Title: ",
-        placeholder: "Recipient title",
-        onBlur: this.validateNameCity,
-        isRequired: false,
-      },
-      {
-        id: "name",
-        label: "Recipient Name: ",
-        placeholder: "Recipient name",
-        onBlur: this.validateNameCity,
-        isRequired: true,
-      },
-      {
-        id: "streetAddress",
-        label: "Street Address: ",
-        placeholder: "Delivery address",
-        onBlur: "",
-        isRequired: true,
-      },
-    ]; */
-
     const deliveryOptions = [
       {
         id: "expeditedDelivery",
