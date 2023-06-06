@@ -36,11 +36,22 @@ class ProgressBar extends React.Component {
         <div className="progressBarConnector"></div>
         <i className="fas fa-check"></i> */}
         {progressBarElements.map((item) => (
-          <i
-            className={
-              item.isCompleted ? `${item.class} completed` : item.class
-            }
-          ></i>
+          <div className="progressBarElement">
+            <i
+              className={
+                item.isCompleted ? `${item.class} completed` : item.class
+              }
+            ></i>
+            {!item.isLast && (
+              <div
+                className={
+                  item.isCompleted
+                    ? "progressBarConnector completed"
+                    : "progressBarConnector"
+                }
+              ></div>
+            )}
+          </div>
         ))}
       </div>
     );
