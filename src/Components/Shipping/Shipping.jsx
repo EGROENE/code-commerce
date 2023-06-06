@@ -225,13 +225,6 @@ class Shipping extends React.Component {
       (element) => element === ""
     );
 
-    /* const progressBarInfo = [
-      { id: "cart", class: "fas fa-shopping-cart" },
-      { id: "shipping", class: "fas fa-shipping-fast" },
-      { id: "payment", class: "fas fa-money-check-alt" },
-      { id: "confirmation", class: "fas fa-check" },
-    ]; */
-
     return (
       <div id="shippingAndPayment">
         <div hidden={isShippingHidden}>
