@@ -189,6 +189,10 @@ a:hover {
   margin: auto 5rem;
 }
 
+.progressBarElement {
+  display: contents;
+}
+
 .progressBar i {
   color: white;
   border: 2px solid var(--theme-color);
