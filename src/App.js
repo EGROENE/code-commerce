@@ -87,8 +87,8 @@ class App extends React.Component {
         this.setState((prevState) => ({
           pageDisplayOptions: {
             ...prevState.pageDisplayOptions,
-            [previousPageHidden]: true,
-            [selectedPageHidden]: false,
+            [previousPageHidden]: false,
+            [selectedPageHidden]: true,
           },
           completedPages: {
             ...prevState.completedPages,
@@ -99,8 +99,8 @@ class App extends React.Component {
         this.setState((prevState) => ({
           pageDisplayOptions: {
             ...prevState.pageDisplayOptions,
-            [previousPageHidden]: true,
-            [selectedPageHidden]: false,
+            [previousPageHidden]: false,
+            [selectedPageHidden]: true,
           },
           completedPages: {
             ...prevState.completedPages,
@@ -111,8 +111,8 @@ class App extends React.Component {
         this.setState((prevState) => ({
           pageDisplayOptions: {
             ...prevState.pageDisplayOptions,
-            [previousPageHidden]: true,
-            [selectedPageHidden]: false,
+            [previousPageHidden]: false,
+            [selectedPageHidden]: true,
           },
           completedPages: {
             ...prevState.completedPages,
@@ -124,8 +124,8 @@ class App extends React.Component {
         this.setState((prevState) => ({
           pageDisplayOptions: {
             ...prevState.pageDisplayOptions,
-            [previousPageHidden]: true,
-            [selectedPageHidden]: false,
+            [previousPageHidden]: false,
+            [selectedPageHidden]: true,
           },
         }));
       }
