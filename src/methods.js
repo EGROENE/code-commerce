@@ -6,6 +6,6 @@ export const roundToHundredth = (val) => {
     return Number(Number(newVal).toFixed(2));
   }
 };
-export const alertShippingFormErrors = () => {
-  alert("Please fix errors before proceeding to payment page.");
+export const alertFormErrors = () => {
+  alert("Please fix errors before proceeding to the next page.");
 };

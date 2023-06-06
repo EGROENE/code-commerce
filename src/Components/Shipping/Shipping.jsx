@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./Shipping.module.css";
-import { alertShippingFormErrors, roundToHundredth } from "../../methods";
+import { alertFormErrors, roundToHundredth } from "../../methods";
 
 class Shipping extends React.Component {
   constructor(props) {
@@ -477,7 +477,7 @@ class Shipping extends React.Component {
                   form="shippingForm"
                   type={!areNoErrors ? "button" : "submit"}
                   title="To Payment"
-                  onClick={!areNoErrors ? alertShippingFormErrors : undefined}
+                  onClick={!areNoErrors ? alertFormErrors : undefined}
                 >
                   To Payment
                 </button>
