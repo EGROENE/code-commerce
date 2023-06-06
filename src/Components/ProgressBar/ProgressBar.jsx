@@ -3,7 +3,6 @@ import React from "react";
 class ProgressBar extends React.Component {
   render() {
     const { completedPages } = this.props;
-    console.log(completedPages);
     const progressBarElements = [
       {
         class: "fas fa-shopping-cart",
@@ -28,13 +27,6 @@ class ProgressBar extends React.Component {
     ];
     return (
       <div className="progressBar">
-        {/* <i className="fas fa-shopping-cart completed"></i>
-        <div className="progressBarConnector completed"></div>
-        <i className="fas fa-shipping-fast completed"></i>
-        <div className="progressBarConnector completed"></div>
-        <i className="fas fa-money-check-alt"></i>
-        <div className="progressBarConnector"></div>
-        <i className="fas fa-check"></i> */}
         {progressBarElements.map((item) => (
           <div className="progressBarElement">
             <i
