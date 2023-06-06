@@ -15,6 +15,12 @@ class App extends React.Component {
         isPaymentHidden: true,
         isConfirmationHidden: true,
       },
+      completedPages: {
+        cart: false,
+        shipping: false,
+        payment: false,
+        confirmation: false,
+      },
     };
   }
 
@@ -23,13 +29,52 @@ class App extends React.Component {
     e.preventDefault();
 
     if (!this.state.pageDisplayOptions[selectedPageHidden]) {
-      this.setState((prevState) => ({
-        pageDisplayOptions: {
-          ...prevState.pageDisplayOptions,
-          [selectedPageHidden]: true,
-          [nextPageHidden]: false,
-        },
-      }));
+      if (selectedPageHidden === "isCartHidden") {
+        this.setState((prevState) => ({
+          pageDisplayOptions: {
+            ...prevState.pageDisplayOptions,
+            [selectedPageHidden]: true,
+            [nextPageHidden]: false,
+          },
+          completedPages: {
+            ...prevState.completedPages,
+            cart: true,
+          },
+        }));
+      } else if (selectedPageHidden === "isShippingHidden") {
+        this.setState((prevState) => ({
+          pageDisplayOptions: {
+            ...prevState.pageDisplayOptions,
+            [selectedPageHidden]: true,
+            [nextPageHidden]: false,
+          },
+          completedPages: {
+            ...prevState.completedPages,
+            shipping: true,
+          },
+        }));
+      } else if (selectedPageHidden === "isPaymentHidden") {
+        this.setState((prevState) => ({
+          pageDisplayOptions: {
+            ...prevState.pageDisplayOptions,
+            [selectedPageHidden]: true,
+            [nextPageHidden]: false,
+          },
+          completedPages: {
+            ...prevState.completedPages,
+            payment: true,
+            confirmation: true,
+          },
+        }));
+      } else {
+        this.setState((prevState) => ({
+          pageDisplayOptions: {
+            ...prevState.pageDisplayOptions,
+            [selectedPageHidden]: true,
+            [nextPageHidden]: false,
+          },
+        }));
+      }
     }
   };
 
@@ -38,13 +83,52 @@ class App extends React.Component {
     e.preventDefault();
 
     if (!this.state.pageDisplayOptions[selectedPageHidden]) {
-      this.setState((prevState) => ({
-        pageDisplayOptions: {
-          ...prevState.pageDisplayOptions,
-          [previousPageHidden]: false,
-          [selectedPageHidden]: true,
-        },
-      }));
+      if (selectedPageHidden === "isCartHidden") {
+        this.setState((prevState) => ({
+          pageDisplayOptions: {
+            ...prevState.pageDisplayOptions,
+            [previousPageHidden]: true,
+            [selectedPageHidden]: false,
+          },
+          completedPages: {
+            ...prevState.completedPages,
+            cart: false,
+          },
+        }));
+      } else if (selectedPageHidden === "isShippingHidden") {
+        this.setState((prevState) => ({
+          pageDisplayOptions: {
+            ...prevState.pageDisplayOptions,
+            [previousPageHidden]: true,
+            [selectedPageHidden]: false,
+          },
+          completedPages: {
+            ...prevState.completedPages,
+            shipping: false,
+          },
+        }));
+      } else if (selectedPageHidden === "isPaymentHidden") {
+        this.setState((prevState) => ({
+          pageDisplayOptions: {
+            ...prevState.pageDisplayOptions,
+            [previousPageHidden]: true,
+            [selectedPageHidden]: false,
+          },
+          completedPages: {
+            ...prevState.completedPages,
+            payment: false,
+            confirmation: false,
+          },
+        }));
+      } else {
+        this.setState((prevState) => ({
+          pageDisplayOptions: {
+            ...prevState.pageDisplayOptions,
+            [previousPageHidden]: true,
+            [selectedPageHidden]: false,
+          },
+        }));
+      }
     }
   };
 
@@ -67,6 +151,7 @@ class App extends React.Component {
             }
             toNextPage={this.toNextPage}
             toPreviousPage={this.toPreviousPage}
+            completedPages={this.state.completedPages}
           />
         </header>
       </div>
