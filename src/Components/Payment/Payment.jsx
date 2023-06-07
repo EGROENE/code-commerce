@@ -18,7 +18,7 @@ class Payment extends React.Component {
                   type="text"
                   required
                   inputMode="text"
-                  placeholder="Enter cardholder name as it appears on card"
+                  placeholder="Enter name as it appears on card"
                 />
               </label>
               <label htmlFor="">
