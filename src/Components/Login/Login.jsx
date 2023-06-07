@@ -228,6 +228,7 @@ class Login extends React.Component {
         onBlur: this.validateEmail,
         field: "email",
         required: true,
+        inputMode: "email",
       },
       {
         isHidden: false,
@@ -237,6 +238,7 @@ class Login extends React.Component {
         onBlur: this.validatePassword,
         field: "password",
         required: true,
+        inputMode: "password",
       },
       {
         isHidden: this.state.isLoginMethodSelected,
@@ -246,6 +248,7 @@ class Login extends React.Component {
         onBlur: this.validatePasswordConfirmation,
         field: "confirmPassword",
         required: this.state.isRequired,
+        inputMode: "password",
       },
       {
         isHidden: this.state.isLoginMethodSelected,
@@ -255,6 +258,7 @@ class Login extends React.Component {
         onBlur: this.validateNames,
         field: "name",
         required: this.state.isRequired,
+        inputMode: "text",
       },
       {
         isHidden: this.state.isLoginMethodSelected,
@@ -264,6 +268,7 @@ class Login extends React.Component {
         onBlur: this.validateNames,
         field: "name",
         required: this.state.isRequired,
+        inputMode: "text",
       },
       {
         isHidden: this.state.isLoginMethodSelected,
@@ -273,6 +278,7 @@ class Login extends React.Component {
         onBlur: this.validatePostalCode,
         field: "postalCode",
         required: this.state.isRequired,
+        inputMode: "numeric",
       },
     ];
 
@@ -310,6 +316,7 @@ class Login extends React.Component {
                 }
                 onBlur={input.onBlur}
                 required={input.required}
+                inputMode={input.inputMode}
               />
               {input.labelText === "Password:" && !isLoginMethodSelected ? (
                 <p>
