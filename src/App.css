@@ -194,6 +194,13 @@ a:hover {
   width: 80vw;
 }
 
+/* .barContainer {
+  display: flex;
+  align-items: center;
+  padding: var(--size-24) 0;
+  width: 80vw;
+} */
+
 .progressBarElement {
   display: contents;
 }
@@ -207,8 +214,8 @@ a:hover {
   align-items: center;
   border-radius: 50px;
   font-size: var(--size-24);
-  width: var(--size-24);
-  height: var(--size-24);
+  width: var(--size-48);
+  height: var(--size-48);
   border-radius: 50%;
   text-align: center;
   line-height: 100px;
@@ -220,13 +227,18 @@ a:hover {
   color: black;
 }
 
+.progressBarElement p {
+  margin: 8px 0 0 0;
+  font-size: 0.9rem;
+}
+
 .progressBarConnector {
   height: var(--size-12);
   width: 26%;
   background-color: transparent;
   border-top: 2px solid var(--theme-color);
   border-bottom: 2px solid var(--theme-color);
-  margin: 0 -2px;
+  margin: -22px -2px 0 -2px;
 }
 
 .progressBarConnector.completed {
