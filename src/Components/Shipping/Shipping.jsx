@@ -442,6 +442,32 @@ class Shipping extends React.Component {
                   <p>{numberOfItemsInCart} items in cart</p>
                 )}
               </div>
+              <div>
+                {itemsInCart.map(
+                  (item) =>
+                    item.quantity > 0 && (
+                      <div className="itemInCartSummary">
+                        <img src={item.itemImage} alt="Item" />
+                        <div className={style.itemDetailsShippingPage}>
+                          <p>{item.itemName}</p>
+                          <p>Category: {item.category}</p>
+                          <p>Language: {item.language}</p>
+                          <p>Quantity: {item.quantity}</p>
+                          <p>
+                            <span className="itemInfoHeader">Item Total:</span>
+                            {" $" +
+                              roundToHundredth(
+                                item.quantity * item.unitPrice
+                              ).toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })}
+                          </p>
+                        </div>
+                      </div>
+                    )
+                )}
+              </div>
               <div className="cartSummaryTotals">
                 {summaryTotals.map((item) => (
                   <p>
@@ -471,32 +497,6 @@ class Shipping extends React.Component {
                     To Payment
                   </button>
                 </div>
-              </div>
-              <div>
-                {itemsInCart.map(
-                  (item) =>
-                    item.quantity > 0 && (
-                      <div className="itemInCartSummary">
-                        <img src={item.itemImage} alt="Item" />
-                        <div className={style.itemDetailsShippingPage}>
-                          <p>{item.itemName}</p>
-                          <p>Category: {item.category}</p>
-                          <p>Language: {item.language}</p>
-                          <p>Quantity: {item.quantity}</p>
-                          <p>
-                            <span className="itemInfoHeader">Item Total:</span>
-                            {" $" +
-                              roundToHundredth(
-                                item.quantity * item.unitPrice
-                              ).toLocaleString(undefined, {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })}
-                          </p>
-                        </div>
-                      </div>
-                    )
-                )}
               </div>
             </div>
           </div>
