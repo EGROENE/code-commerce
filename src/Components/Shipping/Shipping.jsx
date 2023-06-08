@@ -502,6 +502,8 @@ class Shipping extends React.Component {
           toNextPage={toNextPage}
           toPreviousPage={toPreviousPage}
           completedPages={completedPages}
+          shipmentDetails={this.state.details}
+          shippingAndHandling={this.state.shippingAndHandling}
         />
       </div>
     );
