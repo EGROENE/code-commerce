@@ -7,7 +7,10 @@ class Payment extends React.Component {
     const { isPaymentHidden, completedPages } = this.props;
     return (
       <div id="paymentAndConfirmation">
-        <div hidden={isPaymentHidden}>
+        <div
+          className={!isPaymentHidden && "checkoutPageContainer"}
+          hidden={isPaymentHidden}
+        >
           <ProgressBar completedPages={completedPages} />
           <header className="pageHeader">Payment</header>
           <div id={style.paymentFormContainer}>
