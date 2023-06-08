@@ -227,7 +227,7 @@ class Shipping extends React.Component {
 
     return (
       <div id="shippingAndPayment">
-        <div hidden={isShippingHidden}>
+        <div className="checkoutPageContainer" hidden={isShippingHidden}>
           <ProgressBar completedPages={completedPages} />
           <header className="pageHeader">Shipping</header>
           <div id={style.shippingPageMainItems}>

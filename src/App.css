@@ -181,12 +181,17 @@ a:hover {
   opacity: 0.5;
 }
 
+.checkoutPageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .progressBar {
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
   padding: var(--size-24) 0;
-  margin: auto 5rem;
+  width: 80vw;
 }
 
 .progressBarElement {
