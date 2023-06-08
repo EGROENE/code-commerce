@@ -191,9 +191,7 @@ class Cart extends React.Component {
                           <p>Language: {item.language}</p>
                         </div>
                         <p>
-                          <span className={style.itemInfoHeader}>
-                            Unit Price:
-                          </span>
+                          <span className="itemInfoHeader">Unit Price:</span>
                           <br />
                           {" $" +
                             item.unitPrice.toLocaleString(undefined, {
@@ -211,9 +209,7 @@ class Cart extends React.Component {
                           }}
                         />
                         <p>
-                          <span className={style.itemInfoHeader}>
-                            Item Total:
-                          </span>
+                          <span className="itemInfoHeader">Item Total:</span>
                           <br />
                           {"$" +
                             roundToHundredth(

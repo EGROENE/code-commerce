@@ -433,8 +433,8 @@ class Shipping extends React.Component {
                 ))}
               </div>
             </div>
-            <div id={style.cartSummary}>
-              <div id={style.cartSummaryHeaders}>
+            <div className="cartSummary">
+              <div className="cartSummaryHeaders">
                 <header>Order Summary</header>
                 {numberOfItemsInCart === 1 ? (
                   <p>{numberOfItemsInCart} item in cart</p>
@@ -442,7 +442,7 @@ class Shipping extends React.Component {
                   <p>{numberOfItemsInCart} items in cart</p>
                 )}
               </div>
-              <div id={style.cartSummaryTotals}>
+              <div className="cartSummaryTotals">
                 {summaryTotals.map((item) => (
                   <p>
                     {item.label}
@@ -453,7 +453,7 @@ class Shipping extends React.Component {
                       })}
                   </p>
                 ))}
-                <div id={style.shippingBackNextBtnContainer}>
+                <div className="checkoutBackNextBtnContainer">
                   <button
                     title="Back to Cart"
                     onClick={(e) => {
@@ -476,7 +476,7 @@ class Shipping extends React.Component {
                 {itemsInCart.map(
                   (item) =>
                     item.quantity > 0 && (
-                      <div className={style.itemInCartSummary}>
+                      <div className="itemInCartSummary">
                         <img src={item.itemImage} alt="Item" />
                         <div className={style.itemDetailsShippingPage}>
                           <p>{item.itemName}</p>
@@ -484,9 +484,7 @@ class Shipping extends React.Component {
                           <p>Language: {item.language}</p>
                           <p>Quantity: {item.quantity}</p>
                           <p>
-                            <span className={style.itemInfoHeader}>
-                              Item Total:
-                            </span>
+                            <span className="itemInfoHeader">Item Total:</span>
                             {" $" +
                               roundToHundredth(
                                 item.quantity * item.unitPrice
