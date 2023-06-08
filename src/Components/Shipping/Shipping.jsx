@@ -26,12 +26,6 @@ class Shipping extends React.Component {
         phoneNumber: "",
       },
       shippingAndHandling: 50,
-      /* progressBarStatus: {
-        cart: true,
-        shipping: false,
-        payment: false,
-        confirmation: false,
-      }, */
     };
   }
 
