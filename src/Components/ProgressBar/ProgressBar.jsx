@@ -31,7 +31,7 @@ class ProgressBar extends React.Component {
           <div className="progressBarElement">
             <i
               className={
-                item.isCompleted ? `${item.class} completed` : item.class
+                item.isCompleted ? "fas fa-check completed" : item.class
               }
             ></i>
             {!item.isLast && (
