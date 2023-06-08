@@ -4,7 +4,16 @@ import style from "./Payment.module.css";
 
 class Payment extends React.Component {
   render() {
-    const { isPaymentHidden, completedPages } = this.props;
+    const {
+      isPaymentHidden,
+      completedPages,
+      numberOfItemsInCart,
+      discountRate,
+      toNextPage,
+      toPreviousPage,
+      shipmentDetails,
+      shippingAndHandling,
+    } = this.props;
     return (
       <div id="paymentAndConfirmation">
         <div
