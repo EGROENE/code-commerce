@@ -190,16 +190,8 @@ a:hover {
 .progressBar {
   display: flex;
   align-items: center;
-  padding: var(--size-24) 0;
   width: 80vw;
 }
-
-/* .barContainer {
-  display: flex;
-  align-items: center;
-  padding: var(--size-24) 0;
-  width: 80vw;
-} */
 
 .progressBarElement {
   display: contents;
@@ -285,7 +277,7 @@ a:hover {
 
 .itemInCartSummary {
   display: flex;
-  margin: 28px 0;
+  margin: 0;
   justify-content: space-between;
   align-items: center;
   border-top: 2px solid var(--theme-color);
@@ -298,7 +290,7 @@ a:hover {
 }
 
 .itemInCartSummary p {
-  font-size: 1rem;
+  font-size: 0.7rem;
 }
 
 .itemDetailsShippingPage p:first-child {
