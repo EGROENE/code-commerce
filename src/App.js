@@ -2,7 +2,6 @@ import React from "react";
 import logo from "./new-logo.png";
 import "./App.css";
 import Login from "./Components/Login/Login";
-import Cart from "./Components/Cart/Cart";
 
 class App extends React.Component {
   constructor(props) {
@@ -141,15 +140,12 @@ class App extends React.Component {
           <Login
             isLoginHidden={this.state.pageDisplayOptions.isLoginHidden}
             toNextPage={this.toNextPage}
-          />
-          <Cart
             isCartHidden={this.state.pageDisplayOptions.isCartHidden}
             isShippingHidden={this.state.pageDisplayOptions.isShippingHidden}
             isPaymentHidden={this.state.pageDisplayOptions.isPaymentHidden}
             isConfirmationHidden={
               this.state.pageDisplayOptions.isConfirmationHidden
             }
-            toNextPage={this.toNextPage}
             toPreviousPage={this.toPreviousPage}
             completedPages={this.state.completedPages}
           />
