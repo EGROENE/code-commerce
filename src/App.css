@@ -249,7 +249,7 @@ a:hover {
 .cartSummaryTotals {
   border-top: 2px solid white;
   border-top: 2px solid var(--theme-color);
-  text-align: center;
+  text-align: right;
 }
 
 .cartSummaryTotals p {
