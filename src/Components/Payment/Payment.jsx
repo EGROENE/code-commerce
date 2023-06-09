@@ -26,6 +26,7 @@ class Payment extends React.Component {
 
   render() {
     const {
+      accountEmailAddress,
       itemsInCart,
       isPaymentHidden,
       completedPages,
@@ -187,15 +188,17 @@ class Payment extends React.Component {
                 ))}
               </div>
               <div className="cartSummaryItem">
-                {shipmentDetails.title !== "" && <p>{shipmentDetails.title}</p>}
-                <p>{shipmentDetails.name}</p>
+                <p>
+                  {shipmentDetails.title !== "" && shipmentDetails.title}{" "}
+                  {shipmentDetails.name}
+                </p>
                 <p>{shipmentDetails.streetAddress}</p>
                 <p>
                   {shipmentDetails.city}, {shipmentDetails.stateOrTerritory}{" "}
                   {shipmentDetails.postalCode}
                 </p>
                 <p>Phone: {shipmentDetails.phoneNumber}</p>
-                <p>E-mail: {shipmentDetails.phoneNumber}</p>
+                <p>E-mail: {accountEmailAddress}</p>
               </div>
             </div>
           </div>
