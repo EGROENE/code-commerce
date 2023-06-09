@@ -1,10 +1,32 @@
 import React from "react";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import style from "./Payment.module.css";
+import { alertFormErrors, roundToHundredth } from "../../methods";
 
 class Payment extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      errors: {
+        cardNumberError: "",
+        cardHolderNameError: "",
+        expiryError: "",
+        securityCodeError: "",
+      },
+      paymentDetails: {
+        cardNumber: "",
+        cardHolder: "",
+        expiryDate: "",
+        securityCode: "",
+      },
+    };
+  }
+
+  // Validation methods:
+
   render() {
     const {
+      itemsInCart,
       isPaymentHidden,
       completedPages,
       numberOfItemsInCart,
@@ -14,15 +36,39 @@ class Payment extends React.Component {
       shipmentDetails,
       shippingAndHandling,
     } = this.props;
+
+    // Calculate totals based on current state values of unit prices & quantity:
+    let cartSubtotal = itemsInCart.map(
+      (item) => item.unitPrice * item.quantity
+    );
+    cartSubtotal = roundToHundredth(cartSubtotal.reduce((a, b) => a + b));
+
+    let discount = roundToHundredth(cartSubtotal * discountRate);
+
+    let cartTotal = cartSubtotal - discount + shippingAndHandling;
+
+    const summaryTotals = [
+      { label: "Cart Subtotal:", value: cartSubtotal },
+      { label: "Discount:", value: discount },
+      { label: "Shipping & Handling:", value: shippingAndHandling },
+      { label: "Cart Total:", value: cartTotal },
+    ];
+
+    const shipmentDetailsArray = Array.from(shipmentDetails);
+
+    let areNoErrors = Object.values(this.state.errors).every(
+      (element) => element === ""
+    );
+
     return (
       <div id="paymentAndConfirmation">
         <div
-          className={!isPaymentHidden && "checkoutPageContainer"}
+          className={!isPaymentHidden ? "checkoutPageContainer" : undefined}
           hidden={isPaymentHidden}
         >
           <ProgressBar completedPages={completedPages} />
           <header className="pageHeader">Payment</header>
-          <div id={style.paymentFormContainer}>
+          <div className="checkoutPageMainItems">
             <form id={style.paymentForm}>
               <label htmlFor="">
                 <header>Cardholder Name: </header>
@@ -93,6 +139,65 @@ class Payment extends React.Component {
                 />
               </label>
             </form>
+            <div className="cartSummary">
+              <div className="cartSummaryHeaders">
+                <header>Order Summary</header>
+                {numberOfItemsInCart === 1 ? (
+                  <p>{numberOfItemsInCart} item in cart</p>
+                ) : (
+                  <p>{numberOfItemsInCart} items in cart</p>
+                )}
+              </div>
+              <div>
+                {itemsInCart.map(
+                  (item) =>
+                    item.quantity > 0 && (
+                      <div className="itemInCartSummary">
+                        <img src={item.itemImage} alt="Item" />
+                        <div className={style.itemDetailsShippingPage}>
+                          <p>{item.itemName}</p>
+                          <p>Category: {item.category}</p>
+                          <p>Language: {item.language}</p>
+                          <p>Quantity: {item.quantity}</p>
+                          <p>
+                            <span className="itemInfoHeader">Item Total:</span>
+                            {" $" +
+                              roundToHundredth(
+                                item.quantity * item.unitPrice
+                              ).toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })}
+                          </p>
+                        </div>
+                      </div>
+                    )
+                )}
+              </div>
+              <div className="cartSummaryItem">
+                {summaryTotals.map((item) => (
+                  <p>
+                    {item.label}
+                    {" $" +
+                      item.value.toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                  </p>
+                ))}
+              </div>
+              <div className="cartSummaryItem">
+                {shipmentDetails.title !== "" && <p>{shipmentDetails.title}</p>}
+                <p>{shipmentDetails.name}</p>
+                <p>{shipmentDetails.streetAddress}</p>
+                <p>
+                  {shipmentDetails.city}, {shipmentDetails.stateOrTerritory}{" "}
+                  {shipmentDetails.postalCode}
+                </p>
+                <p>Phone: {shipmentDetails.phoneNumber}</p>
+                <p>E-mail: {shipmentDetails.phoneNumber}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
