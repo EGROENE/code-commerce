@@ -1,11 +1,13 @@
 import React from "react";
 import style from "./Login.module.css";
+import Cart from "../Cart/Cart";
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       isLoginMethodSelected: true,
+      accountEmailAddress: "",
       passwordPlaceholder: "Enter your password",
       passwordFieldInputType: "password",
       isOpenEye: true,
@@ -88,6 +90,7 @@ class Login extends React.Component {
       console.log("valid");
       // Update email error state value to "". Will need to access previous state values.
       this.setState((prevState) => ({
+        accountEmailAddress: value,
         errors: {
           ...prevState.errors,
           emailError: "",
@@ -98,6 +101,7 @@ class Login extends React.Component {
       // Update email error state value to an error message. Will need to access previous state values.
       this.setState((prevState) => ({
         errors: {
+          accountEmailAddress: "",
           ...prevState.errors,
           emailError: "Please enter a valid email address",
         },
@@ -201,7 +205,16 @@ class Login extends React.Component {
   };
 
   render() {
-    const { isLoginHidden, toNextPage } = this.props;
+    const {
+      isLoginHidden,
+      toNextPage,
+      isCartHidden,
+      isShippingHidden,
+      isPaymentHidden,
+      isConfirmationHidden,
+      toPreviousPage,
+      completedPages,
+    } = this.props;
 
     const { isLoginMethodSelected, eyeLogo, passwordFieldInputType, errors } =
       this.state;
@@ -283,72 +296,84 @@ class Login extends React.Component {
     ];
 
     return (
-      <div hidden={isLoginHidden} id="homepageContainer">
-        <header className="pageHeader">Welcome to codeCommerce!</header>
-        <div id={style.homepageOptions}>
-          {loginMethodHeaders.map((option) => (
-            <header
-              key={option.id}
-              id={option.id}
-              className={option.className}
-              onClick={this.selectLoginMethod}
-            >
-              {option.textContent}
-            </header>
-          ))}
-        </div>
-        <form
-          onSubmit={(e) => {
-            toNextPage(e, "isLoginHidden", "isCartHidden");
-          }}
-        >
-          {formInputs.map((input) => (
-            <label key={input.labelText} hidden={input.isHidden}>
-              <header key={input.labelText + "1"}>{input.labelText}</header>
-              {input.labelText.includes("Password") && eyeLogo}
-              <input
-                key={input.labelText + "2"}
-                placeholder={input.placeholder}
-                type={
-                  input.labelText.includes("Password")
-                    ? passwordFieldInputType
-                    : input.inputType
-                }
-                onBlur={input.onBlur}
-                required={input.required}
-                inputMode={input.inputMode}
-              />
-              {input.labelText === "Password:" && !isLoginMethodSelected ? (
-                <p>
-                  Must contain at least 1 uppercase & 1 lowercase English
-                  letter, at least 1 digit, at least 1 special character (#, ?,
-                  !, @, $, %, ^, &, *, -), & be 8-20 characters long
-                </p>
-              ) : (
-                <p>{errors[`${input.field}Error`]}</p>
-              )}
-            </label>
-          ))}
-          <div id={style.loginBtnsContainer}>
-            <button type="submit">
-              {isLoginMethodSelected ? "Log In" : "Create Account"}
-            </button>
-            <p>or</p>
-            <a href="#" id={style.facebookLogin}>
-              <button>
-                <i className="fab fa-facebook-f"></i>Log in with Facebook
-              </button>
-            </a>
-            <div id={style.termsLinksContainer}>
-              <a href="#" className={style.termsAndConditionsLinks}>
-                Privacy Policy & Cookies
-              </a>
-              <a href="#" className={style.termsAndConditionsLinks}>
-                Terms of Sale & Use
-              </a>
-            </div>
+      <div id="loginAndCart">
+        <div hidden={isLoginHidden} id="homepageContainer">
+          <header className="pageHeader">Welcome to codeCommerce!</header>
+          <div id={style.homepageOptions}>
+            {loginMethodHeaders.map((option) => (
+              <header
+                key={option.id}
+                id={option.id}
+                className={option.className}
+                onClick={this.selectLoginMethod}
+              >
+                {option.textContent}
+              </header>
+            ))}
           </div>
-        </form>
+          <form
+            onSubmit={(e) => {
+              toNextPage(e, "isLoginHidden", "isCartHidden");
+            }}
+          >
+            {formInputs.map((input) => (
+              <label key={input.labelText} hidden={input.isHidden}>
+                <header key={input.labelText + "1"}>{input.labelText}</header>
+                {input.labelText.includes("Password") && eyeLogo}
+                <input
+                  key={input.labelText + "2"}
+                  placeholder={input.placeholder}
+                  type={
+                    input.labelText.includes("Password")
+                      ? passwordFieldInputType
+                      : input.inputType
+                  }
+                  onBlur={input.onBlur}
+                  required={input.required}
+                  inputMode={input.inputMode}
+                />
+                {input.labelText === "Password:" && !isLoginMethodSelected ? (
+                  <p>
+                    Must contain at least 1 uppercase & 1 lowercase English
+                    letter, at least 1 digit, at least 1 special character (#,
+                    ?, !, @, $, %, ^, &, *, -), & be 8-20 characters long
+                  </p>
+                ) : (
+                  <p>{errors[`${input.field}Error`]}</p>
+                )}
+              </label>
+            ))}
+            <div id={style.loginBtnsContainer}>
+              <button type="submit">
+                {isLoginMethodSelected ? "Log In" : "Create Account"}
+              </button>
+              <p>or</p>
+              <a href="#" id={style.facebookLogin}>
+                <button>
+                  <i className="fab fa-facebook-f"></i>Log in with Facebook
+                </button>
+              </a>
+              <div id={style.termsLinksContainer}>
+                <a href="#" className={style.termsAndConditionsLinks}>
+                  Privacy Policy & Cookies
+                </a>
+                <a href="#" className={style.termsAndConditionsLinks}>
+                  Terms of Sale & Use
+                </a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <Cart
+          accountEmailAddress={this.state.accountEmailAddress}
+          isCartHidden={isCartHidden}
+          isShippingHidden={isShippingHidden}
+          isPaymentHidden={isPaymentHidden}
+          isConfirmationHidden={isConfirmationHidden}
+          toNextPage={toNextPage}
+          toPreviousPage={toPreviousPage}
+          completedPages={completedPages}
+        />
       </div>
     );
   }
