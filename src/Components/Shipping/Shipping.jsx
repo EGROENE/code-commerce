@@ -175,6 +175,7 @@ class Shipping extends React.Component {
 
   render() {
     const {
+      accountEmailAddress,
       isShippingHidden,
       isPaymentHidden,
       toPreviousPage,
@@ -496,6 +497,7 @@ class Shipping extends React.Component {
           </div>
         </div>
         <Payment
+          accountEmailAddress={accountEmailAddress}
           itemsInCart={itemsInCart}
           isPaymentHidden={isPaymentHidden}
           numberOfItemsInCart={numberOfItemsInCart}
