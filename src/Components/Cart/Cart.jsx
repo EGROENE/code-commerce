@@ -139,6 +139,7 @@ class Cart extends React.Component {
 
   render() {
     const {
+      accountEmailAddress,
       isCartHidden,
       isShippingHidden,
       isPaymentHidden,
@@ -298,6 +299,7 @@ class Cart extends React.Component {
           </div>
         </div>
         <Shipping
+          accountEmailAddress={accountEmailAddress}
           itemsInCart={this.state.itemsInCart}
           numberOfItemsInCart={this.state.numberOfItemsInCart}
           discountRate={this.state.discountRate}
