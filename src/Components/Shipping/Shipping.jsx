@@ -222,12 +222,12 @@ class Shipping extends React.Component {
     return (
       <div id="shippingAndPayment">
         <div
-          className={!isShippingHidden && "checkoutPageContainer"}
+          className={!isShippingHidden ? "checkoutPageContainer" : undefined}
           hidden={isShippingHidden}
         >
           <ProgressBar completedPages={completedPages} />
           <header className="pageHeader">Shipping</header>
-          <div id={style.shippingPageMainItems}>
+          <div className="checkoutPageMainItems">
             <div>
               <form
                 id="shippingForm"
@@ -462,7 +462,7 @@ class Shipping extends React.Component {
                     )
                 )}
               </div>
-              <div className="cartSummaryTotals">
+              <div className="cartSummaryItem">
                 {summaryTotals.map((item) => (
                   <p>
                     {item.label}
@@ -496,6 +496,7 @@ class Shipping extends React.Component {
           </div>
         </div>
         <Payment
+          itemsInCart={itemsInCart}
           isPaymentHidden={isPaymentHidden}
           numberOfItemsInCart={numberOfItemsInCart}
           discountRate={discountRate}
