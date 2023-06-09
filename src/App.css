@@ -237,6 +237,11 @@ a:hover {
   background-color: var(--theme-color);
 }
 
+.checkoutPageMainItems {
+  display: flex;
+  padding: 0 2rem;
+}
+
 .cartSummary {
   text-align: right;
 }
@@ -246,13 +251,13 @@ a:hover {
   font-size: var(--size-20);
 }
 
-.cartSummaryTotals {
+.cartSummaryItem {
   border-top: 2px solid white;
   border-top: 2px solid var(--theme-color);
   text-align: right;
 }
 
-.cartSummaryTotals p {
+.cartSummaryItem p {
   font-size: var(--size-16);
 }
 
