@@ -273,6 +273,10 @@ a:hover {
   text-align: right;
 }
 
+.cartSummaryHeaders header {
+  color: var(--theme-color);
+}
+
 .cartSummaryHeaders p {
   margin: var(--size-12) 0;
   font-size: var(--size-20);
