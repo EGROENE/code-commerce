@@ -160,7 +160,7 @@ class Payment extends React.Component {
               </div>
               <div id={style.deliveryInfoContainer}>
                 <header>Delivery Information:</header>
-                <div>
+                <div id={style.deliveryInfoContainerInfoColumns}>
                   <p>
                     {shipmentDetails.title !== "" && shipmentDetails.title}{" "}
                     {shipmentDetails.name}

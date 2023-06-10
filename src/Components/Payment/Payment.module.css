@@ -12,7 +12,7 @@
     text-align: left;
 }
 
-#deliveryInfoContainer div:first-child {
+#deliveryInfoContainerInfoColumns {
     display: flex;
     width: 100%;
     max-width: 100%;
