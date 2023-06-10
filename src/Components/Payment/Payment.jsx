@@ -165,13 +165,17 @@ class Payment extends React.Component {
                     {shipmentDetails.title !== "" && shipmentDetails.title}{" "}
                     {shipmentDetails.name}
                   </p>
-                  <p>{shipmentDetails.streetAddress}</p>
-                  <p>
-                    {shipmentDetails.city}, {shipmentDetails.stateOrTerritory}{" "}
-                    {shipmentDetails.postalCode}
-                  </p>
-                  <p>Phone: {shipmentDetails.phoneNumber}</p>
-                  <p>E-mail: {accountEmailAddress}</p>
+                  <div>
+                    <p>{shipmentDetails.streetAddress}</p>
+                    <p>
+                      {shipmentDetails.city}, {shipmentDetails.stateOrTerritory}{" "}
+                      {shipmentDetails.postalCode}
+                    </p>
+                  </div>
+                  <div>
+                    <p>Phone: {shipmentDetails.phoneNumber}</p>
+                    <p>E-mail: {accountEmailAddress}</p>
+                  </div>
                 </div>
               </div>
             </form>
