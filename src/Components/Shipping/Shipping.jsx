@@ -427,6 +427,24 @@ class Shipping extends React.Component {
                   </label>
                 ))}
               </div>
+              <div className="checkoutBackNextBtnContainer">
+                <button
+                  title="Back to Cart"
+                  onClick={(e) => {
+                    toPreviousPage(e, "isCartHidden", "isShippingHidden");
+                  }}
+                >
+                  Back to Cart
+                </button>
+                <button
+                  form="shippingForm"
+                  type={!areNoErrors ? "button" : "submit"}
+                  title="To Payment"
+                  onClick={!areNoErrors ? alertFormErrors : undefined}
+                >
+                  To Payment
+                </button>
+              </div>
             </div>
             <div className="cartSummary">
               <div className="cartSummaryHeaders">
@@ -474,24 +492,6 @@ class Shipping extends React.Component {
                       })}
                   </p>
                 ))}
-                <div className="checkoutBackNextBtnContainer">
-                  <button
-                    title="Back to Cart"
-                    onClick={(e) => {
-                      toPreviousPage(e, "isCartHidden", "isShippingHidden");
-                    }}
-                  >
-                    Back to Cart
-                  </button>
-                  <button
-                    form="shippingForm"
-                    type={!areNoErrors ? "button" : "submit"}
-                    title="To Payment"
-                    onClick={!areNoErrors ? alertFormErrors : undefined}
-                  >
-                    To Payment
-                  </button>
-                </div>
               </div>
             </div>
           </div>
