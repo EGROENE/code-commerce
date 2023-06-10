@@ -157,6 +157,22 @@ class Payment extends React.Component {
                   })}
                 </button>
               </div>
+              <div id={style.deliveryInfoContainer}>
+                <header>Delivery Information:</header>
+                <div>
+                  <p>
+                    {shipmentDetails.title !== "" && shipmentDetails.title}{" "}
+                    {shipmentDetails.name}
+                  </p>
+                  <p>{shipmentDetails.streetAddress}</p>
+                  <p>
+                    {shipmentDetails.city}, {shipmentDetails.stateOrTerritory}{" "}
+                    {shipmentDetails.postalCode}
+                  </p>
+                  <p>Phone: {shipmentDetails.phoneNumber}</p>
+                  <p>E-mail: {accountEmailAddress}</p>
+                </div>
+              </div>
             </form>
             <div className="cartSummary">
               <div className="cartSummaryHeaders">
@@ -205,7 +221,7 @@ class Payment extends React.Component {
                   </p>
                 ))}
               </div>
-              <div className="cartSummaryItem">
+              {/* <div className="cartSummaryItem">
                 <header>Delivery Information</header>
                 <p>
                   {shipmentDetails.title !== "" && shipmentDetails.title}{" "}
@@ -218,7 +234,7 @@ class Payment extends React.Component {
                 </p>
                 <p>Phone: {shipmentDetails.phoneNumber}</p>
                 <p>E-mail: {accountEmailAddress}</p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
