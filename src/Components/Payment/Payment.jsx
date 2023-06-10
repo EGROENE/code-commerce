@@ -181,7 +181,7 @@ class Payment extends React.Component {
             </form>
             <div className="cartSummary">
               <div className="cartSummaryHeaders">
-                <header>Order Summary</header>
+                <header>Order Summary:</header>
                 {numberOfItemsInCart === 1 ? (
                   <p>{numberOfItemsInCart} item in cart</p>
                 ) : (
