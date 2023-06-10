@@ -137,7 +137,7 @@ class Payment extends React.Component {
                     type="text"
                     required
                     inputMode="numeric"
-                    placeholder="Enter 3-digit CVV code"
+                    placeholder="3-digit CVV code"
                   />
                 </label>
               </div>
