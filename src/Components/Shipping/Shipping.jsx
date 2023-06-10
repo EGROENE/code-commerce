@@ -275,7 +275,7 @@ class Shipping extends React.Component {
                   </label>
                 </div>
                 <label>
-                  <header>Street address: </header>
+                  <header>Street Address: </header>
                   <input
                     id="streetAddress"
                     type="text"
