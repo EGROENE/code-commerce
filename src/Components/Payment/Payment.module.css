@@ -1,3 +1,21 @@
 #expiryAndCVV {
     display: flex;
 }
+
+#deliveryInfoContainer {
+    margin-top: var(--size-24);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    border: 2px solid var(--theme-color);
+    padding: var(--size-12);
+    text-align: left;
+}
+
+#deliveryInfoContainer header {
+    color: var(--theme-color);
+}
+
+#deliveryInfoContainer p {
+    font-size: var(--size-12);
+}
