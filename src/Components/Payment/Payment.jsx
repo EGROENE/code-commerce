@@ -143,13 +143,14 @@ class Payment extends React.Component {
               </div>
               <div className="checkoutBackNextBtnContainer">
                 <button
+                  title="Back to Shipping"
                   onClick={(e) => {
                     toPreviousPage(e, "isShippingHidden", "isPaymentHidden");
                   }}
                 >
                   Back to Shipping
                 </button>
-                <button>
+                <button title="Pay & Place Order">
                   Pay $
                   {cartTotal.toLocaleString(undefined, {
                     minimumFractionDigits: 2,
