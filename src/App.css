@@ -296,6 +296,11 @@ a:hover {
 
 .cartSummaryItem p {
   font-size: var(--size-16);
+  color: var(--theme-color);
+}
+
+.cartSummaryItem p span {
+  color: white;
 }
 
 .checkoutBackNextBtnContainer {
@@ -336,6 +341,11 @@ a:hover {
 
 .itemInCartSummary p {
   font-size: 0.7rem;
+  color: var(--theme-color);
+}
+
+.itemInCartSummary p span {
+  color: white;
 }
 
 .itemDetailsShippingPage p:first-child {
