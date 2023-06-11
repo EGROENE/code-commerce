@@ -9,13 +9,13 @@ class Payment extends React.Component {
     this.state = {
       errors: {
         cardNumberError: "",
-        cardHolderNameError: "",
+        cardHolderError: "",
         expiryError: "",
         securityCodeError: "",
       },
       paymentDetails: {
-        cardNumber: "",
         cardHolder: "",
+        cardNumber: "",
         expiryDate: "",
         securityCode: "",
       },
@@ -23,6 +23,34 @@ class Payment extends React.Component {
   }
 
   // Validation methods:
+  validateCardHolderName = (e) => {
+    let value = e.target.value.trim();
+    if (/^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value)) {
+      console.log("valid ");
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          cardHolderError: "",
+        },
+        details: {
+          ...prevState.details,
+          cardHolder: value,
+        },
+      }));
+    } else {
+      console.log("invalid");
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          cardHolderError: "Enter only alphabetic characters (and any hyphens)",
+        },
+        details: {
+          ...prevState.details,
+          cardHolder: "",
+        },
+      }));
+    }
+  };
 
   render() {
     const {
@@ -74,11 +102,15 @@ class Payment extends React.Component {
               <label htmlFor="">
                 <header>Cardholder Name: </header>
                 <input
+                  onChange={this.validateCardHolderName}
                   type="text"
                   required
                   inputMode="text"
                   placeholder="Enter name as it appears on card"
                 />
+                {this.state.errors.cardHolderError && (
+                  <p>{this.state.errors.cardHolderError}</p>
+                )}
               </label>
               <label htmlFor="">
                 <header>Card Number: </header>
