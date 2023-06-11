@@ -74,7 +74,19 @@ class Shipping extends React.Component {
   // Method to validate street address:
   validateStreetAddress = (e) => {
     let value = e.target.value.trim();
-    if (/[^A-Za-z0-9#'/ -]+/i.test(value) && value.length > 10) {
+    console.log(value);
+    if (/[^A-Za-z0-9#/ -]+/i.test(value) && value.length > 10) {
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          streetAddress: "",
+        },
+        details: {
+          ...prevState.details,
+          streetAddress: value,
+        },
+      }));
+    } else {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -84,17 +96,6 @@ class Shipping extends React.Component {
         details: {
           ...prevState.details,
           streetAddress: "",
-        },
-      }));
-    } else {
-      this.setState((prevState) => ({
-        errors: {
-          ...prevState.errors,
-          streetAddress: "",
-        },
-        details: {
-          ...prevState.details,
-          streetAddress: value,
         },
       }));
     }
