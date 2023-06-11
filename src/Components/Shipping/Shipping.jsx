@@ -410,7 +410,7 @@ class Shipping extends React.Component {
               </form>
               <div id={style.deliveryOptions}>
                 <header>
-                  Delivery Options <a href="#">Shipping Details</a>
+                  Delivery Options: <a href="#">Shipping Details</a>
                 </header>
                 {deliveryOptions.map((item) => (
                   <label>
@@ -463,18 +463,26 @@ class Shipping extends React.Component {
                         <img src={item.itemImage} alt="Item" />
                         <div className={style.itemDetailsShippingPage}>
                           <p>{item.itemName}</p>
-                          <p>Category: {item.category}</p>
-                          <p>Language: {item.language}</p>
-                          <p>Quantity: {item.quantity}</p>
                           <p>
-                            <span className="itemInfoHeader">Item Total:</span>
-                            {" $" +
-                              roundToHundredth(
-                                item.quantity * item.unitPrice
-                              ).toLocaleString(undefined, {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })}
+                            Category: <span>{item.category}</span>
+                          </p>
+                          <p>
+                            Language: <span>{item.language}</span>
+                          </p>
+                          <p>
+                            Quantity: <span>{item.quantity}</span>
+                          </p>
+                          <p className="itemInfoHeader">
+                            Item Total:
+                            <span>
+                              {" $" +
+                                roundToHundredth(
+                                  item.quantity * item.unitPrice
+                                ).toLocaleString(undefined, {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })}
+                            </span>
                           </p>
                         </div>
                       </div>
@@ -485,11 +493,13 @@ class Shipping extends React.Component {
                 {summaryTotals.map((item) => (
                   <p>
                     {item.label}
-                    {" $" +
-                      item.value.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
+                    <span>
+                      {" $" +
+                        item.value.toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                    </span>
                   </p>
                 ))}
               </div>
