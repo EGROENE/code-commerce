@@ -2,6 +2,7 @@ import React from "react";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import style from "./Payment.module.css";
 import { alertFormErrors, roundToHundredth } from "../../methods";
+import { cardRegexPatterns } from "../../constants";
 
 class Payment extends React.Component {
   constructor(props) {
@@ -14,8 +15,10 @@ class Payment extends React.Component {
         securityCodeError: "",
       },
       paymentDetails: {
+        cardType: "",
         cardHolder: "",
         cardNumber: "",
+        cardNumberMask: "",
         expiryDate: "",
         securityCode: "",
       },
@@ -47,6 +50,72 @@ class Payment extends React.Component {
         details: {
           ...prevState.details,
           cardHolder: "",
+        },
+      }));
+    }
+  };
+
+  // If input of card number field matches any RegEx patterns of accepted cards, the card type (AmEx, Visa, etc.) is returned. If not, nothing is returned.
+  findDebitCardType = (cardNumber) => {
+    for (const cardType in cardRegexPatterns) {
+      if (cardNumber.replace(/[^\d]/g, "").match(cardRegexPatterns[cardType])) {
+        return cardType;
+      }
+    }
+    return "";
+  };
+
+  // Check that card number is valid. Return error message if not.
+  checkCardNumberError = (cardNumber) => {
+    for (const card in cardRegexPatterns) {
+      // Remove any empty spaces (chars that are not digits) in card number:
+      if (cardNumber.replace(/[^\d]/g, "").match(cardRegexPatterns[card])) {
+        if (cardNumber) {
+          return cardNumber &&
+            /^[1-6]{1}[0-9]{14,15}$/i.test(
+              cardNumber.replace(/[^\d]/g, "").trim()
+            )
+            ? ""
+            : "Please enter a valid card number";
+        }
+      }
+    }
+    return "Please enter a valid card number";
+  };
+
+  validateCardNumber = (e) => {
+    let value = e.target.value.trim();
+    let errorText = this.checkCardNumberError(value);
+    let mask = value.split(" ").join("");
+    // If any input...
+    if (mask.length) {
+      // Add space after every fourth character:
+      mask = mask.match(new RegExp(".{1,4}", "g")).join(" ");
+      // Set appropriate state values:
+      this.setState((prevState) => ({
+        paymentDetails: {
+          ...prevState.paymentDetails,
+          cardNumberMask: mask,
+          cardNumber: value.replace(/\s/g, ""),
+          cardType: this.findDebitCardType(value),
+        },
+        errors: {
+          ...prevState.errors,
+          cardNumberError: errorText,
+        },
+      }));
+      // If no input, reset appropriate state values:
+    } else {
+      this.setState((prevState) => ({
+        paymentDetails: {
+          ...prevState.paymentDetails,
+          cardNumberMask: "",
+          cardNumber: "",
+          cardType: "",
+        },
+        errors: {
+          ...prevState.errors,
+          cardNumberError: "",
         },
       }));
     }
@@ -115,10 +184,21 @@ class Payment extends React.Component {
               <label htmlFor="">
                 <header>Card Number: </header>
                 <input
+                  onChange={this.validateCardNumber}
                   type="text"
                   required
                   inputMode="numeric"
+                  value={
+                    this.state.paymentDetails.cardNumberMask !== ""
+                      ? this.state.paymentDetails.cardNumberMask
+                      : ""
+                  }
                   placeholder="Enter card number"
+                  maxLength={
+                    this.state.paymentDetails.cardType === "AMERICAN_EXPRESS"
+                      ? 18
+                      : 19
+                  }
                 />
               </label>
               <div id={style.expiryAndCVV}>
