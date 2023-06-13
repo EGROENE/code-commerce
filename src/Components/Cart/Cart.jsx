@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./Cart.module.css";
-import { ITEMS_IN_CART } from "../../Constants/itemsAddedToCart.js";
+import { ITEMS_IN_CART } from "../../constants";
 import { roundToHundredth } from "../../methods";
 import Shipping from "../Shipping/Shipping";
 
