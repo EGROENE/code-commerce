@@ -137,6 +137,7 @@ class Payment extends React.Component {
       toPreviousPage,
       shipmentDetails,
       shippingAndHandling,
+      deliveryTime,
     } = this.props;
 
     // Calculate totals based on current state values of unit prices & quantity:
@@ -334,6 +335,7 @@ class Payment extends React.Component {
                     <p>E-mail: {accountEmailAddress}</p>
                   </div>
                 </div>
+                <p>- Delivery within {deliveryTime} of placing order -</p>
               </div>
             </form>
             <div className="cartSummary">
