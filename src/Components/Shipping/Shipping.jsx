@@ -215,7 +215,7 @@ class Shipping extends React.Component {
       {
         id: "expeditedDelivery",
         deliveryPrice: 50,
-        label: "Expedited (within 3 hours): $50",
+        label: "Expedited (within 3 seconds): $50",
       },
       {
         id: "standardDelivery",
