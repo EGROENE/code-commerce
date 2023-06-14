@@ -145,7 +145,7 @@ class Payment extends React.Component {
         },
         errors: {
           ...prevState.errors,
-          expiryError: "Expiry date must be later than current date",
+          expiryError: "Invalid date",
         },
       }));
     } else {
@@ -179,7 +179,7 @@ class Payment extends React.Component {
         },
         errors: {
           ...prevState.errors,
-          expiryError: "Expiry date must be later than current date",
+          expiryError: "Invalid date",
         },
       }));
     } else {
