@@ -47,10 +47,6 @@ class App extends React.Component {
             [selectedPageHidden]: true,
             [nextPageHidden]: false,
           },
-          completedPages: {
-            ...prevState.completedPages,
-            shipping: true,
-          },
         }));
       } else if (selectedPageHidden === "isPaymentHidden") {
         this.setState((prevState) => ({
@@ -58,11 +54,6 @@ class App extends React.Component {
             ...prevState.pageDisplayOptions,
             [selectedPageHidden]: true,
             [nextPageHidden]: false,
-          },
-          completedPages: {
-            ...prevState.completedPages,
-            payment: true,
-            confirmation: true,
           },
         }));
       } else {
@@ -89,10 +80,6 @@ class App extends React.Component {
             [previousPageHidden]: false,
             [selectedPageHidden]: true,
           },
-          completedPages: {
-            ...prevState.completedPages,
-            cart: false,
-          },
         }));
       } else if (selectedPageHidden === "isShippingHidden") {
         this.setState((prevState) => ({
@@ -101,10 +88,6 @@ class App extends React.Component {
             [previousPageHidden]: false,
             [selectedPageHidden]: true,
           },
-          completedPages: {
-            ...prevState.completedPages,
-            shipping: false,
-          },
         }));
       } else if (selectedPageHidden === "isPaymentHidden") {
         this.setState((prevState) => ({
@@ -112,11 +95,6 @@ class App extends React.Component {
             ...prevState.pageDisplayOptions,
             [previousPageHidden]: false,
             [selectedPageHidden]: true,
-          },
-          completedPages: {
-            ...prevState.completedPages,
-            payment: false,
-            confirmation: false,
           },
         }));
       } else {
