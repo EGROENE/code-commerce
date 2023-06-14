@@ -197,6 +197,33 @@ class Payment extends React.Component {
     }
   };
 
+  validateCVV = (e) => {
+    let value = e.target.value;
+    if (/[0-9]$/i.test(value)) {
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          securityCodeError: "",
+        },
+        paymentDetails: {
+          ...prevState.paymentDetails,
+          securityCode: value,
+        },
+      }));
+    } else {
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          securityCodeError: "3-digit CVV (on card back)",
+        },
+        paymentDetails: {
+          ...prevState.paymentDetails,
+          securityCode: value,
+        },
+      }));
+    }
+  };
+
   render() {
     const {
       accountEmailAddress,
@@ -377,6 +404,7 @@ class Payment extends React.Component {
                 <label htmlFor="">
                   <header>CVV:</header>
                   <input
+                    onChange={this.validateCVV}
                     minLength="3"
                     maxLength="3"
                     type="text"
@@ -384,6 +412,9 @@ class Payment extends React.Component {
                     inputMode="numeric"
                     placeholder="3-digit CVV code"
                   />
+                  {this.state.errors.securityCodeError && (
+                    <p>{this.state.errors.securityCodeError}</p>
+                  )}
                 </label>
               </div>
               <div className="checkoutBackNextBtnContainer">
