@@ -4,6 +4,9 @@ import style from "./Payment.module.css";
 import { alertFormErrors, roundToHundredth } from "../../methods";
 import { cardImages, cardRegexPatterns } from "../../constants";
 
+let currentMonth = new Date().getMonth() + 1;
+let currentYear = new Date().getFullYear();
+
 class Payment extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +22,8 @@ class Payment extends React.Component {
         cardHolder: "",
         cardNumber: "",
         cardNumberMask: "",
-        expiryDate: "",
+        expiryMonth: "",
+        expiryYear: "",
         securityCode: "",
         cardImage: "",
       },
@@ -120,6 +124,74 @@ class Payment extends React.Component {
         errors: {
           ...prevState.errors,
           cardNumberError: "",
+        },
+      }));
+    }
+  };
+
+  getExpiryMonth = (e) => {
+    let value = e.target.value;
+    if (
+      (+value <= currentMonth &&
+        +this.state.paymentDetails.expiryYear === currentYear) ||
+      (+this.state.paymentDetails.expiryYear !== 0 &&
+        +this.state.paymentDetails.expiryYear < currentYear)
+    ) {
+      this.setState((prevState) => ({
+        ...prevState,
+        paymentDetails: {
+          ...prevState.paymentDetails,
+          expiryMonth: value,
+        },
+        errors: {
+          ...prevState.errors,
+          expiryError: "Expiry date must be later than current date",
+        },
+      }));
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        paymentDetails: {
+          ...prevState.paymentDetails,
+          expiryMonth: value,
+        },
+        errors: {
+          ...prevState.errors,
+          expiryError: "",
+        },
+      }));
+    }
+  };
+
+  getExpiryYear = (e) => {
+    let value = e.target.value;
+    if (
+      (+this.state.paymentDetails.expiryMonth !== "" &&
+        +this.state.paymentDetails.expiryMonth <= currentMonth &&
+        +value === currentYear) ||
+      +value < currentYear
+    ) {
+      this.setState((prevState) => ({
+        ...prevState,
+        paymentDetails: {
+          ...prevState.paymentDetails,
+          expiryYear: value,
+        },
+        errors: {
+          ...prevState.errors,
+          expiryError: "Expiry date must be later than current date",
+        },
+      }));
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        paymentDetails: {
+          ...prevState.paymentDetails,
+          expiryYear: value,
+        },
+        errors: {
+          ...prevState.errors,
+          expiryError: "",
         },
       }));
     }
@@ -268,7 +340,7 @@ class Payment extends React.Component {
               <div id={style.expiryAndCVV}>
                 <label htmlFor="">
                   <header>Expiry Date: </header>
-                  <select name="" id="">
+                  <select id="selectExpiryMonth" onChange={this.getExpiryMonth}>
                     <option disabled selected>
                       Month
                     </option>
@@ -278,7 +350,7 @@ class Payment extends React.Component {
                       </option>
                     ))}
                   </select>
-                  <select name="" id="">
+                  <select id="selectExpiryYear" onChange={this.getExpiryYear}>
                     <option disabled selected>
                       Year
                     </option>
@@ -288,6 +360,9 @@ class Payment extends React.Component {
                       </option>
                     ))}
                   </select>
+                  {this.state.errors.expiryError && (
+                    <p>{this.state.errors.expiryError}</p>
+                  )}
                 </label>
                 <label htmlFor="">
                   <header>CVV:</header>
