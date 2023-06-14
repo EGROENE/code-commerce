@@ -230,7 +230,10 @@ class Shipping extends React.Component {
           className={!isShippingHidden ? "checkoutPageContainer" : undefined}
           hidden={isShippingHidden}
         >
-          <ProgressBar completedPages={completedPages} />
+          <ProgressBar
+            isShippingCompleted={completedPages.shipping}
+            completedPages={completedPages}
+          />
           <header className="pageHeader">Shipping</header>
           <div className="checkoutPageMainItems">
             <div>
@@ -519,6 +522,7 @@ class Shipping extends React.Component {
           toNextPage={toNextPage}
           toPreviousPage={toPreviousPage}
           completedPages={completedPages}
+          isShippingCompleted={!completedPages.shipping}
           shipmentDetails={this.state.details}
           shippingAndHandling={this.state.shippingAndHandling}
           deliveryTime={this.state.deliveryTime}
