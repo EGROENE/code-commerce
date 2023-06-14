@@ -162,6 +162,52 @@ class Payment extends React.Component {
       (element) => element === ""
     );
 
+    const months = [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12",
+    ];
+
+    const years = [
+      "2023",
+      "2024",
+      "2025",
+      "2026",
+      "2027",
+      "2028",
+      "2029",
+      "2030",
+      "2031",
+      "2032",
+      "2033",
+      "2034",
+      "2035",
+      "2036",
+      "2037",
+      "2038",
+      "2039",
+      "2040",
+      "2041",
+      "2042",
+      "2043",
+      "2044",
+      "2045",
+      "2046",
+      "2047",
+      "2048",
+      "2049",
+      "2050",
+    ];
+
     return (
       <div id="paymentAndConfirmation">
         <div
@@ -219,39 +265,21 @@ class Payment extends React.Component {
                     <option disabled selected>
                       Month
                     </option>
-                    <option value="01">01</option>
-                    <option value="02">02</option>
-                    <option value="03">03</option>
-                    <option value="04">04</option>
-                    <option value="05">05</option>
-                    <option value="06">06</option>
-                    <option value="07">07</option>
-                    <option value="08">08</option>
-                    <option value="09">09</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
+                    {months.map((month) => (
+                      <option key={month} value={month}>
+                        {month}
+                      </option>
+                    ))}
                   </select>
                   <select name="" id="">
                     <option disabled selected>
                       Year
                     </option>
-                    <option value="2023">2023</option>
-                    <option value="2024">2024</option>
-                    <option value="2025">2025</option>
-                    <option value="2026">2026</option>
-                    <option value="2027">2027</option>
-                    <option value="2028">2028</option>
-                    <option value="2029">2029</option>
-                    <option value="2030">2030</option>
-                    <option value="2031">2031</option>
-                    <option value="2032">2032</option>
-                    <option value="2033">2033</option>
-                    <option value="2034">2034</option>
-                    <option value="2035">2035</option>
-                    <option value="2036">2036</option>
-                    <option value="2037">2037</option>
-                    <option value="2038">2038</option>
+                    {years.map((year) => (
+                      <option key={year} value={year}>
+                        {year}
+                      </option>
+                    ))}
                   </select>
                 </label>
                 <label htmlFor="">
