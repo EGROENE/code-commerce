@@ -2,7 +2,7 @@ import React from "react";
 
 class ProgressBar extends React.Component {
   render() {
-    const { completedPages } = this.props;
+    const { completedPages, isShippingCompleted } = this.props;
     const progressBarElements = [
       {
         id: "Cart",
@@ -13,7 +13,7 @@ class ProgressBar extends React.Component {
       {
         id: "Shipping",
         class: "fas fa-shipping-fast",
-        isCompleted: completedPages.shipping,
+        isCompleted: isShippingCompleted,
         isLast: false,
       },
       {
