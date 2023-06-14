@@ -1,3 +1,8 @@
+import VISA from "./Components/assets/visa.png";
+import MASTERCARD from "./Components/assets/masterCard.png";
+import AMERICAN_EXPRESS from "./Components/assets/amex.png";
+import DISCOVER from "./Components/assets/discover.png";
+
 export const ITEMS_IN_CART = [
   {
     itemName: "The Ultimate JS RegEx Pack",
@@ -26,4 +31,11 @@ export const cardRegexPatterns = {
   VISA: /^4[0-9]{2,}$/,
   AMERICAN_EXPRESS: /^3[47][0-9]{5,}$/,
   DISCOVER: /^6(?:011|5[0-9]{2})[0-9]{3,}$/,
+};
+
+export const cardImages = {
+  VISA: VISA,
+  MASTERCARD: MASTERCARD,
+  AMERICAN_EXPRESS: AMERICAN_EXPRESS,
+  DISCOVER: DISCOVER,
 };
