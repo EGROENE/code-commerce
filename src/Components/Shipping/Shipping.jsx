@@ -26,6 +26,7 @@ class Shipping extends React.Component {
         phoneNumber: "",
       },
       shippingAndHandling: 50,
+      deliveryTime: "3 seconds",
     };
   }
 
@@ -165,11 +166,13 @@ class Shipping extends React.Component {
       this.setState((prevState) => ({
         ...prevState,
         shippingAndHandling: 50,
+        deliveryTime: "3 seconds",
       }));
     } else {
       this.setState((prevState) => ({
         ...prevState,
         shippingAndHandling: 10,
+        deliveryTime: "3 days",
       }));
     }
   };
@@ -518,6 +521,7 @@ class Shipping extends React.Component {
           completedPages={completedPages}
           shipmentDetails={this.state.details}
           shippingAndHandling={this.state.shippingAndHandling}
+          deliveryTime={this.state.deliveryTime}
         />
       </div>
     );
