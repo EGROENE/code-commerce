@@ -24,6 +24,7 @@ class Shipping extends React.Component {
         city: "",
         stateOrTerritory: "",
         phoneNumber: "",
+        phoneNumberMask: "",
       },
       shippingAndHandling: 50,
       deliveryTime: "3 seconds",
@@ -131,9 +132,19 @@ class Shipping extends React.Component {
     }
   };
 
+  formatPhoneNumber(phoneNumberString) {
+    let cleaned = ("" + phoneNumberString).replace(/\D/g, "");
+    let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      return "(" + match[1] + ") " + match[2] + "-" + match[3];
+    }
+    return null;
+  }
+
   // Method to validate phone number:
   validatePhoneNumber = (e) => {
     let value = e.target.value.trim();
+    let phoneNumberMask = this.formatPhoneNumber(value);
     if (/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/i.test(value)) {
       this.setState((prevState) => ({
         errors: {
@@ -143,18 +154,19 @@ class Shipping extends React.Component {
         details: {
           ...prevState.details,
           phoneNumber: value.replace(/[^\d]/g, ""),
+          phoneNumberMask: phoneNumberMask,
         },
       }));
     } else {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
-          phoneNumber:
-            "Enter 10-digit number. You may use parentheses, hyphens, spaces, or periods to format it, or just type in full number.",
+          phoneNumber: "Enter 10-digit, US number",
         },
         details: {
           ...prevState.details,
           phoneNumber: "",
+          phoneNumberMask: phoneNumberMask,
         },
       }));
     }
@@ -412,10 +424,15 @@ class Shipping extends React.Component {
                     id="phoneNumber"
                     placeholder="Enter US phone number"
                     type="text"
-                    onBlur={this.validatePhoneNumber}
+                    onChange={this.validatePhoneNumber}
                     inputMode="numeric"
-                    minLength="12"
-                    maxLength="12"
+                    minLength="14"
+                    maxLength="14"
+                    value={
+                      this.state.details.phoneNumberMask
+                        ? this.state.details.phoneNumberMask
+                        : undefined
+                    }
                   />
                   {this.state.errors.phoneNumber !== "" && (
                     <p>{this.state.errors.phoneNumber}</p>
