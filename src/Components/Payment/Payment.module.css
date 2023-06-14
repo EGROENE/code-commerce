@@ -1,8 +1,8 @@
 .cardImage {
     position: absolute;
     right: 1%;
-    top: 36px;
-    height: 37%;
+    top: 36px;  
+    height: 24px;
     background-color: white;
 }
 
