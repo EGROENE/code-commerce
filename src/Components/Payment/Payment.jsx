@@ -2,7 +2,7 @@ import React from "react";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import style from "./Payment.module.css";
 import { alertFormErrors, roundToHundredth } from "../../methods";
-import { cardRegexPatterns } from "../../constants";
+import { cardImages, cardRegexPatterns } from "../../constants";
 
 class Payment extends React.Component {
   constructor(props) {
@@ -21,6 +21,7 @@ class Payment extends React.Component {
         cardNumberMask: "",
         expiryDate: "",
         securityCode: "",
+        cardImage: "",
       },
     };
   }
@@ -86,6 +87,7 @@ class Payment extends React.Component {
   validateCardNumber = (e) => {
     let value = e.target.value.trim();
     let errorText = this.checkCardNumberError(value);
+    let cardType = this.findDebitCardType(value);
     let mask = value.split(" ").join("");
     // If any input...
     if (mask.length) {
@@ -97,7 +99,8 @@ class Payment extends React.Component {
           ...prevState.paymentDetails,
           cardNumberMask: mask,
           cardNumber: value.replace(/\s/g, ""),
-          cardType: this.findDebitCardType(value),
+          cardType: cardType,
+          cardImage: cardImages[cardType],
         },
         errors: {
           ...prevState.errors,
@@ -112,6 +115,7 @@ class Payment extends React.Component {
           cardNumberMask: "",
           cardNumber: "",
           cardType: "",
+          cardImage: "",
         },
         errors: {
           ...prevState.errors,
@@ -200,6 +204,13 @@ class Payment extends React.Component {
                       : 19
                   }
                 />
+                {this.state.paymentDetails.cardType !== "" && (
+                  <img
+                    className={style.cardImage}
+                    src={this.state.paymentDetails.cardImage}
+                    alt="card"
+                  />
+                )}
               </label>
               <div id={style.expiryAndCVV}>
                 <label htmlFor="">
