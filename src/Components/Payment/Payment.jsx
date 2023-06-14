@@ -294,6 +294,7 @@ class Payment extends React.Component {
               <label htmlFor="">
                 <header>Cardholder Name: </header>
                 <input
+                  minLength="1"
                   onChange={this.validateCardHolderName}
                   type="text"
                   required
@@ -320,6 +321,11 @@ class Payment extends React.Component {
                       : ""
                   }
                   placeholder="Enter card number"
+                  minLength={
+                    this.state.paymentDetails.cardType === "AMERICAN_EXPRESS"
+                      ? 18
+                      : 19
+                  }
                   maxLength={
                     this.state.paymentDetails.cardType === "AMERICAN_EXPRESS"
                       ? 18
@@ -367,6 +373,8 @@ class Payment extends React.Component {
                 <label htmlFor="">
                   <header>CVV:</header>
                   <input
+                    minLength="3"
+                    maxLength="3"
                     type="text"
                     required
                     inputMode="numeric"
