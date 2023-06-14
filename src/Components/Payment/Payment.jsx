@@ -203,6 +203,7 @@ class Payment extends React.Component {
       itemsInCart,
       isPaymentHidden,
       completedPages,
+      isShippingCompleted,
       numberOfItemsInCart,
       discountRate,
       toNextPage,
@@ -287,7 +288,10 @@ class Payment extends React.Component {
           className={!isPaymentHidden ? "checkoutPageContainer" : undefined}
           hidden={isPaymentHidden}
         >
-          <ProgressBar completedPages={completedPages} />
+          <ProgressBar
+            completedPages={completedPages}
+            isShippingCompleted={isShippingCompleted}
+          />
           <header className="pageHeader">Payment</header>
           <div className="checkoutPageMainItems">
             <form id={style.paymentForm}>
