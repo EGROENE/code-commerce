@@ -105,9 +105,8 @@ class Shipping extends React.Component {
 
   // Method to validate ZIP code:
   validatePostalCode = (e) => {
-    let value = e.target.value.trim();
-    let field = e.target.id;
-    if (/^[0-9]{5}$/i.test(value)) {
+    let value = e.target.value;
+    if (/[0-9]$/i.test(value)) {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -115,7 +114,7 @@ class Shipping extends React.Component {
         },
         details: {
           ...prevState.details,
-          [field]: value,
+          postalCode: value,
         },
       }));
     } else {
@@ -126,7 +125,7 @@ class Shipping extends React.Component {
         },
         details: {
           ...prevState.details,
-          [field]: "",
+          postalCode: "",
         },
       }));
     }
