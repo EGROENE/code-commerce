@@ -260,6 +260,9 @@ class Payment extends React.Component {
                     alt="card"
                   />
                 )}
+                {this.state.errors.cardNumberError && (
+                  <p>{this.state.errors.cardNumberError}</p>
+                )}
               </label>
               <div id={style.expiryAndCVV}>
                 <label htmlFor="">
