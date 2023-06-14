@@ -135,6 +135,10 @@ label header {
   font-size: var(--size-24);
 }
 
+label header span {
+  font-size: var(--size-12);
+}
+
 label p {
   font-size: var(--size-16);
   margin: 0;

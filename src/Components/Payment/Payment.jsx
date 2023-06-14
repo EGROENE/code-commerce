@@ -232,7 +232,10 @@ class Payment extends React.Component {
                 )}
               </label>
               <label htmlFor="">
-                <header>Card Number: </header>
+                <header>
+                  Card Number:{" "}
+                  <span>MasterCard, American Express, Visa, or Discover</span>
+                </header>
                 <input
                   onChange={this.validateCardNumber}
                   type="text"
