@@ -201,7 +201,7 @@ class Payment extends React.Component {
   };
 
   validateCVV = (e) => {
-    let value = e.target.value;
+    let value = e.target.value.trim();
     if (/[0-9]$/i.test(value)) {
       this.setState((prevState) => ({
         errors: {
@@ -414,6 +414,7 @@ class Payment extends React.Component {
                     required
                     inputMode="numeric"
                     placeholder="3-digit CVV code"
+                    value={this.state.paymentDetails.securityCode}
                   />
                   {this.state.errors.securityCodeError && (
                     <p>{this.state.errors.securityCodeError}</p>
