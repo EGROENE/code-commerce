@@ -36,6 +36,12 @@
     margin-right: var(--size-12);
 }
 
+#nameErrorMessage {
+    position: absolute;
+    left: 100%;
+    width: 82%;
+}
+
 #moreAddressDetails {
     display: flex;
     align-items: flex-start;

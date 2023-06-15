@@ -238,7 +238,7 @@ class Login extends React.Component {
         labelText: "Email Address:",
         placeholder: "Enter your email address",
         inputType: "email",
-        onBlur: this.validateEmail,
+        onChange: this.validateEmail,
         field: "email",
         required: true,
         inputMode: "email",
@@ -248,7 +248,7 @@ class Login extends React.Component {
         labelText: "Password:",
         placeholder: this.state.passwordPlaceholder,
         inputType: this.state.passwordFieldInputType,
-        onBlur: this.validatePassword,
+        onChange: this.validatePassword,
         field: "password",
         required: true,
         inputMode: "password",
@@ -258,7 +258,7 @@ class Login extends React.Component {
         labelText: "Confirm Password:",
         placeholder: "Confirm Password",
         inputType: this.state.passwordFieldInputType,
-        onBlur: this.validatePasswordConfirmation,
+        onChange: this.validatePasswordConfirmation,
         field: "confirmPassword",
         required: this.state.isRequired,
         inputMode: "password",
@@ -268,7 +268,7 @@ class Login extends React.Component {
         labelText: "First Name:",
         placeholder: "Enter your first name",
         inputType: "text",
-        onBlur: this.validateNames,
+        onChange: this.validateNames,
         field: "name",
         required: this.state.isRequired,
         inputMode: "text",
@@ -278,7 +278,7 @@ class Login extends React.Component {
         labelText: "Last Name:",
         placeholder: "Enter your last name",
         inputType: "text",
-        onBlur: this.validateNames,
+        onChange: this.validateNames,
         field: "name",
         required: this.state.isRequired,
         inputMode: "text",
@@ -288,7 +288,7 @@ class Login extends React.Component {
         labelText: "Postal Code:",
         placeholder: "US postal code (ex. 12345)",
         inputType: "text",
-        onBlur: this.validatePostalCode,
+        onChange: this.validatePostalCode,
         field: "postalCode",
         required: this.state.isRequired,
         inputMode: "numeric",
@@ -328,7 +328,7 @@ class Login extends React.Component {
                       ? passwordFieldInputType
                       : input.inputType
                   }
-                  onBlur={input.onBlur}
+                  onChange={input.onChange}
                   required={input.required}
                   inputMode={input.inputMode}
                 />

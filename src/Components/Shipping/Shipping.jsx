@@ -279,7 +279,7 @@ class Shipping extends React.Component {
                       <input
                         id="name"
                         type="text"
-                        onBlur={(e) => {
+                        onChange={(e) => {
                           this.validateNameCity(e, "name");
                         }}
                         placeholder="Enter recipient name"
@@ -289,7 +289,9 @@ class Shipping extends React.Component {
                       />
                     </div>
                     {this.state.errors.name !== "" && (
-                      <p>{this.state.errors.name}</p>
+                      <p id={style.nameErrorMessage}>
+                        {this.state.errors.name}
+                      </p>
                     )}
                   </label>
                 </div>
@@ -300,7 +302,7 @@ class Shipping extends React.Component {
                     type="text"
                     required
                     placeholder="Delivery address"
-                    onBlur={this.validateStreetAddress}
+                    onChange={this.validateStreetAddress}
                     inputMode="text"
                     minLength="1"
                   />
@@ -315,7 +317,7 @@ class Shipping extends React.Component {
                       id="postalCode"
                       placeholder="5-digit ZIP code"
                       type="text"
-                      onBlur={this.validatePostalCode}
+                      onChange={this.validatePostalCode}
                       required
                       inputMode="numeric"
                       minLength="5"
@@ -332,7 +334,7 @@ class Shipping extends React.Component {
                       id="city"
                       placeholder="Enter city"
                       type="text"
-                      onBlur={(e) => {
+                      onChange={(e) => {
                         this.validateNameCity(e, "city");
                       }}
                       required
