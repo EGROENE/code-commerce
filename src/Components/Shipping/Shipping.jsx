@@ -65,7 +65,7 @@ class Shipping extends React.Component {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
-          [field]: "Enter alphabetical characters & any spaces between names",
+          [field]: "Enter alphabetical characters & any spaces between words",
         },
         details: {
           ...prevState.details,
