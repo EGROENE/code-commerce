@@ -87,7 +87,6 @@ class Login extends React.Component {
         value.trim()
       )
     ) {
-      console.log("valid");
       // Update email error state value to "". Will need to access previous state values.
       this.setState((prevState) => ({
         accountEmailAddress: value,
@@ -97,7 +96,6 @@ class Login extends React.Component {
         },
       }));
     } else {
-      console.log("invalid");
       // Update email error state value to an error message. Will need to access previous state values.
       this.setState((prevState) => ({
         errors: {
@@ -117,7 +115,6 @@ class Login extends React.Component {
         value.trim()
       )
     ) {
-      console.log("valid pw");
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -126,7 +123,6 @@ class Login extends React.Component {
         password: value,
       }));
     } else {
-      console.log("invalid pw");
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -142,7 +138,6 @@ class Login extends React.Component {
   validatePasswordConfirmation = (e) => {
     let value = e.target.value.trim();
     if (this.state.password !== value) {
-      console.log("no match");
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -150,7 +145,6 @@ class Login extends React.Component {
         },
       }));
     } else {
-      console.log("match");
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -164,7 +158,6 @@ class Login extends React.Component {
   validateNames = (e) => {
     let value = e.target.value.trim();
     if (/^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value)) {
-      console.log("valid name");
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -172,7 +165,6 @@ class Login extends React.Component {
         },
       }));
     } else {
-      console.log("invalid name");
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -186,7 +178,6 @@ class Login extends React.Component {
   validatePostalCode = (e) => {
     let value = e.target.value.trim();
     if (/^[0-9]$/i.test(value)) {
-      console.log("valid zip");
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -194,7 +185,6 @@ class Login extends React.Component {
         },
       }));
     } else {
-      console.log("invalid zip");
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,

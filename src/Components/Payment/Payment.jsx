@@ -37,7 +37,6 @@ class Payment extends React.Component {
       /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value) &&
       value.replace(/\s/g, "").length
     ) {
-      console.log("valid ");
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -49,7 +48,6 @@ class Payment extends React.Component {
         },
       }));
     } else {
-      console.log("invalid");
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -273,8 +271,6 @@ class Payment extends React.Component {
       { label: "Shipping & Handling:", value: shippingAndHandling },
       { label: "Cart Total:", value: cartTotal },
     ];
-
-    const shipmentDetailsArray = Array.from(shipmentDetails);
 
     let areNoErrors = Object.values(this.state.errors).every(
       (element) => element === ""
