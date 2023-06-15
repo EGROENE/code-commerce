@@ -395,11 +395,7 @@ class Payment extends React.Component {
               <div id={style.expiryAndCVV}>
                 <label htmlFor="">
                   <header>Expiry Date: </header>
-                  <select
-                    id="selectExpiryMonth"
-                    onChange={this.getExpiryMonth}
-                    required
-                  >
+                  <select id="selectExpiryMonth" onChange={this.getExpiryMonth}>
                     <option disabled selected>
                       Month
                     </option>
@@ -409,11 +405,7 @@ class Payment extends React.Component {
                       </option>
                     ))}
                   </select>
-                  <select
-                    id="selectExpiryYear"
-                    onChange={this.getExpiryYear}
-                    required
-                  >
+                  <select id="selectExpiryYear" onChange={this.getExpiryYear}>
                     <option disabled selected>
                       Year
                     </option>
