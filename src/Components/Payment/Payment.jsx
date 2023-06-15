@@ -338,7 +338,12 @@ class Payment extends React.Component {
           />
           <header className="pageHeader">Payment</header>
           <div className="checkoutPageMainItems">
-            <form id={style.paymentForm}>
+            <form
+              id={style.paymentForm}
+              onSubmit={(e) => {
+                toNextPage(e, "isPaymentHidden", "isConfirmationHidden");
+              }}
+            >
               <label htmlFor="">
                 <header>Cardholder Name: </header>
                 <input
@@ -394,7 +399,11 @@ class Payment extends React.Component {
               <div id={style.expiryAndCVV}>
                 <label htmlFor="">
                   <header>Expiry Date: </header>
-                  <select id="selectExpiryMonth" onChange={this.getExpiryMonth}>
+                  <select
+                    id="selectExpiryMonth"
+                    onChange={this.getExpiryMonth}
+                    required
+                  >
                     <option disabled selected>
                       Month
                     </option>
@@ -404,7 +413,11 @@ class Payment extends React.Component {
                       </option>
                     ))}
                   </select>
-                  <select id="selectExpiryYear" onChange={this.getExpiryYear}>
+                  <select
+                    id="selectExpiryYear"
+                    onChange={this.getExpiryYear}
+                    required
+                  >
                     <option disabled selected>
                       Year
                     </option>
@@ -444,7 +457,11 @@ class Payment extends React.Component {
                 >
                   Back to Shipping
                 </button>
-                <button title="Pay & Place Order">
+                <button
+                  title="Pay & Place Order"
+                  type={!areNoErrors ? undefined : "submit"}
+                  onClick={!areNoErrors ? alertFormErrors : undefined}
+                >
                   Pay $
                   {cartTotal.toLocaleString(undefined, {
                     minimumFractionDigits: 2,
