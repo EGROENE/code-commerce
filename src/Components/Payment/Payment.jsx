@@ -73,6 +73,16 @@ class Payment extends React.Component {
     return "";
   };
 
+  // Method to format AmEx numbers:
+  formatAmex(inputNumber) {
+    let cleaned = ("" + inputNumber).replace(/\D/g, "");
+    let match = cleaned.match(/^(\d{4})(\d{6})(\d{5})$/);
+    if (match) {
+      return match[1] + " " + match[2] + " " + match[3];
+    }
+    return null;
+  }
+
   // Check that card number is valid. Return error message if not.
   checkCardNumberError = (cardNumber) => {
     for (const card in cardRegexPatterns) {
@@ -98,8 +108,12 @@ class Payment extends React.Component {
     let mask = value.split(" ").join("");
     // If any input...
     if (mask.length) {
-      // Add space after every fourth character:
-      mask = mask.match(new RegExp(".{1,4}", "g")).join(" ");
+      if (cardType === "AMERICAN_EXPRESS") {
+        mask = this.formatAmex(value);
+      } else {
+        // Add space after every fourth character:
+        mask = mask.match(new RegExp(".{1,4}", "g")).join(" ");
+      }
       // Set appropriate state values:
       this.setState((prevState) => ({
         paymentDetails: {
