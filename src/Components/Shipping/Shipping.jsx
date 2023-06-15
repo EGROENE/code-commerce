@@ -9,7 +9,6 @@ class Shipping extends React.Component {
     super(props);
     this.state = {
       errors: {
-        title: "",
         name: "",
         streetAddress: "",
         postalCode: "",
@@ -17,7 +16,6 @@ class Shipping extends React.Component {
         phoneNumber: "",
       },
       details: {
-        title: "",
         name: "",
         streetAddress: "",
         postalCode: "",
