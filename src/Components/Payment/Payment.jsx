@@ -43,8 +43,8 @@ class Payment extends React.Component {
           ...prevState.errors,
           cardHolderError: "",
         },
-        details: {
-          ...prevState.details,
+        paymentDetails: {
+          ...prevState.paymentDetails,
           cardHolder: value,
         },
       }));
@@ -55,8 +55,8 @@ class Payment extends React.Component {
           ...prevState.errors,
           cardHolderError: "Enter only alphabetic characters (and any hyphens)",
         },
-        details: {
-          ...prevState.details,
+        paymentDetails: {
+          ...prevState.paymentDetails,
           cardHolder: "",
         },
       }));
