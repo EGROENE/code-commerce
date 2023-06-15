@@ -72,7 +72,7 @@ class Cart extends React.Component {
 
   // Set state value inputPromoCode to what user inputs:
   getPromoCode = (e) => {
-    let inputCode = e.target.value.trim().trim().toLowerCase();
+    let inputCode = e.target.value.trim().toLowerCase();
     this.setState((prevState) => ({
       ...prevState,
       inputPromoCode: inputCode,
