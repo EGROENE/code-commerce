@@ -459,8 +459,20 @@ class Payment extends React.Component {
                 </button>
                 <button
                   title="Pay & Place Order"
-                  type={!areNoErrors ? undefined : "submit"}
-                  onClick={!areNoErrors ? alertFormErrors : undefined}
+                  type={
+                    !areNoErrors ||
+                    this.state.paymentDetails.expiryMonth === "" ||
+                    this.state.paymentDetails.expiryYear === ""
+                      ? "button"
+                      : "submit"
+                  }
+                  onClick={
+                    !areNoErrors ||
+                    this.state.paymentDetails.expiryMonth === "" ||
+                    this.state.paymentDetails.expiryYear === ""
+                      ? alertFormErrors
+                      : undefined
+                  }
                 >
                   Pay $
                   {cartTotal.toLocaleString(undefined, {
