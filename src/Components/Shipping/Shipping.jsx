@@ -190,6 +190,7 @@ class Shipping extends React.Component {
       accountEmailAddress,
       isShippingHidden,
       isPaymentHidden,
+      isConfirmationHidden,
       toPreviousPage,
       toNextPage,
       itemsInCart,
@@ -547,6 +548,7 @@ class Shipping extends React.Component {
           accountEmailAddress={accountEmailAddress}
           itemsInCart={itemsInCart}
           isPaymentHidden={isPaymentHidden}
+          isConfirmationHidden={isConfirmationHidden}
           numberOfItemsInCart={numberOfItemsInCart}
           discountRate={discountRate}
           toNextPage={toNextPage}

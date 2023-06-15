@@ -244,6 +244,7 @@ class Payment extends React.Component {
       accountEmailAddress,
       itemsInCart,
       isPaymentHidden,
+      isConfirmationHidden,
       completedPages,
       isShippingCompleted,
       numberOfItemsInCart,

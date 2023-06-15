@@ -305,6 +305,7 @@ class Cart extends React.Component {
           discountRate={this.state.discountRate}
           isShippingHidden={isShippingHidden}
           isPaymentHidden={isPaymentHidden}
+          isConfirmationHidden={isConfirmationHidden}
           toNextPage={toNextPage}
           toPreviousPage={toPreviousPage}
           completedPages={completedPages}
