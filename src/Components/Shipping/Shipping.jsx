@@ -44,7 +44,11 @@ class Shipping extends React.Component {
   // Method to validate title, name, city:
   validateNameCity = (e, field) => {
     let value = e.target.value.trim();
-    if (/^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value)) {
+    console.log(!value.replace(/\s/g, ""));
+    if (
+      /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value) &&
+      value.replace(/\s/g, "").length
+    ) {
       console.log("valid ");
       this.setState((prevState) => ({
         errors: {
@@ -61,7 +65,7 @@ class Shipping extends React.Component {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
-          [field]: "Enter only alphabetic characters",
+          [field]: "Enter alphabetical characters & any spaces between names",
         },
         details: {
           ...prevState.details,
