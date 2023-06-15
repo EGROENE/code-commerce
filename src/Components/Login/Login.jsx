@@ -185,7 +185,7 @@ class Login extends React.Component {
   // Validate postal code:
   validatePostalCode = (e) => {
     let value = e.target.value.trim();
-    if (/^[0-9]{5}$/i.test(value)) {
+    if (/^[0-9]$/i.test(value)) {
       console.log("valid zip");
       this.setState((prevState) => ({
         errors: {
@@ -331,6 +331,8 @@ class Login extends React.Component {
                   onChange={input.onChange}
                   required={input.required}
                   inputMode={input.inputMode}
+                  minLength={input.labelText === "Postal Code:" && 5}
+                  maxLength={input.labelText === "Postal Code:" && 5}
                 />
                 {input.labelText === "Password:" && !isLoginMethodSelected ? (
                   <p>
