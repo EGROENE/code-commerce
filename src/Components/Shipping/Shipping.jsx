@@ -345,14 +345,13 @@ class Shipping extends React.Component {
                     )}
                   </label>
                   <label>
-                    <header>State: </header>
+                    <header>State/Territory: </header>
                     <select
                       id="stateOrTerritory"
                       onChange={this.setStateValuesOfDropdownFields}
-                      required
                     >
                       <option disabled selected>
-                        -- territory or state --
+                        -- state or territory --
                       </option>
                       <option value="AL">Alabama</option>
                       <option value="AK">Alaska</option>
@@ -470,9 +469,18 @@ class Shipping extends React.Component {
                 </button>
                 <button
                   form="shippingForm"
-                  type={!areNoErrors ? "button" : "submit"}
+                  //disabled={!areNoErrors}
+                  type={
+                    !areNoErrors || this.state.details.stateOrTerritory === ""
+                      ? "button"
+                      : "submit"
+                  }
                   title="To Payment"
-                  onClick={!areNoErrors ? alertFormErrors : undefined}
+                  onClick={
+                    !areNoErrors || this.state.details.stateOrTerritory === ""
+                      ? alertFormErrors
+                      : undefined
+                  }
                 >
                   To Payment
                 </button>
