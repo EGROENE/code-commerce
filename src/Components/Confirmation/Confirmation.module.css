@@ -1,0 +1,71 @@
+#confirmationMessageContainer {
+    margin: 7rem auto;
+}
+
+#confirmationMessageContainer header {
+    font-size: var(--size-48);
+}
+
+#orderDetailsContainer {
+    border: 2px solid var(--theme-color);
+    padding: 2rem;
+    width: 75vw;
+}
+
+#orderDetailsContainer header {
+    color: var(--theme-color);
+    font-size: 2rem;
+}
+
+#confirmationPageBtnContainer a button {
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+}
+
+#confirmationPageBtnContainer button {
+    background-color: var(--theme-color);
+    border: 1px solid var(--theme-color);
+    padding: var(--size-8);
+    width: unset;
+    margin: var(--size-24) var(--size-12) 0 0;
+    font-size: var(--size-20);
+}
+
+#orderItemsAndTotals {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.itemInOrderSummary {
+    border: 2px solid var(--theme-color);
+    padding: 1rem;
+    margin: var(--size-12) auto;
+}
+
+.itemInOrderSummary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 2px solid var(--theme-color);
+    padding: var(--size-12);
+  }
+  
+  .itemInOrderSummary img {
+    height: 110px;
+    margin-right: var(--size-12);
+  }
+  
+  .itemInOrderSummary p {
+    font-size: 0.7rem;
+    color: var(--theme-color);
+  }
+  
+  .itemInOrderSummary p span {
+    color: white;
+  }
+
+#orderTotalsContainer {
+    text-align: right;
+}
