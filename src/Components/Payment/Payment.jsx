@@ -3,6 +3,7 @@ import ProgressBar from "../ProgressBar/ProgressBar";
 import style from "./Payment.module.css";
 import { alertFormErrors, roundToHundredth } from "../../methods";
 import { cardImages, cardRegexPatterns } from "../../constants";
+import Confirmation from "../Confirmation/Confirmation";
 
 let currentMonth = new Date().getMonth() + 1;
 let currentYear = new Date().getFullYear();
@@ -552,6 +553,20 @@ class Payment extends React.Component {
             </div>
           </div>
         </div>
+        <Confirmation
+          accountEmailAddress={accountEmailAddress}
+          itemsInCart={itemsInCart}
+          isPaymentHidden={isPaymentHidden}
+          isConfirmationHidden={isConfirmationHidden}
+          numberOfItemsInCart={numberOfItemsInCart}
+          discountRate={discountRate}
+          toNextPage={toNextPage}
+          toPreviousPage={toPreviousPage}
+          completedPages={completedPages}
+          shipmentDetails={shipmentDetails}
+          shippingAndHandling={shippingAndHandling}
+          deliveryTime={deliveryTime}
+        />
       </div>
     );
   }
