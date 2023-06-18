@@ -4,7 +4,18 @@ import style from "./Confirmation.module.css";
 import { roundToHundredth } from "../../methods";
 
 class Confirmation extends React.Component {
-  showOrderDetails = () => {};
+  constructor() {
+    super();
+    this.state = {
+      isOrderSummaryDisplayed: false,
+    };
+  }
+
+  showHideOrderDetails = () => {
+    !this.state.isOrderSummaryDisplayed
+      ? this.setState({ isOrderSummaryDisplayed: true })
+      : this.setState({ isOrderSummaryDisplayed: false });
+  };
 
   render() {
     const {
@@ -56,10 +67,25 @@ class Confirmation extends React.Component {
             <a href="">
               <button>Back to Homepage</button>
             </a>
-            <button>See Order Details</button>
+            <button onClick={this.showHideOrderDetails}>
+              See Order Details
+            </button>
           </div>
         </div>
-        <div id={style.orderDetailsContainer}>
+        <div
+          style={
+            this.state.isOrderSummaryDisplayed
+              ? { display: "block" }
+              : { display: "none" }
+          }
+          id={style.orderDetailsContainer}
+        >
+          <i
+            title="Close Order Summary"
+            onClick={this.showHideOrderDetails}
+            id={style.closeModalBtn}
+            className="fas fa-times"
+          ></i>
           <header>Order Details</header>
           <div id={style.orderItemsAndTotals}>
             <div>
