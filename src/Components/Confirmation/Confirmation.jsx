@@ -96,7 +96,14 @@ class Confirmation extends React.Component {
             ></i>
             <header id={style.modalHeader}>Order Details</header>
             <div id={style.orderItemsAndTotals}>
-              <div>
+              <div
+                id={style.itemsInCartContainer}
+                style={
+                  itemsInCart.length > 2
+                    ? { overflowY: "scroll" }
+                    : { overflowY: "unset" }
+                }
+              >
                 {itemsInCart.map(
                   (item) =>
                     item.quantity > 0 && (
@@ -135,7 +142,7 @@ class Confirmation extends React.Component {
                   <header>Cart Totals:</header>
                   {summaryTotals.map((total) => (
                     <p>
-                      {total.label}: $
+                      {total.label} $
                       {total.value.toLocaleString(undefined, {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
