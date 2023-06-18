@@ -86,7 +86,7 @@ class Confirmation extends React.Component {
                 ? { display: "block" }
                 : { display: "none" }
             }
-            id={style.orderDetailsContainer}
+            id={style.orderSummaryContainer}
           >
             <i
               title="Close Order Summary"
@@ -94,7 +94,7 @@ class Confirmation extends React.Component {
               id={style.closeModalBtn}
               className="fas fa-times"
             ></i>
-            <header>Order Details</header>
+            <header id={style.modalHeader}>Order Details</header>
             <div id={style.orderItemsAndTotals}>
               <div>
                 {itemsInCart.map(
@@ -130,38 +130,33 @@ class Confirmation extends React.Component {
                     )
                 )}
               </div>
-              <div id={style.orderTotalsContainer}>
-                <p>
-                  Cart Subtotal: $
-                  {cartSubtotal.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                </p>
-                {discount > 0 && (
+              <div id={style.detailsContainer}>
+                <div id={style.orderTotalsContainer}>
+                  <header>Cart Totals:</header>
+                  {summaryTotals.map((total) => (
+                    <p>
+                      {total.label}: $
+                      {total.value.toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </p>
+                  ))}
+                </div>
+                <div id={style.orderShipmentDetails}>
+                  <header>Delivering To:</header>
                   <p>
-                    Discount: $
-                    {discount.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
+                    {shipmentDetails.title !== "" && shipmentDetails.title}{" "}
+                    {shipmentDetails.name}
                   </p>
-                )}
-                <p>
-                  Shipping & Handling: $
-                  {shippingAndHandling.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                </p>
-                <p>
-                  Total Paid: $
-                  {cartTotal.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                </p>
-                <p></p>
+                  <p>{shipmentDetails.streetAddress}</p>
+                  <p>
+                    {shipmentDetails.city}, {shipmentDetails.stateOrTerritory}{" "}
+                    {shipmentDetails.postalCode}
+                  </p>
+                  <p>Phone: {shipmentDetails.phoneNumber}</p>
+                  <p>E-mail: {accountEmailAddress}</p>
+                </div>
               </div>
             </div>
           </div>

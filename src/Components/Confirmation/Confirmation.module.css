@@ -31,33 +31,26 @@
     justify-content: center;
 }
 
-#orderDetailsContainer {
-    border: 2px solid var(--theme-color);
-    padding: 2rem;
-    width: 75vw;
-    position: relative;
-    background-color: black;
-}
-
-#orderDetailsContainer:hover {
-    cursor: pointer;
-}
-
-#orderDetailsContainer header {
-    color: var(--theme-color);
-    font-size: 2rem;
-}
-
 #closeModalBtn {
     position: absolute;
     top: 5%;
     right: 2%;
 }
 
+#closeModalBtn:hover {
+    cursor: pointer;
+}
+
+#modalHeader {
+    font-size: 2rem;
+    color: var(--theme-color);
+}
+
 #orderItemsAndTotals {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    margin-top: 1rem;
 }
 
 .itemInOrderSummary {
@@ -88,6 +81,29 @@
     color: white;
   }
 
-#orderTotalsContainer {
+  #orderSummaryContainer {
+    border: 2px solid var(--theme-color);
+    padding: 2rem;
+    width: 75vw;
+    position: relative;
+    background-color: black;
+}
+
+#detailsContainer div:nth-child(2) {
+    margin-top: 2rem;
+}
+
+#detailsContainer header {
+    color: var(--theme-color);
+    font-size: 1.5rem;
+}
+
+#detailsContainer p {
+    margin: 0.5rem;
+    font-size: 1rem;
+}
+
+#orderTotalsContainer,
+#orderShipmentDetails {
     text-align: right;
 }
