@@ -24,6 +24,26 @@ export const ITEMS_IN_CART = [
     unitPrice: 75.0,
     quantity: 2,
   },
+  {
+    itemName: "The Holy JavaScript Bible",
+    itemNameCamelCase: "theHolyJavaScriptBible",
+    itemImage:
+      "https://d1ozqqh7vh3ykm.cloudfront.net/2023/21/113013054/thumb_a9244058c5c1cb3.png",
+    category: "Web Development",
+    language: "JavaScript",
+    unitPrice: 99.99,
+    quantity: 1,
+  },
+  {
+    itemName: "All About Git & GitHub",
+    itemNameCamelCase: "allAboutgitAndGitHub",
+    itemImage:
+      "https://d1ozqqh7vh3ykm.cloudfront.net/2023/21/113013054/thumb_a9244058c5c1cb3.png",
+    category: "Web Development",
+    language: "Git",
+    unitPrice: 24.99,
+    quantity: 4,
+  },
 ];
 
 export const cardRegexPatterns = {
