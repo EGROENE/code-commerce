@@ -53,6 +53,12 @@
     margin-top: 1rem;
 }
 
+#itemsInCartContainer {
+    overflow-y:scroll;
+    padding: 12px;
+    height: 23rem;
+}
+
 .itemInOrderSummary {
     border: 2px solid var(--theme-color);
     padding: 1rem;
