@@ -36,7 +36,7 @@ export const ITEMS_IN_CART = [
   },
   {
     itemName: "All About Git & GitHub",
-    itemNameCamelCase: "allAboutgitAndGitHub",
+    itemNameCamelCase: "allAboutGitAndGitHub",
     itemImage:
       "https://d1ozqqh7vh3ykm.cloudfront.net/2023/21/113013054/thumb_a9244058c5c1cb3.png",
     category: "Web Development",
