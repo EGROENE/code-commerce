@@ -6,17 +6,6 @@
     font-size: var(--size-48);
 }
 
-#orderDetailsContainer {
-    border: 2px solid var(--theme-color);
-    padding: 2rem;
-    width: 75vw;
-}
-
-#orderDetailsContainer header {
-    color: var(--theme-color);
-    font-size: 2rem;
-}
-
 #confirmationPageBtnContainer a button {
     background-color: transparent;
     color: white;
@@ -30,6 +19,39 @@
     width: unset;
     margin: var(--size-24) var(--size-12) 0 0;
     font-size: var(--size-20);
+}
+
+#modalContainer {
+    height: 100vh;
+    background: rgba(0,0,0,0.8);
+    z-index: 100;
+    width: 98vw;
+    top: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+#orderDetailsContainer {
+    border: 2px solid var(--theme-color);
+    padding: 2rem;
+    width: 75vw;
+    position: relative;
+    background-color: black;
+}
+
+#orderDetailsContainer:hover {
+    cursor: pointer;
+}
+
+#orderDetailsContainer header {
+    color: var(--theme-color);
+    font-size: 2rem;
+}
+
+#closeModalBtn {
+    position: absolute;
+    top: 5%;
+    right: 2%;
 }
 
 #orderItemsAndTotals {

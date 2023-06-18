@@ -73,87 +73,96 @@ class Confirmation extends React.Component {
           </div>
         </div>
         <div
+          id={style.modalContainer}
           style={
             this.state.isOrderSummaryDisplayed
-              ? { display: "block" }
-              : { display: "none" }
+              ? { display: "flex", position: "fixed" }
+              : { display: "none", position: "unset" }
           }
-          id={style.orderDetailsContainer}
         >
-          <i
-            title="Close Order Summary"
-            onClick={this.showHideOrderDetails}
-            id={style.closeModalBtn}
-            className="fas fa-times"
-          ></i>
-          <header>Order Details</header>
-          <div id={style.orderItemsAndTotals}>
-            <div>
-              {itemsInCart.map(
-                (item) =>
-                  item.quantity > 0 && (
-                    <div className={style.itemInOrderSummary}>
-                      <img src={item.itemImage} alt="Item" />
-                      <div className={style.itemDetailsShippingPage}>
-                        <p>{item.itemName}</p>
-                        <p>
-                          Category: <span>{item.category}</span>
-                        </p>
-                        <p>
-                          Language: <span>{item.language}</span>
-                        </p>
-                        <p>
-                          Quantity: <span>{item.quantity}</span>
-                        </p>
-                        <p className="itemInfoHeader">
-                          Item Total:
-                          <span>
-                            {" $" +
-                              roundToHundredth(
-                                item.quantity * item.unitPrice
-                              ).toLocaleString(undefined, {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })}
-                          </span>
-                        </p>
+          <div
+            style={
+              this.state.isOrderSummaryDisplayed
+                ? { display: "block" }
+                : { display: "none" }
+            }
+            id={style.orderDetailsContainer}
+          >
+            <i
+              title="Close Order Summary"
+              onClick={this.showHideOrderDetails}
+              id={style.closeModalBtn}
+              className="fas fa-times"
+            ></i>
+            <header>Order Details</header>
+            <div id={style.orderItemsAndTotals}>
+              <div>
+                {itemsInCart.map(
+                  (item) =>
+                    item.quantity > 0 && (
+                      <div className={style.itemInOrderSummary}>
+                        <img src={item.itemImage} alt="Item" />
+                        <div className={style.itemDetailsShippingPage}>
+                          <p>{item.itemName}</p>
+                          <p>
+                            Category: <span>{item.category}</span>
+                          </p>
+                          <p>
+                            Language: <span>{item.language}</span>
+                          </p>
+                          <p>
+                            Quantity: <span>{item.quantity}</span>
+                          </p>
+                          <p className="itemInfoHeader">
+                            Item Total:
+                            <span>
+                              {" $" +
+                                roundToHundredth(
+                                  item.quantity * item.unitPrice
+                                ).toLocaleString(undefined, {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })}
+                            </span>
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  )
-              )}
-            </div>
-            <div id={style.orderTotalsContainer}>
-              <p>
-                Cart Subtotal: $
-                {cartSubtotal.toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-              </p>
-              {discount > 0 && (
+                    )
+                )}
+              </div>
+              <div id={style.orderTotalsContainer}>
                 <p>
-                  Discount: $
-                  {discount.toLocaleString(undefined, {
+                  Cart Subtotal: $
+                  {cartSubtotal.toLocaleString(undefined, {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
                   })}
                 </p>
-              )}
-              <p>
-                Shipping & Handling: $
-                {shippingAndHandling.toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-              </p>
-              <p>
-                Total Paid: $
-                {cartTotal.toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-              </p>
-              <p></p>
+                {discount > 0 && (
+                  <p>
+                    Discount: $
+                    {discount.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </p>
+                )}
+                <p>
+                  Shipping & Handling: $
+                  {shippingAndHandling.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </p>
+                <p>
+                  Total Paid: $
+                  {cartTotal.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </p>
+                <p></p>
+              </div>
             </div>
           </div>
         </div>
