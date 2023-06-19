@@ -431,6 +431,7 @@ class Shipping extends React.Component {
                         ? this.state.details.phoneNumberMask
                         : undefined
                     }
+                    required
                   />
                   {this.state.errors.phoneNumber !== "" && (
                     <p>{this.state.errors.phoneNumber}</p>
