@@ -34,3 +34,8 @@
 #deliveryInfoContainer p {
     font-size: var(--size-12);
 }
+
+#itemsInCartSummarySeveral {
+    height: 24rem;
+    overflow-y: scroll;
+}
