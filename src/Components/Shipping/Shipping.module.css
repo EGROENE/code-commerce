@@ -79,3 +79,11 @@
 #deliveryOptions input:hover {
     cursor: pointer;
 }
+
+#itemsInCartSummaryCouple {
+}
+
+#itemsInCartSummarySeveral {
+    height: 24rem;
+    overflow-y: scroll;
+}

@@ -493,7 +493,13 @@ class Shipping extends React.Component {
                   <p>{numberOfItemsInCart} items in cart</p>
                 )}
               </div>
-              <div>
+              <div
+                id={
+                  itemsInCart.length > 2
+                    ? style.itemsInCartSummarySeveral
+                    : undefined
+                }
+              >
                 {itemsInCart.map(
                   (item) =>
                     item.quantity > 0 && (
