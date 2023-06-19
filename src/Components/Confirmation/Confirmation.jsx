@@ -26,9 +26,9 @@ class Confirmation extends React.Component {
       isPaymentHidden,
       numberOfItemsInCart,
       discountRate,
+      shipmentDetails,
       toNextPage,
       toPreviousPage,
-      shipmentDetails,
       shippingAndHandling,
       deliveryTime,
     } = this.props;
@@ -161,7 +161,7 @@ class Confirmation extends React.Component {
                     {shipmentDetails.city}, {shipmentDetails.stateOrTerritory}{" "}
                     {shipmentDetails.postalCode}
                   </p>
-                  <p>Phone: {shipmentDetails.phoneNumber}</p>
+                  <p>Phone: {shipmentDetails.phoneNumberMask}</p>
                   <p>E-mail: {accountEmailAddress}</p>
                 </div>
               </div>
