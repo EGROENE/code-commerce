@@ -163,7 +163,13 @@ class Cart extends React.Component {
         <div hidden={isCartHidden}>
           <header className="pageHeader">Cart</header>
           <div id={style.cartPageContainer}>
-            <div id={style.itemsInCart}>
+            <div
+              id={
+                this.state.itemsInCart.length > 2
+                  ? style.itemsInCartSeveral
+                  : style.itemsInCartCouple
+              }
+            >
               {this.isCartEmpty() ? (
                 <p id={style.cartIsEmpty}>Cart is empty</p>
               ) : (

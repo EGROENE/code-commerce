@@ -7,11 +7,17 @@
     width: 42rem;
 }
 
-#itemsInCart {
+#itemsInCartCouple {
   border: 2px solid var(--theme-color);
-  display: flex;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;   
+  flex-direction: column;   
+  justify-content: center; 
+}
+
+#itemsInCartSeveral {
+  border: 2px solid var(--theme-color);
+  height: 30rem;
+  overflow-y: scroll;
 }
 
 .itemInCart {
