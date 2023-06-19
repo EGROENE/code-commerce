@@ -165,7 +165,7 @@ class Cart extends React.Component {
           <div id={style.cartPageContainer}>
             <div
               id={
-                this.state.itemsInCart.length > 2
+                this.state.numberOfItemsInCart > 2
                   ? style.itemsInCartSeveral
                   : style.itemsInCartCouple
               }

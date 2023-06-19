@@ -496,7 +496,7 @@ class Shipping extends React.Component {
               </div>
               <div
                 id={
-                  itemsInCart.length > 2
+                  numberOfItemsInCart > 2
                     ? style.itemsInCartSummarySeveral
                     : undefined
                 }
