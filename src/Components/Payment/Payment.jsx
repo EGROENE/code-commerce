@@ -486,7 +486,7 @@ class Payment extends React.Component {
                     </p>
                   </div>
                   <div>
-                    <p>Phone: {shipmentDetails.phoneNumber}</p>
+                    <p>Phone: {shipmentDetails.phoneNumberMask}</p>
                     <p>E-mail: {accountEmailAddress}</p>
                   </div>
                 </div>
