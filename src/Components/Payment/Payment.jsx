@@ -502,7 +502,13 @@ class Payment extends React.Component {
                   <p>{numberOfItemsInCart} items in cart</p>
                 )}
               </div>
-              <div>
+              <div
+                id={
+                  numberOfItemsInCart > 2
+                    ? style.itemsInCartSummarySeveral
+                    : undefined
+                }
+              >
                 {itemsInCart.map(
                   (item) =>
                     item.quantity > 0 && (
