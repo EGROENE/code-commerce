@@ -262,7 +262,7 @@ class Cart extends React.Component {
                     maximumFractionDigits: 2,
                   })}
               </p>
-              <p>Shipping & Handling: -</p>
+              <p>Shipping & Handling: TBD</p>
               <p>
                 Discount:
                 {" $" +
