@@ -321,8 +321,8 @@ class Login extends React.Component {
                   onChange={input.onChange}
                   required={input.required}
                   inputMode={input.inputMode}
-                  minLength={input.labelText === "Postal Code:" && 5}
-                  maxLength={input.labelText === "Postal Code:" && 5}
+                  minLength={input.labelText === "Postal Code:" ? 5 : undefined}
+                  maxLength={input.labelText === "Postal Code:" ? 5 : undefined}
                 />
                 {input.labelText === "Password:" && !isLoginMethodSelected ? (
                   <p>
