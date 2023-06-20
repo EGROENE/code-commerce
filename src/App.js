@@ -40,31 +40,7 @@ class App extends React.Component {
             cart: true,
           },
         }));
-      } /* else if (selectedPageHidden === "isShippingHidden") {
-        this.setState((prevState) => ({
-          pageDisplayOptions: {
-            ...prevState.pageDisplayOptions,
-            [selectedPageHidden]: true,
-            [nextPageHidden]: false,
-          },
-        }));
-      } else if (selectedPageHidden === "isPaymentHidden") {
-        this.setState((prevState) => ({
-          pageDisplayOptions: {
-            ...prevState.pageDisplayOptions,
-            [selectedPageHidden]: true,
-            [nextPageHidden]: false,
-          },
-        }));
       } else {
-        this.setState((prevState) => ({
-          pageDisplayOptions: {
-            ...prevState.pageDisplayOptions,
-            [selectedPageHidden]: true,
-            [nextPageHidden]: false,
-          },
-        }));
-      } */ else {
         this.setState((prevState) => ({
           pageDisplayOptions: {
             ...prevState.pageDisplayOptions,
@@ -81,39 +57,13 @@ class App extends React.Component {
     e.preventDefault();
 
     if (!this.state.pageDisplayOptions[selectedPageHidden]) {
-      if (selectedPageHidden === "isCartHidden") {
-        this.setState((prevState) => ({
-          pageDisplayOptions: {
-            ...prevState.pageDisplayOptions,
-            [previousPageHidden]: false,
-            [selectedPageHidden]: true,
-          },
-        }));
-      } else if (selectedPageHidden === "isShippingHidden") {
-        this.setState((prevState) => ({
-          pageDisplayOptions: {
-            ...prevState.pageDisplayOptions,
-            [previousPageHidden]: false,
-            [selectedPageHidden]: true,
-          },
-        }));
-      } else if (selectedPageHidden === "isPaymentHidden") {
-        this.setState((prevState) => ({
-          pageDisplayOptions: {
-            ...prevState.pageDisplayOptions,
-            [previousPageHidden]: false,
-            [selectedPageHidden]: true,
-          },
-        }));
-      } else {
-        this.setState((prevState) => ({
-          pageDisplayOptions: {
-            ...prevState.pageDisplayOptions,
-            [previousPageHidden]: false,
-            [selectedPageHidden]: true,
-          },
-        }));
-      }
+      this.setState((prevState) => ({
+        pageDisplayOptions: {
+          ...prevState.pageDisplayOptions,
+          [previousPageHidden]: false,
+          [selectedPageHidden]: true,
+        },
+      }));
     }
   };
 
