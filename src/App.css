@@ -290,6 +290,7 @@ a:hover {
   border-top: 2px solid white;
   border-top: 2px solid var(--theme-color);
   text-align: right;
+  margin: var(--size-12) auto;
 }
 
 .cartSummaryItem header {

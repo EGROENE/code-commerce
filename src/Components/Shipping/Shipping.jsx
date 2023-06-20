@@ -468,7 +468,6 @@ class Shipping extends React.Component {
                 </button>
                 <button
                   form="shippingForm"
-                  //disabled={!areNoErrors}
                   type={
                     !areNoErrors || this.state.details.stateOrTerritory === ""
                       ? "button"
@@ -501,38 +500,40 @@ class Shipping extends React.Component {
                     : undefined
                 }
               >
-                {itemsInCart.map(
-                  (item) =>
-                    item.quantity > 0 && (
-                      <div className="itemInCartSummary">
-                        <img src={item.itemImage} alt="Item" />
-                        <div className={style.itemDetailsShippingPage}>
-                          <p>{item.itemName}</p>
-                          <p>
-                            Category: <span>{item.category}</span>
-                          </p>
-                          <p>
-                            Language: <span>{item.language}</span>
-                          </p>
-                          <p>
-                            Quantity: <span>{item.quantity}</span>
-                          </p>
-                          <p className="itemInfoHeader">
-                            Item Total:
-                            <span>
-                              {" $" +
-                                roundToHundredth(
-                                  item.quantity * item.unitPrice
-                                ).toLocaleString(undefined, {
-                                  minimumFractionDigits: 2,
-                                  maximumFractionDigits: 2,
-                                })}
-                            </span>
-                          </p>
+                <div id={style.itemsContainer}>
+                  {itemsInCart.map(
+                    (item) =>
+                      item.quantity > 0 && (
+                        <div className="itemInCartSummary">
+                          <img src={item.itemImage} alt="Item" />
+                          <div className={style.itemDetailsShippingPage}>
+                            <p>{item.itemName}</p>
+                            <p>
+                              Category: <span>{item.category}</span>
+                            </p>
+                            <p>
+                              Language: <span>{item.language}</span>
+                            </p>
+                            <p>
+                              Quantity: <span>{item.quantity}</span>
+                            </p>
+                            <p className="itemInfoHeader">
+                              Item Total:
+                              <span>
+                                {" $" +
+                                  roundToHundredth(
+                                    item.quantity * item.unitPrice
+                                  ).toLocaleString(undefined, {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2,
+                                  })}
+                              </span>
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    )
-                )}
+                      )
+                  )}
+                </div>
               </div>
               <div className="cartSummaryItem">
                 {summaryTotals.map((item) => (
