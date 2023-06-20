@@ -440,7 +440,10 @@ class Shipping extends React.Component {
               </form>
               <div id={style.deliveryOptions}>
                 <header>
-                  Delivery Options: <a href="#">Shipping Details</a>
+                  Delivery Options:{" "}
+                  <span title="Read about the shipping process">
+                    Shipping Details
+                  </span>
                 </header>
                 {deliveryOptions.map((item) => (
                   <label key={item.id}>

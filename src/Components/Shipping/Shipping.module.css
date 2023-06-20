@@ -66,6 +66,17 @@
     text-align: left;
 }
 
+#deliveryOptions span {
+    font-size: 0.75rem;
+    color: var(--theme-color);
+    text-decoration: underline;
+}
+
+#deliveryOptions span:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
 #deliveryOptions label {
     display: flex;
     margin: var(--size-12) 0;
