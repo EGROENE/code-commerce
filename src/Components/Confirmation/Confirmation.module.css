@@ -55,7 +55,7 @@
 
 #itemsInCartContainer {
     overflow-y:scroll;
-    padding: 12px;
+    padding: 0 0.75rem;
     height: 23rem;
 }
 
