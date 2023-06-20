@@ -37,7 +37,7 @@ class ProgressBar extends React.Component {
     return (
       <div className="progressBar">
         {progressBarElements.map((item) => (
-          <div className="progressBarElement">
+          <div key={item.id} className="progressBarElement">
             <div>
               <i
                 className={

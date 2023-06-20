@@ -443,7 +443,7 @@ class Shipping extends React.Component {
                   Delivery Options: <a href="#">Shipping Details</a>
                 </header>
                 {deliveryOptions.map((item) => (
-                  <label>
+                  <label key={item.id}>
                     <input
                       type="radio"
                       id={item.id}
@@ -504,7 +504,10 @@ class Shipping extends React.Component {
                   {itemsInCart.map(
                     (item) =>
                       item.quantity > 0 && (
-                        <div className="itemInCartSummary">
+                        <div
+                          key={item.itemNameCamelCase}
+                          className="itemInCartSummary"
+                        >
                           <img src={item.itemImage} alt="Item" />
                           <div className={style.itemDetailsShippingPage}>
                             <p>{item.itemName}</p>
@@ -537,7 +540,7 @@ class Shipping extends React.Component {
               </div>
               <div className="cartSummaryItem">
                 {summaryTotals.map((item) => (
-                  <p>
+                  <p key={item.label}>
                     {item.label}
                     <span>
                       {" $" +

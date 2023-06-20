@@ -179,6 +179,7 @@ class Cart extends React.Component {
                       <div
                         id={item.itemNameCamelCase}
                         className={style.itemInCart}
+                        key={item.itemNameCamelCase}
                       >
                         <p
                           className={style.deleteItemButton}

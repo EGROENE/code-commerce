@@ -107,7 +107,10 @@ class Confirmation extends React.Component {
                 {itemsInCart.map(
                   (item) =>
                     item.quantity > 0 && (
-                      <div className={style.itemInOrderSummary}>
+                      <div
+                        key={item.itemNameCamelCase}
+                        className={style.itemInOrderSummary}
+                      >
                         <img src={item.itemImage} alt="Item" />
                         <div className={style.itemDetailsShippingPage}>
                           <p>{item.itemName}</p>
@@ -141,7 +144,7 @@ class Confirmation extends React.Component {
                 <div id={style.orderTotalsContainer}>
                   <header>Cart Totals:</header>
                   {summaryTotals.map((total) => (
-                    <p>
+                    <p key={total.label}>
                       {total.label} $
                       {total.value.toLocaleString(undefined, {
                         minimumFractionDigits: 2,
