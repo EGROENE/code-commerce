@@ -242,6 +242,7 @@ class Cart extends React.Component {
                     this.getPromoCode(e);
                   }}
                   type="text"
+                  inputMode="text"
                 />
                 {this.state.isInvalidPromo && <p>Invalid code</p>}
                 <button
