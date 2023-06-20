@@ -66,16 +66,22 @@
 
 #termsLinksContainer {
     display: flex;
-    margin-top: 20px;
+    margin-top: 1.25rem;
+    justify-content: space-between;
 }
 
-/* .termsAndConditionsLinks {
+.termsAndConditionsLinks {
     background: none;
     padding: 0;
     color: white;
     text-decoration: underline;
     font-size: var(--size-12);
-} */
+}
+
+.termsAndConditionsLinks:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
 
 .eye {
     position: absolute;

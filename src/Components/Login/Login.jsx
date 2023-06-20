@@ -340,18 +340,22 @@ class Login extends React.Component {
                 {isLoginMethodSelected ? "Log In" : "Create Account"}
               </button>
               <p>or</p>
-              <a href="#" id={style.facebookLogin}>
-                <button>
-                  <i className="fab fa-facebook-f"></i>Log in with Facebook
-                </button>
-              </a>
+              <button id={style.facebookLogin}>
+                <i className="fab fa-facebook-f"></i>Log in with Facebook
+              </button>
               <div id={style.termsLinksContainer}>
-                <a href="#" className={style.termsAndConditionsLinks}>
+                <p
+                  title="Read about our Privacy Policy & how we use cookies"
+                  className={style.termsAndConditionsLinks}
+                >
                   Privacy Policy & Cookies
-                </a>
-                <a href="#" className={style.termsAndConditionsLinks}>
+                </p>
+                <p
+                  title="Read our Terms of Sale & Use"
+                  className={style.termsAndConditionsLinks}
+                >
                   Terms of Sale & Use
-                </a>
+                </p>
               </div>
             </div>
           </form>
