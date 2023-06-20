@@ -138,6 +138,7 @@ class Cart extends React.Component {
   };
 
   render() {
+    // Destructure props:
     const {
       accountEmailAddress,
       isCartHidden,
@@ -148,14 +149,24 @@ class Cart extends React.Component {
       toPreviousPage,
       completedPages,
     } = this.props;
+
+    // Destructure state:
+    const {
+      itemsInCart,
+      discountRate,
+      numberOfItemsInCart,
+      isInvalidPromo,
+      acceptedPromoCode,
+    } = this.state;
+
     // Calculate totals based on current state values of unit prices & quantity:
-    let cartSubtotal = this.state.itemsInCart.map(
+    let cartSubtotal = itemsInCart.map(
       (item) => item.unitPrice * item.quantity
     );
     cartSubtotal = roundToHundredth(cartSubtotal.reduce((a, b) => a + b));
 
     let cartTotal = roundToHundredth(
-      cartSubtotal - cartSubtotal * this.state.discountRate
+      cartSubtotal - cartSubtotal * discountRate
     );
 
     return (
@@ -165,7 +176,7 @@ class Cart extends React.Component {
           <div id={style.cartPageContainer}>
             <div
               id={
-                this.state.numberOfItemsInCart > 2
+                numberOfItemsInCart > 2
                   ? style.itemsInCartSeveral
                   : style.itemsInCartCouple
               }
@@ -173,7 +184,7 @@ class Cart extends React.Component {
               {this.isCartEmpty() ? (
                 <p id={style.cartIsEmpty}>Cart is empty</p>
               ) : (
-                this.state.itemsInCart.map(
+                itemsInCart.map(
                   (item) =>
                     item.quantity > 0 && (
                       <div
@@ -238,16 +249,16 @@ class Cart extends React.Component {
                 <p>Do you have a promo code?</p>
                 <input
                   placeholder="Enter promo code"
-                  disabled={this.state.discountRate > 0 || this.isCartEmpty()}
+                  disabled={discountRate > 0 || this.isCartEmpty()}
                   onChange={(e) => {
                     this.getPromoCode(e);
                   }}
                   type="text"
                   inputMode="text"
                 />
-                {this.state.isInvalidPromo && <p>Invalid code</p>}
+                {isInvalidPromo && <p>Invalid code</p>}
                 <button
-                  disabled={this.state.discountRate > 0}
+                  disabled={discountRate > 0}
                   title="Apply promo code"
                   onClick={this.checkPromoCode}
                   id={style.applyPromo}
@@ -267,17 +278,14 @@ class Cart extends React.Component {
               <p>
                 Discount:
                 {" $" +
-                  (cartSubtotal * this.state.discountRate).toLocaleString(
-                    undefined,
-                    {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    }
-                  )}
+                  (cartSubtotal * discountRate).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
               </p>
-              {this.state.discountRate > 0 && (
+              {discountRate > 0 && (
                 <p className={style.acceptedPromoCode}>
-                  {this.state.acceptedPromoCode}
+                  {acceptedPromoCode}
                   <i
                     onClick={this.removeDiscount}
                     title="Remove discount"
@@ -308,9 +316,9 @@ class Cart extends React.Component {
         </div>
         <Shipping
           accountEmailAddress={accountEmailAddress}
-          itemsInCart={this.state.itemsInCart}
-          numberOfItemsInCart={this.state.numberOfItemsInCart}
-          discountRate={this.state.discountRate}
+          itemsInCart={itemsInCart}
+          numberOfItemsInCart={numberOfItemsInCart}
+          discountRate={discountRate}
           isShippingHidden={isShippingHidden}
           isPaymentHidden={isPaymentHidden}
           isConfirmationHidden={isConfirmationHidden}

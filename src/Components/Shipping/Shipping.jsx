@@ -186,6 +186,7 @@ class Shipping extends React.Component {
   };
 
   render() {
+    // Destructure props:
     const {
       accountEmailAddress,
       isShippingHidden,
@@ -199,6 +200,9 @@ class Shipping extends React.Component {
       completedPages,
     } = this.props;
 
+    // Destructure state:
+    const { shippingAndHandling, errors, details, deliveryTime } = this.state;
+
     // Calculate totals based on current state values of unit prices & quantity:
     let cartSubtotal = itemsInCart.map(
       (item) => item.unitPrice * item.quantity
@@ -207,7 +211,7 @@ class Shipping extends React.Component {
 
     let discount = roundToHundredth(cartSubtotal * discountRate);
 
-    let cartTotal = cartSubtotal - discount + this.state.shippingAndHandling;
+    let cartTotal = cartSubtotal - discount + shippingAndHandling;
 
     const deliveryOptions = [
       {
@@ -225,13 +229,11 @@ class Shipping extends React.Component {
     const summaryTotals = [
       { label: "Cart Subtotal:", value: cartSubtotal },
       { label: "Discount:", value: discount },
-      { label: "Shipping & Handling:", value: this.state.shippingAndHandling },
+      { label: "Shipping & Handling:", value: shippingAndHandling },
       { label: "Cart Total:", value: cartTotal },
     ];
 
-    let areNoErrors = Object.values(this.state.errors).every(
-      (element) => element === ""
-    );
+    let areNoErrors = Object.values(errors).every((element) => element === "");
 
     return (
       <div id="shippingAndPayment">
@@ -286,10 +288,8 @@ class Shipping extends React.Component {
                         minLength="1"
                       />
                     </div>
-                    {this.state.errors.name !== "" && (
-                      <p id={style.nameErrorMessage}>
-                        {this.state.errors.name}
-                      </p>
+                    {errors.name !== "" && (
+                      <p id={style.nameErrorMessage}>{errors.name}</p>
                     )}
                   </label>
                 </div>
@@ -305,7 +305,7 @@ class Shipping extends React.Component {
                     minLength="1"
                   />
                   {this.state.errors.streetAddress !== "" && (
-                    <p>{this.state.errors.streetAddress}</p>
+                    <p>{errors.streetAddress}</p>
                   )}
                 </label>
                 <div id={style.moreAddressDetails}>
@@ -321,9 +321,7 @@ class Shipping extends React.Component {
                       minLength="5"
                       maxLength="5"
                     />
-                    {this.state.errors.postalCode !== "" && (
-                      <p>{this.state.errors.postalCode}</p>
-                    )}
+                    {errors.postalCode !== "" && <p>{errors.postalCode}</p>}
                   </label>
                   <label>
                     <header>City: </header>
@@ -338,9 +336,7 @@ class Shipping extends React.Component {
                       required
                       inputMode="text"
                     />
-                    {this.state.errors.city !== "" && (
-                      <p>{this.state.errors.city}</p>
-                    )}
+                    {errors.city !== "" && <p>{errors.city}</p>}
                   </label>
                   <label>
                     <header>State/Territory: </header>
@@ -426,12 +422,10 @@ class Shipping extends React.Component {
                     inputMode="numeric"
                     minLength="14"
                     maxLength="14"
-                    value={this.state.details.phoneNumberMask}
+                    value={details.phoneNumberMask}
                     required
                   />
-                  {this.state.errors.phoneNumber !== "" && (
-                    <p>{this.state.errors.phoneNumber}</p>
-                  )}
+                  {errors.phoneNumber !== "" && <p>{errors.phoneNumber}</p>}
                 </label>
               </form>
               <div id={style.deliveryOptions}>
@@ -447,9 +441,7 @@ class Shipping extends React.Component {
                       type="radio"
                       id={item.id}
                       name="deliveryOption"
-                      checked={
-                        this.state.shippingAndHandling === item.deliveryPrice
-                      }
+                      checked={shippingAndHandling === item.deliveryPrice}
                       onChange={this.handleDeliveryOptionSelection}
                     />
                     <p>{item.label}</p>
@@ -468,13 +460,13 @@ class Shipping extends React.Component {
                 <button
                   form="shippingForm"
                   type={
-                    !areNoErrors || this.state.details.stateOrTerritory === ""
+                    !areNoErrors || details.stateOrTerritory === ""
                       ? "button"
                       : "submit"
                   }
                   title="To Payment"
                   onClick={
-                    !areNoErrors || this.state.details.stateOrTerritory === ""
+                    !areNoErrors || details.stateOrTerritory === ""
                       ? alertFormErrors
                       : undefined
                   }
@@ -565,9 +557,9 @@ class Shipping extends React.Component {
           toPreviousPage={toPreviousPage}
           completedPages={completedPages}
           isShippingCompleted={!completedPages.shipping}
-          shipmentDetails={this.state.details}
-          shippingAndHandling={this.state.shippingAndHandling}
-          deliveryTime={this.state.deliveryTime}
+          shipmentDetails={details}
+          shippingAndHandling={shippingAndHandling}
+          deliveryTime={deliveryTime}
         />
       </div>
     );

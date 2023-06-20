@@ -195,6 +195,7 @@ class Login extends React.Component {
   };
 
   render() {
+    // Destructure props:
     const {
       isLoginHidden,
       toNextPage,
@@ -206,8 +207,16 @@ class Login extends React.Component {
       completedPages,
     } = this.props;
 
-    const { isLoginMethodSelected, eyeLogo, passwordFieldInputType, errors } =
-      this.state;
+    // Destructure state:
+    const {
+      isLoginMethodSelected,
+      eyeLogo,
+      passwordFieldInputType,
+      passwordPlaceholder,
+      errors,
+      isRequired,
+      accountEmailAddress,
+    } = this.state;
 
     const loginMethodHeaders = [
       {
@@ -236,51 +245,51 @@ class Login extends React.Component {
       {
         isHidden: false,
         labelText: "Password:",
-        placeholder: this.state.passwordPlaceholder,
-        inputType: this.state.passwordFieldInputType,
+        placeholder: passwordPlaceholder,
+        inputType: passwordFieldInputType,
         onChange: this.validatePassword,
         field: "password",
         required: true,
         inputMode: "password",
       },
       {
-        isHidden: this.state.isLoginMethodSelected,
+        isHidden: isLoginMethodSelected,
         labelText: "Confirm Password:",
         placeholder: "Confirm Password",
-        inputType: this.state.passwordFieldInputType,
+        inputType: passwordFieldInputType,
         onChange: this.validatePasswordConfirmation,
         field: "confirmPassword",
-        required: this.state.isRequired,
+        required: isRequired,
         inputMode: "password",
       },
       {
-        isHidden: this.state.isLoginMethodSelected,
+        isHidden: isLoginMethodSelected,
         labelText: "First Name:",
         placeholder: "Enter your first name",
         inputType: "text",
         onChange: this.validateNames,
         field: "name",
-        required: this.state.isRequired,
+        required: isRequired,
         inputMode: "text",
       },
       {
-        isHidden: this.state.isLoginMethodSelected,
+        isHidden: isLoginMethodSelected,
         labelText: "Last Name:",
         placeholder: "Enter your last name",
         inputType: "text",
         onChange: this.validateNames,
         field: "name",
-        required: this.state.isRequired,
+        required: isRequired,
         inputMode: "text",
       },
       {
-        isHidden: this.state.isLoginMethodSelected,
+        isHidden: isLoginMethodSelected,
         labelText: "Postal Code:",
         placeholder: "US postal code (ex. 12345)",
         inputType: "text",
         onChange: this.validatePostalCode,
         field: "postalCode",
-        required: this.state.isRequired,
+        required: isRequired,
         inputMode: "numeric",
       },
     ];
@@ -361,7 +370,7 @@ class Login extends React.Component {
           </form>
         </div>
         <Cart
-          accountEmailAddress={this.state.accountEmailAddress}
+          accountEmailAddress={accountEmailAddress}
           isCartHidden={isCartHidden}
           isShippingHidden={isShippingHidden}
           isPaymentHidden={isPaymentHidden}

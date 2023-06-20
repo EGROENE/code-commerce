@@ -241,6 +241,7 @@ class Payment extends React.Component {
   };
 
   render() {
+    // Destructure props:
     const {
       accountEmailAddress,
       itemsInCart,
@@ -256,6 +257,9 @@ class Payment extends React.Component {
       shippingAndHandling,
       deliveryTime,
     } = this.props;
+
+    // Destructure state:
+    const { errors, paymentDetails } = this.state;
 
     // Calculate totals based on current state values of unit prices & quantity:
     let cartSubtotal = itemsInCart.map(
@@ -352,9 +356,7 @@ class Payment extends React.Component {
                   inputMode="text"
                   placeholder="Enter name as it appears on card"
                 />
-                {this.state.errors.cardHolderError && (
-                  <p>{this.state.errors.cardHolderError}</p>
-                )}
+                {errors.cardHolderError && <p>{errors.cardHolderError}</p>}
               </label>
               <label htmlFor="">
                 <header>
@@ -367,32 +369,26 @@ class Payment extends React.Component {
                   required
                   inputMode="numeric"
                   value={
-                    this.state.paymentDetails.cardNumberMask !== ""
-                      ? this.state.paymentDetails.cardNumberMask
+                    paymentDetails.cardNumberMask !== ""
+                      ? paymentDetails.cardNumberMask
                       : ""
                   }
                   placeholder="Enter card number"
                   minLength={
-                    this.state.paymentDetails.cardType === "AMERICAN_EXPRESS"
-                      ? 18
-                      : 19
+                    paymentDetails.cardType === "AMERICAN_EXPRESS" ? 18 : 19
                   }
                   maxLength={
-                    this.state.paymentDetails.cardType === "AMERICAN_EXPRESS"
-                      ? 18
-                      : 19
+                    paymentDetails.cardType === "AMERICAN_EXPRESS" ? 18 : 19
                   }
                 />
-                {this.state.paymentDetails.cardType !== "" && (
+                {paymentDetails.cardType !== "" && (
                   <img
                     className={style.cardImage}
-                    src={this.state.paymentDetails.cardImage}
+                    src={paymentDetails.cardImage}
                     alt="card"
                   />
                 )}
-                {this.state.errors.cardNumberError && (
-                  <p>{this.state.errors.cardNumberError}</p>
-                )}
+                {errors.cardNumberError && <p>{errors.cardNumberError}</p>}
               </label>
               <div id={style.expiryAndCVV}>
                 <label htmlFor="">
@@ -417,9 +413,7 @@ class Payment extends React.Component {
                       </option>
                     ))}
                   </select>
-                  {this.state.errors.expiryError && (
-                    <p>{this.state.errors.expiryError}</p>
-                  )}
+                  {errors.expiryError && <p>{errors.expiryError}</p>}
                 </label>
                 <label htmlFor="">
                   <header>CVV:</header>
@@ -431,10 +425,10 @@ class Payment extends React.Component {
                     required
                     inputMode="numeric"
                     placeholder="3-digit CVV code"
-                    value={this.state.paymentDetails.securityCode}
+                    value={paymentDetails.securityCode}
                   />
-                  {this.state.errors.securityCodeError && (
-                    <p>{this.state.errors.securityCodeError}</p>
+                  {errors.securityCodeError && (
+                    <p>{errors.securityCodeError}</p>
                   )}
                 </label>
               </div>
@@ -451,15 +445,15 @@ class Payment extends React.Component {
                   title="Pay & Place Order"
                   type={
                     !areNoErrors ||
-                    this.state.paymentDetails.expiryMonth === "" ||
-                    this.state.paymentDetails.expiryYear === ""
+                    paymentDetails.expiryMonth === "" ||
+                    paymentDetails.expiryYear === ""
                       ? "button"
                       : "submit"
                   }
                   onClick={
                     !areNoErrors ||
-                    this.state.paymentDetails.expiryMonth === "" ||
-                    this.state.paymentDetails.expiryYear === ""
+                    paymentDetails.expiryMonth === "" ||
+                    paymentDetails.expiryYear === ""
                       ? alertFormErrors
                       : undefined
                   }

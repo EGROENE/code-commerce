@@ -18,6 +18,7 @@ class Confirmation extends React.Component {
   };
 
   render() {
+    // Destructure props:
     const {
       isConfirmationHidden,
       completedPages,

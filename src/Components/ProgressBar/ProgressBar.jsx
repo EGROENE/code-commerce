@@ -2,12 +2,14 @@ import React from "react";
 
 class ProgressBar extends React.Component {
   render() {
+    // Destructure props:
     const {
       completedPages,
       isShippingCompleted,
       isPaymentCompleted,
       isConfirmationCompleted,
     } = this.props;
+
     const progressBarElements = [
       {
         id: "Cart",
