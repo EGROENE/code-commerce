@@ -23,12 +23,9 @@ class Confirmation extends React.Component {
       completedPages,
       accountEmailAddress,
       itemsInCart,
-      isPaymentHidden,
       numberOfItemsInCart,
       discountRate,
       shipmentDetails,
-      toNextPage,
-      toPreviousPage,
       shippingAndHandling,
       deliveryTime,
     } = this.props;
@@ -64,9 +61,7 @@ class Confirmation extends React.Component {
           <header>Thanks for your order!</header>
           <p>It should be arriving within {deliveryTime}.</p>
           <div id={style.confirmationPageBtnContainer}>
-            <a href="">
-              <button>Back to Homepage</button>
-            </a>
+            <button>Back to Homepage</button>
             <button onClick={this.showHideOrderDetails}>
               See Order Details
             </button>

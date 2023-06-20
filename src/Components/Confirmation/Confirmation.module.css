@@ -6,10 +6,15 @@
     font-size: var(--size-48);
 }
 
-#confirmationPageBtnContainer a button {
+#confirmationPageBtnContainer button:first-child {
     background-color: transparent;
     color: white;
     border: 1px solid white;
+}
+
+#confirmationPageBtnContainer button:first-child:hover {
+    cursor: pointer;
+    opacity: 0.5;
 }
 
 #confirmationPageBtnContainer button {
