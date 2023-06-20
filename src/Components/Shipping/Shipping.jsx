@@ -15,7 +15,7 @@ class Shipping extends React.Component {
         city: "",
         phoneNumber: "",
       },
-      details: {
+      shipmentDetails: {
         name: "",
         streetAddress: "",
         postalCode: "",
@@ -34,8 +34,8 @@ class Shipping extends React.Component {
     let value = e.target.value;
     let field = e.target.id;
     this.setState((prevState) => ({
-      details: {
-        ...prevState.details,
+      shipmentDetails: {
+        ...prevState.shipmentDetails,
         [field]: value,
       },
     }));
@@ -53,8 +53,8 @@ class Shipping extends React.Component {
           ...prevState.errors,
           [field]: "",
         },
-        details: {
-          ...prevState.details,
+        shipmentDetails: {
+          ...prevState.shipmentDetails,
           [field]: value,
         },
       }));
@@ -64,8 +64,8 @@ class Shipping extends React.Component {
           ...prevState.errors,
           [field]: "Enter alphabetical characters & any spaces between words",
         },
-        details: {
-          ...prevState.details,
+        shipmentDetails: {
+          ...prevState.shipmentDetails,
           [field]: "",
         },
       }));
@@ -81,8 +81,8 @@ class Shipping extends React.Component {
           ...prevState.errors,
           streetAddress: "",
         },
-        details: {
-          ...prevState.details,
+        shipmentDetails: {
+          ...prevState.shipmentDetails,
           streetAddress: value,
         },
       }));
@@ -92,8 +92,8 @@ class Shipping extends React.Component {
           ...prevState.errors,
           streetAddress: "Please enter a valid address",
         },
-        details: {
-          ...prevState.details,
+        shipmentDetails: {
+          ...prevState.shipmentDetails,
           streetAddress: "",
         },
       }));
@@ -109,8 +109,8 @@ class Shipping extends React.Component {
           ...prevState.errors,
           postalCode: "",
         },
-        details: {
-          ...prevState.details,
+        shipmentDetails: {
+          ...prevState.shipmentDetails,
           postalCode: value,
         },
       }));
@@ -120,8 +120,8 @@ class Shipping extends React.Component {
           ...prevState.errors,
           postalCode: "5-digit US postal code",
         },
-        details: {
-          ...prevState.details,
+        shipmentDetails: {
+          ...prevState.shipmentDetails,
           postalCode: "",
         },
       }));
@@ -147,8 +147,8 @@ class Shipping extends React.Component {
           ...prevState.errors,
           phoneNumber: "",
         },
-        details: {
-          ...prevState.details,
+        shipmentDetails: {
+          ...prevState.shipmentDetails,
           phoneNumber: value.replace(/[^\d]/g, ""),
           phoneNumberMask: phoneNumberMask,
         },
@@ -159,8 +159,8 @@ class Shipping extends React.Component {
           ...prevState.errors,
           phoneNumber: "Enter 10-digit, US number",
         },
-        details: {
-          ...prevState.details,
+        shipmentDetails: {
+          ...prevState.shipmentDetails,
           phoneNumber: "",
           phoneNumberMask: phoneNumberMask,
         },
@@ -201,7 +201,8 @@ class Shipping extends React.Component {
     } = this.props;
 
     // Destructure state:
-    const { shippingAndHandling, errors, details, deliveryTime } = this.state;
+    const { shippingAndHandling, errors, shipmentDetails, deliveryTime } =
+      this.state;
 
     // Calculate totals based on current state values of unit prices & quantity:
     let cartSubtotal = itemsInCart.map(
@@ -422,7 +423,7 @@ class Shipping extends React.Component {
                     inputMode="numeric"
                     minLength="14"
                     maxLength="14"
-                    value={details.phoneNumberMask}
+                    value={shipmentDetails.phoneNumberMask}
                     required
                   />
                   {errors.phoneNumber !== "" && <p>{errors.phoneNumber}</p>}
@@ -460,13 +461,13 @@ class Shipping extends React.Component {
                 <button
                   form="shippingForm"
                   type={
-                    !areNoErrors || details.stateOrTerritory === ""
+                    !areNoErrors || shipmentDetails.stateOrTerritory === ""
                       ? "button"
                       : "submit"
                   }
                   title="To Payment"
                   onClick={
-                    !areNoErrors || details.stateOrTerritory === ""
+                    !areNoErrors || shipmentDetails.stateOrTerritory === ""
                       ? alertFormErrors
                       : undefined
                   }
@@ -557,7 +558,7 @@ class Shipping extends React.Component {
           toPreviousPage={toPreviousPage}
           completedPages={completedPages}
           isShippingCompleted={!completedPages.shipping}
-          shipmentDetails={details}
+          shipmentDetails={shipmentDetails}
           shippingAndHandling={shippingAndHandling}
           deliveryTime={deliveryTime}
         />
