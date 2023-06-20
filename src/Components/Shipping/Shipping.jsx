@@ -426,11 +426,7 @@ class Shipping extends React.Component {
                     inputMode="numeric"
                     minLength="14"
                     maxLength="14"
-                    value={
-                      this.state.details.phoneNumberMask
-                        ? this.state.details.phoneNumberMask
-                        : undefined
-                    }
+                    value={this.state.details.phoneNumberMask}
                     required
                   />
                   {this.state.errors.phoneNumber !== "" && (
