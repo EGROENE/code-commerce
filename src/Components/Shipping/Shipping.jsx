@@ -134,7 +134,7 @@ class Shipping extends React.Component {
     if (match) {
       return "(" + match[1] + ") " + match[2] + "-" + match[3];
     }
-    return null;
+    return undefined;
   }
 
   // Method to validate phone number:
