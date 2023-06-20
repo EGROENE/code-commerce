@@ -40,7 +40,7 @@ class App extends React.Component {
             cart: true,
           },
         }));
-      } else if (selectedPageHidden === "isShippingHidden") {
+      } /* else if (selectedPageHidden === "isShippingHidden") {
         this.setState((prevState) => ({
           pageDisplayOptions: {
             ...prevState.pageDisplayOptions,
@@ -57,6 +57,14 @@ class App extends React.Component {
           },
         }));
       } else {
+        this.setState((prevState) => ({
+          pageDisplayOptions: {
+            ...prevState.pageDisplayOptions,
+            [selectedPageHidden]: true,
+            [nextPageHidden]: false,
+          },
+        }));
+      } */ else {
         this.setState((prevState) => ({
           pageDisplayOptions: {
             ...prevState.pageDisplayOptions,

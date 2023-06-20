@@ -99,7 +99,7 @@ class Confirmation extends React.Component {
               <div
                 id={style.itemsInCartContainer}
                 style={
-                  itemsInCart.length > 2
+                  numberOfItemsInCart > 2
                     ? { overflowY: "scroll" }
                     : { overflowY: "unset" }
                 }
