@@ -346,7 +346,7 @@ class Payment extends React.Component {
                 toNextPage(e, "isPaymentHidden", "isConfirmationHidden");
               }}
             >
-              <label htmlFor="">
+              <label>
                 <header>Cardholder Name: </header>
                 <input
                   minLength="1"
@@ -355,10 +355,11 @@ class Payment extends React.Component {
                   required
                   inputMode="text"
                   placeholder="Enter name as it appears on card"
+                  autoComplete="cc-name"
                 />
                 {errors.cardHolderError && <p>{errors.cardHolderError}</p>}
               </label>
-              <label htmlFor="">
+              <label>
                 <header>
                   Card Number:{" "}
                   <span>MasterCard, American Express, Visa, or Discover</span>
@@ -380,6 +381,7 @@ class Payment extends React.Component {
                   maxLength={
                     paymentDetails.cardType === "AMERICAN_EXPRESS" ? 18 : 19
                   }
+                  autoComplete="cc-number"
                 />
                 {paymentDetails.cardType !== "" && (
                   <img
@@ -391,7 +393,7 @@ class Payment extends React.Component {
                 {errors.cardNumberError && <p>{errors.cardNumberError}</p>}
               </label>
               <div id={style.expiryAndCVV}>
-                <label htmlFor="">
+                <label>
                   <header>Expiry Date: </header>
                   <select id="selectExpiryMonth" onChange={this.getExpiryMonth}>
                     <option disabled selected>
@@ -415,7 +417,7 @@ class Payment extends React.Component {
                   </select>
                   {errors.expiryError && <p>{errors.expiryError}</p>}
                 </label>
-                <label htmlFor="">
+                <label>
                   <header>CVV:</header>
                   <input
                     onChange={this.validateCVV}
@@ -426,6 +428,7 @@ class Payment extends React.Component {
                     inputMode="numeric"
                     placeholder="3-digit CVV code"
                     value={paymentDetails.securityCode}
+                    autoComplete="cc-csc"
                   />
                   {errors.securityCodeError && (
                     <p>{errors.securityCodeError}</p>

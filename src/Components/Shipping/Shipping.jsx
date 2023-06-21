@@ -257,7 +257,7 @@ class Shipping extends React.Component {
                 }}
               >
                 <div id={style.titleName}>
-                  <label htmlFor="">
+                  <label>
                     <header>Title: </header>
                     <select
                       id="title"
@@ -287,6 +287,7 @@ class Shipping extends React.Component {
                         required
                         inputMode="text"
                         minLength="1"
+                        autoComplete="on"
                       />
                     </div>
                     {errors.name !== "" && (
@@ -304,13 +305,14 @@ class Shipping extends React.Component {
                     onChange={this.validateStreetAddress}
                     inputMode="text"
                     minLength="1"
+                    autoComplete="street-address"
                   />
                   {this.state.errors.streetAddress !== "" && (
                     <p>{errors.streetAddress}</p>
                   )}
                 </label>
                 <div id={style.moreAddressDetails}>
-                  <label htmlFor="">
+                  <label>
                     <header>ZIP Code: </header>
                     <input
                       id="postalCode"
@@ -321,6 +323,7 @@ class Shipping extends React.Component {
                       inputMode="numeric"
                       minLength="5"
                       maxLength="5"
+                      autoComplete="postal-code"
                     />
                     {errors.postalCode !== "" && <p>{errors.postalCode}</p>}
                   </label>
@@ -336,6 +339,7 @@ class Shipping extends React.Component {
                       }}
                       required
                       inputMode="text"
+                      autoComplete="on"
                     />
                     {errors.city !== "" && <p>{errors.city}</p>}
                   </label>
@@ -425,6 +429,7 @@ class Shipping extends React.Component {
                     maxLength="14"
                     value={shipmentDetails.phoneNumberMask}
                     required
+                    autoComplete="tel-national"
                   />
                   {errors.phoneNumber !== "" && <p>{errors.phoneNumber}</p>}
                 </label>

@@ -245,7 +245,7 @@ class Cart extends React.Component {
             </div>
             <div id={style.cartSummary}>
               <header>Cart Summary</header>
-              <label htmlFor="">
+              <label>
                 <p>Do you have a promo code?</p>
                 <input
                   placeholder="Enter promo code"

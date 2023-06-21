@@ -241,6 +241,7 @@ class Login extends React.Component {
         field: "email",
         required: true,
         inputMode: "email",
+        autocomplete: "email",
       },
       {
         isHidden: false,
@@ -251,6 +252,7 @@ class Login extends React.Component {
         field: "password",
         required: true,
         inputMode: "password",
+        autocomplete: "current-password",
       },
       {
         isHidden: isLoginMethodSelected,
@@ -261,6 +263,7 @@ class Login extends React.Component {
         field: "confirmPassword",
         required: isRequired,
         inputMode: "password",
+        autocomplete: "off",
       },
       {
         isHidden: isLoginMethodSelected,
@@ -271,6 +274,7 @@ class Login extends React.Component {
         field: "name",
         required: isRequired,
         inputMode: "text",
+        autocomplete: "given-name",
       },
       {
         isHidden: isLoginMethodSelected,
@@ -281,6 +285,7 @@ class Login extends React.Component {
         field: "name",
         required: isRequired,
         inputMode: "text",
+        autocomplete: "family-name",
       },
       {
         isHidden: isLoginMethodSelected,
@@ -291,6 +296,7 @@ class Login extends React.Component {
         field: "postalCode",
         required: isRequired,
         inputMode: "numeric",
+        autocomplete: "postal-code",
       },
     ];
 
@@ -332,6 +338,7 @@ class Login extends React.Component {
                   inputMode={input.inputMode}
                   minLength={input.labelText === "Postal Code:" ? 5 : undefined}
                   maxLength={input.labelText === "Postal Code:" ? 5 : undefined}
+                  autocomplete={input.autocomplete}
                 />
                 {input.labelText === "Password:" && !isLoginMethodSelected ? (
                   <p>
