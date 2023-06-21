@@ -367,3 +367,59 @@ a:hover {
   color: var(--theme-color);
   text-transform: uppercase;
 }
+
+/* MOBILE STYLING */
+@media screen and (max-width: 962px) {
+  h1 {
+    margin-bottom: 0rem;
+  }
+
+  .pageHeader {
+    margin: 0.5rem auto;
+  }
+
+  #homepageContainer form {
+    width: 68vw;
+    max-width: 68vw;
+  }
+}
+
+@media screen and (max-width: 810px) {
+  #homepageContainer form {
+    width: 68vw;
+    max-width: 68vw;
+  }
+}
+
+@media screen and (max-width: 800px) and (min-height: 1280px) {
+  #homepageContainer form {
+    margin-top: 2rem;
+  }
+  label {
+    margin: 1rem;
+  }
+}
+
+@media screen and (max-width: 601px) {
+  #homepageContainer form {
+    /* width: 85vw;
+    max-width: 85vw; */
+    margin: 12px 42px 42px 42px;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  label {
+    margin: 0.75rem auto;
+  }
+
+  form button, form a {
+    width: 86%;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  #Login_loginBtnsContainer__L9wak p {
+    margin: 0.75rem;
+  }
+}
