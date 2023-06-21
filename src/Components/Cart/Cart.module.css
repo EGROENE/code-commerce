@@ -1,6 +1,7 @@
 #cartPageContainer {
     display: flex;
     margin: 0.75rem 1rem;
+    width: 96vw;
 }
 
 #cartIsEmpty {
@@ -18,13 +19,43 @@
   border: 2px solid var(--theme-color);
   height: 30rem;
   overflow-y: scroll;
+  width: 100%;
+  width: 105rem;
+  /* max-width: 100%; */
+}
+
+.itemMainInfoContainer {
+  display: flex;
+  align-items: center;
+  width: 56%;
+}
+
+.deleteItemButton i {
+  margin-left: -3rem;
+}
+
+.itemMainInfoContainer * {
+  margin: 0 8px;
+}
+
+.itemTotalsContainer * {
+  
 }
 
 .itemInCart {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  /* grid-template-columns: repeat(6, 1fr); */
   align-items: center;
   margin: 1rem auto;
+  display: flex;
+  /* align-items: center; */
+  width: 54rem;
+}
+
+.itemTotalsContainer {
+  display: flex;
+  align-items: flex-end;
+  width: 50%;
 }
 
 .itemInCart img {
@@ -40,12 +71,13 @@
 .itemInCart input {
   height: 3rem;
   width: 4rem;
-  margin-left: 3rem;
+  margin: 0 1rem;
 }
 
 .itemInCart p {
     font-size: 1.25rem;
     margin: 0.75rem auto;
+    text-align: left;
 }
 
 .itemInfo {
@@ -146,12 +178,54 @@
   }
 }
 
+@media screen and (min-width: 1600px) {
+  .deleteItemButton i {
+    margin-left: -4rem;
+  }
+}
+
+@media screen and (min-width: 1536px) {
+  .itemInCart {
+    width: 51rem;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .itemInCart {
+    width: 51rem;
+  }
+
+  .deleteItemButton i {
+    margin-left: 0;
+  }
+}
+
 @media screen and (max-width: 962px) {
   #cartPageContainer {
     display: flex;
-    margin: 0.75rem 1rem;
+    margin: 0.75rem 0;
     flex-direction: column;
     align-items: center;
+  }
+
+  #itemsInCartSeveral {
+    border: 2px solid var(--theme-color);
+    height: 30rem;
+    overflow-y: scroll;
+    width: 100%;
+    width: 57rem;
+    /* max-width: 100%; */
+}
+
+  .itemInCart {
+    align-items: center;
+    margin: 1rem auto;
+    display: flex;
+    width: 46rem;
+  }
+
+  .deleteItemButton i {
+    margin-left: -3.5rem;
   }
 
   .itemInCart img {
@@ -166,9 +240,35 @@
   }
 }
 
+@media screen and (max-width: 810px) {
+  #itemsInCartSeveral {
+    width: 47rem;
+  }
+
+  .itemInCart {
+    width: 38rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #itemsInCartSeveral,
+  #itemsInCartCouple {
+    width: 44rem;
+  }
+
+  .itemInCart {
+    width: 34rem;
+  }
+}
+
 @media screen and (max-width: 601px) {
   #cartPageContainer {
     width: 90vw;
+  }
+
+  #itemsInCartSeveral,
+  #itemsInCartCouple {
+    width: 33rem;
   }
 
   .itemInCart {
@@ -180,12 +280,18 @@
 
   .deleteItemButton i {
     font-size: var(--size-28);
+    margin-left: 0;
   }
 
   .itemMainInfoContainer {
     display: flex;
     align-items: center;
     padding-left: 0.5rem;
+    width: 30rem;
+  }
+
+  .itemInCart {
+    width: 30rem;
   }
 
   .itemInCart img {
@@ -197,13 +303,20 @@
   }
 
   .itemInCart input {
-    height: 4rem;
+    height: 3rem;
     margin: 0 2rem;
   }
 
   .itemTotalsContainer {
     display: flex;
     margin: var(--size-20) auto;
+    width: 30rem;
+    justify-content: space-around;
+    align-items: flex-start;
+  }
+
+  #cartSummary {
+    padding: 0 1rem;
   }
 
   #cartSummary button {
@@ -211,7 +324,35 @@
   }
 }
 
+@media screen and (max-width: 414px) {
+  #itemsInCartSeveral,
+  #itemsInCartCouple {
+    width: 23rem;
+  }
+
+  .itemInCart p {
+    font-size: 1rem;
+  }
+
+  .itemInCart img {
+    height: 5rem;
+  }
+
+  .itemInCart input {
+    height: 2rem;
+  }
+}
+
 @media screen and (max-width: 360px) {
+  #cartSummary {
+    width: 22rem;
+  }
+
+  #itemsInCartSeveral,
+  #itemsInCartCouple {
+    width: 20rem;
+  }
+
   .itemInCart p {
     font-size: 1rem;
   }
