@@ -192,53 +192,59 @@ class Cart extends React.Component {
                         className={style.itemInCart}
                         key={item.itemNameCamelCase}
                       >
-                        <p
-                          className={style.deleteItemButton}
-                          title="Remove from cart"
-                        >
-                          <i
-                            onClick={(e) => {
-                              this.deleteItem(e, item.itemNameCamelCase);
-                            }}
-                            className="fas fa-times-circle"
-                          ></i>
-                        </p>
-                        <img alt="" src={item.itemImage} />
-                        <div className={style.itemInfo}>
-                          <p className={style.productTitle}>{item.itemName}</p>
-                          <p>Category: {item.category}</p>
-                          <p>Language: {item.language}</p>
+                        <div className={style.itemMainInfoContainer}>
+                          <p
+                            className={style.deleteItemButton}
+                            title="Remove from cart"
+                          >
+                            <i
+                              onClick={(e) => {
+                                this.deleteItem(e, item.itemNameCamelCase);
+                              }}
+                              className="fas fa-times-circle"
+                            ></i>
+                          </p>
+                          <img alt="" src={item.itemImage} />
+                          <div className={style.itemInfo}>
+                            <p className={style.productTitle}>
+                              {item.itemName}
+                            </p>
+                            <p>Category: {item.category}</p>
+                            <p>Language: {item.language}</p>
+                          </div>
                         </div>
-                        <p>
-                          <span className="itemInfoHeader">Unit Price:</span>
-                          <br />
-                          {" $" +
-                            item.unitPrice.toLocaleString(undefined, {
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 2,
-                            })}
-                        </p>
-                        <input
-                          id={`${item.itemNameCamelCase}Quantity`}
-                          value={item.quantity}
-                          type="number"
-                          min={1}
-                          step={1}
-                          onChange={(e) => {
-                            this.updateQuantities(e, item.itemNameCamelCase);
-                          }}
-                        />
-                        <p>
-                          <span className="itemInfoHeader">Item Total:</span>
-                          <br />
-                          {"$" +
-                            roundToHundredth(
-                              item.quantity * item.unitPrice
-                            ).toLocaleString(undefined, {
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 2,
-                            })}
-                        </p>
+                        <div className={style.itemTotalsContainer}>
+                          <p>
+                            <span className="itemInfoHeader">Unit Price:</span>
+                            <br />
+                            {" $" +
+                              item.unitPrice.toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })}
+                          </p>
+                          <input
+                            id={`${item.itemNameCamelCase}Quantity`}
+                            value={item.quantity}
+                            type="number"
+                            min={1}
+                            step={1}
+                            onChange={(e) => {
+                              this.updateQuantities(e, item.itemNameCamelCase);
+                            }}
+                          />
+                          <p>
+                            <span className="itemInfoHeader">Item Total:</span>
+                            <br />
+                            {"$" +
+                              roundToHundredth(
+                                item.quantity * item.unitPrice
+                              ).toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })}
+                          </p>
+                        </div>
                       </div>
                     )
                 )

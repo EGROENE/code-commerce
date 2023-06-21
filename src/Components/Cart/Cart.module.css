@@ -68,6 +68,7 @@
 
 #cartSummary header {
     margin-bottom: 1.5rem;
+    font-size: 1.75rem;
 }
 
 #cartSummary label {
@@ -136,4 +137,90 @@
 
 .acceptedPromoCode i:hover {
   cursor: pointer;
+}
+
+/* MOBILE STYLING */
+@media screen and (min-width: 1920px) {
+  #itemsInCartSeveral {
+    height: 41rem;
+  }
+}
+
+@media screen and (max-width: 962px) {
+  #cartPageContainer {
+    display: flex;
+    margin: 0.75rem 1rem;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .itemInCart img {
+    height: 9rem;
+    margin-left: -1.5rem;
+  }
+
+  #cartSummary header {
+    margin-bottom: 1.5rem;
+    margin: 1.5rem auto;
+    font-size: 1.75rem;
+  }
+}
+
+@media screen and (max-width: 601px) {
+  #cartPageContainer {
+    width: 90vw;
+  }
+
+  .itemInCart {
+    align-items: center;
+    margin: 3.5rem auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .deleteItemButton i {
+    font-size: var(--size-28);
+  }
+
+  .itemMainInfoContainer {
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem;
+  }
+
+  .itemInCart img {
+    margin: 0 var(--size-20);
+  }
+
+  .itemInCart p {
+    margin: 0;
+  }
+
+  .itemInCart input {
+    height: 4rem;
+    margin: 0 2rem;
+  }
+
+  .itemTotalsContainer {
+    display: flex;
+    margin: var(--size-20) auto;
+  }
+
+  #cartSummary button {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .itemInCart p {
+    font-size: 1rem;
+  }
+
+  .itemInCart img {
+    height: 6rem;
+  }
+
+  .itemInCart input {
+    height: 3rem;
+  }
 }
