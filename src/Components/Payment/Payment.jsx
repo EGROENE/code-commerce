@@ -349,6 +349,7 @@ class Payment extends React.Component {
               <label>
                 <header>Cardholder Name: </header>
                 <input
+                  id="cardholderName"
                   minLength="1"
                   onChange={this.validateCardHolderName}
                   type="text"
@@ -365,6 +366,7 @@ class Payment extends React.Component {
                   <span>MasterCard, American Express, Visa, or Discover</span>
                 </header>
                 <input
+                  id="cardNumber"
                   onChange={this.validateCardNumber}
                   type="text"
                   required
@@ -420,6 +422,7 @@ class Payment extends React.Component {
                 <label>
                   <header>CVV:</header>
                   <input
+                    id="securityCode"
                     onChange={this.validateCVV}
                     minLength="3"
                     maxLength="3"

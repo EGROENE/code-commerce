@@ -233,6 +233,7 @@ class Login extends React.Component {
 
     const formInputs = [
       {
+        id: "loginEmail",
         isHidden: false,
         labelText: "Email Address:",
         placeholder: "Enter your email address",
@@ -244,6 +245,7 @@ class Login extends React.Component {
         autocomplete: "email",
       },
       {
+        id: "loginPassword",
         isHidden: false,
         labelText: "Password:",
         placeholder: passwordPlaceholder,
@@ -255,6 +257,7 @@ class Login extends React.Component {
         autocomplete: "current-password",
       },
       {
+        id: "loginConfirmPassword",
         isHidden: isLoginMethodSelected,
         labelText: "Confirm Password:",
         placeholder: "Confirm Password",
@@ -266,6 +269,7 @@ class Login extends React.Component {
         autocomplete: "off",
       },
       {
+        id: "loginFirstName",
         isHidden: isLoginMethodSelected,
         labelText: "First Name:",
         placeholder: "Enter your first name",
@@ -277,6 +281,7 @@ class Login extends React.Component {
         autocomplete: "given-name",
       },
       {
+        id: "loginLastName",
         isHidden: isLoginMethodSelected,
         labelText: "Last Name:",
         placeholder: "Enter your last name",
@@ -288,6 +293,7 @@ class Login extends React.Component {
         autocomplete: "family-name",
       },
       {
+        id: "loginPostalCode",
         isHidden: isLoginMethodSelected,
         labelText: "Postal Code:",
         placeholder: "US postal code (ex. 12345)",
@@ -326,6 +332,7 @@ class Login extends React.Component {
                 <header key={input.labelText + "1"}>{input.labelText}</header>
                 {input.labelText.includes("Password") && eyeLogo}
                 <input
+                  id={input.id}
                   key={input.labelText + "2"}
                   placeholder={input.placeholder}
                   type={

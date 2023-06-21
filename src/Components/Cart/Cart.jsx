@@ -219,6 +219,7 @@ class Cart extends React.Component {
                             })}
                         </p>
                         <input
+                          id={`${item.itemNameCamelCase}Quantity`}
                           value={item.quantity}
                           type="number"
                           min={1}
@@ -255,6 +256,7 @@ class Cart extends React.Component {
                   }}
                   type="text"
                   inputMode="text"
+                  id="promoCode"
                 />
                 {isInvalidPromo && <p>Invalid code</p>}
                 <button
