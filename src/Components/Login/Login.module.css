@@ -93,3 +93,16 @@
 .eye:hover {
     cursor: pointer;
 }
+
+/* MOBILE STYLING */
+@media screen and (min-width: 1920px) {
+    .eye {
+        top: 44px;
+      }
+}
+
+@media screen and (min-width: 1600px) {
+    .eye {
+        top: 42px;
+      }
+}
