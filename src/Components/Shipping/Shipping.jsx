@@ -274,7 +274,7 @@ class Shipping extends React.Component {
                       <option value="Lady">Lady</option>
                     </select>
                   </label>
-                  <label>
+                  <label id={style.nameField}>
                     <div>
                       <header>Name: </header>
                       <input

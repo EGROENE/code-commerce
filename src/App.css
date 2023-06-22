@@ -374,14 +374,25 @@ a:hover {
     margin-bottom: 0rem;
   }
 
+  .progressBar {
+    display: flex;
+    align-items: center;
+    width: 80vw;
+    margin: 1.5rem auto;
+  }
+
   .pageHeader {
-    margin: 0.5rem auto;
+    margin: 1.5rem auto;
   }
 
   #homepageContainer form {
     width: 68vw;
     max-width: 68vw;
   }
+
+  label header {
+    font-size: var(--size-20);
+}
 }
 
 @media screen and (max-width: 810px) {
@@ -400,12 +411,53 @@ a:hover {
   }
 }
 
+@media screen and (max-width: 768px) {
+  .progressBar {
+    width: 90vw;
+  }
+
+  .itemInCartSummary {
+    width: 14rem;
+}
+}
+
 @media screen and (max-width: 601px) {
+  .progressBar {
+    width: 95vw;
+  }
+
+  .progressBar i {
+    padding: var(--size-20);
+  }
+
+  .progressBarElement p {
+    font-size: 0.8rem;
+  }
+
   #homepageContainer form {
-    /* width: 85vw;
-    max-width: 85vw; */
     margin: 12px 42px 42px 42px;
   }
+
+  .checkoutPageMainItems {
+    flex-direction: column;
+  }
+  
+  .checkoutBackNextBtnContainer {
+    justify-content: center;
+  }
+
+  .cartSummaryHeaders {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .itemInCartSummary {
+    width: 33rem;
+  }
+
+  .cartSummaryItem {
+    text-align: center;
+}
 }
 
 @media screen and (max-width: 414px) {
@@ -416,10 +468,61 @@ a:hover {
   form button, form a {
     width: 86%;
   }
+
+  .progressBar {
+    width: 91vw;
+  }
+
+  .progressBar i {
+      padding: var(--size-8);
+  }
+
+  .progressBarElement p {
+      font-size: 0.6rem;
+  }
+
+  #moreAddressDetails {
+    flex-direction: column;
+  }
+
+  .itemInCartSummary {
+    width: 23rem;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .itemInCartSummary {
+    width: 21rem;
+  }
 }
 
 @media screen and (max-width: 360px) {
-  #Login_loginBtnsContainer__L9wak p {
+  .checkoutPageMainItems {
+    width: 88vw;
+  }
+  
+  #loginBtnsContainer p {
     margin: 0.75rem;
+  }
+
+  .progressBarConnector {
+    height: 0.5rem;
+  }
+
+  .progressBarElement p {
+    font-size: 0.5rem;
+  }
+
+  .checkoutBackNextBtnContainer button {
+    font-size: 1rem;
+  }
+
+  .itemInCartSummary {
+    width: 18rem;
+  }
+
+  .progressBar i {
+    font-size: 1rem;
+    padding: 0;
   }
 }
