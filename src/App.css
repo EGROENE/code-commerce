@@ -279,6 +279,7 @@ a:hover {
 
 .cartSummaryHeaders header {
   color: var(--theme-color);
+  font-size: 1.5rem;
 }
 
 .cartSummaryHeaders p {
@@ -400,6 +401,11 @@ a:hover {
     width: 68vw;
     max-width: 68vw;
   }
+
+  .cartSummary {
+    text-align: right;
+    margin-left: 3rem;
+  }
 }
 
 @media screen and (max-width: 800px) and (min-height: 1280px) {
@@ -452,7 +458,7 @@ a:hover {
   }
 
   .itemInCartSummary {
-    width: 33rem;
+    width: 30rem;
   }
 
   .cartSummaryItem {
@@ -462,7 +468,8 @@ a:hover {
 
 @media screen and (max-width: 414px) {
   label {
-    margin: 0.75rem auto;
+    margin: 0.5rem 0;
+    width: 93%;
   }
 
   form button, form a {
@@ -483,6 +490,11 @@ a:hover {
 
   #moreAddressDetails {
     flex-direction: column;
+  }
+
+  .cartSummary {
+    text-align: right;
+    margin-left: 0;
   }
 
   .itemInCartSummary {

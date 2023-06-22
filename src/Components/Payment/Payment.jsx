@@ -422,7 +422,7 @@ class Payment extends React.Component {
                 <label>
                   <header>CVV:</header>
                   <input
-                    id="securityCode"
+                    id={style.securityCode}
                     onChange={this.validateCVV}
                     minLength="3"
                     maxLength="3"
