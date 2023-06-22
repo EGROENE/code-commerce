@@ -428,6 +428,10 @@ a:hover {
 }
 
 @media screen and (max-width: 601px) {
+  .App-logo {
+    height: 24vmin;
+  }
+
   .progressBar {
     width: 95vw;
   }
@@ -467,6 +471,10 @@ a:hover {
 }
 
 @media screen and (max-width: 414px) {
+  .App-logo {
+    height: 30vmin;
+  }
+
   label {
     margin: 0.5rem 0;
     width: 93%;

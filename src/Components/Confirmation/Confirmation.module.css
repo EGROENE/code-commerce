@@ -139,6 +139,10 @@
         font-size: 2rem;
     }
 
+    #confirmationPageBtnContainer button {
+        margin: 0.75rem auto;
+    }
+
     #orderItemsAndTotals {
         flex-direction: column;
     }
@@ -146,6 +150,12 @@
     #orderTotalsContainer, 
     #orderShipmentDetails {
         text-align: center;
+    }
+}
+
+@media screen and (max-width: 393px) {
+    #confirmationMessageContainer {
+        margin: 4rem auto;
     }
 }
 
