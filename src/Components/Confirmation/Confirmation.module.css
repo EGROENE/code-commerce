@@ -118,3 +118,69 @@
 #orderShipmentDetails {
     text-align: right;
 }
+
+/* MOBILE STYLING */
+@media screen and (max-width: 962px) {
+    #confirmationMessageContainer {
+        margin: 2rem auto;
+    }
+}
+
+@media screen and (max-width: 810px) {
+    #confirmationMessageContainer {
+        margin: 8rem auto;
+    }
+}
+
+@media screen and (max-width: 414px) {
+    #closeModalBtn {
+        top: 2%;
+        right: 5%;
+        font-size: 2rem;
+    }
+
+    #orderItemsAndTotals {
+        flex-direction: column;
+    }
+
+    #orderTotalsContainer, 
+    #orderShipmentDetails {
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 360px) and (max-height: 800px) {
+    #itemsInCartContainer {
+        height: 18rem;
+    }
+
+    #detailsContainer p {
+        margin: 0.2rem;
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 360px) and (max-height: 780px) {
+    #detailsContainer p {
+        margin: 0.2rem;
+        font-size: 0.75rem;
+    }
+}
+
+@media screen and (max-width: 360px) and (max-height: 640px) {
+    #confirmationMessageContainer header {
+        font-size: var(--size-32);
+    }
+
+    #confirmationMessageContainer {
+        margin: 3rem auto;
+    }
+
+    #detailsContainer div:nth-child(2) {
+        margin-top: 0rem;
+    }
+
+    #detailsContainer header {
+        font-size: 1rem;
+    }
+}
