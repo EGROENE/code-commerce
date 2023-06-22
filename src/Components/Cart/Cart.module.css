@@ -38,10 +38,6 @@
   margin: 0 8px;
 }
 
-.itemTotalsContainer * {
-  
-}
-
 .itemInCart {
   display: grid;
   /* grid-template-columns: repeat(6, 1fr); */
