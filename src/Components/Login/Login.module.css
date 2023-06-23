@@ -86,7 +86,6 @@
 .eye {
     position: absolute;
     right: 1%;
-    top: 31%;
     font-size: 20px;
 }
 
@@ -95,30 +94,6 @@
 }
 
 /* MOBILE STYLING */
-@media screen and (min-width: 1280px) {
-    .eye {
-        top: 39px;
-    }
-}
-
-@media screen and (min-width: 1600px) {
-    .eye {
-        top: 42px;
-    }
-}
-
-@media screen and (min-width: 1920px) {
-    .eye {
-        top: 45px;
-    }
-}
-
-@media screen and (max-width: 962px) {
-    .eye {
-        top: 33px;
-    }
-}
-
 @media screen and (max-width: 393px) {
     #loginBtnsContainer {
         margin: 1.5rem 0.5rem;

@@ -365,7 +365,7 @@ class Payment extends React.Component {
                   Card Number:{" "}
                   <span>MasterCard, American Express, Visa, or Discover</span>
                 </header>
-                <div id={style.cardInputContainer}>
+                <div className="inputFieldWithImage">
                   <input
                     id="cardNumber"
                     onChange={this.validateCardNumber}

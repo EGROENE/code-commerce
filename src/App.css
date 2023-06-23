@@ -198,6 +198,11 @@ form a {
   color: var(--theme-color);
 }
 
+.inputFieldWithImage {
+    display: flex;
+    align-items: center;
+}
+
 button:hover,
 a:hover {
   cursor: pointer;

@@ -330,23 +330,29 @@ class Login extends React.Component {
             {formInputs.map((input) => (
               <label key={input.labelText} hidden={input.isHidden}>
                 <header key={input.labelText + "1"}>{input.labelText}</header>
-                {input.labelText.includes("Password") && eyeLogo}
-                <input
-                  id={input.id}
-                  key={input.labelText + "2"}
-                  placeholder={input.placeholder}
-                  type={
-                    input.labelText.includes("Password")
-                      ? passwordFieldInputType
-                      : input.inputType
-                  }
-                  onChange={input.onChange}
-                  required={input.required}
-                  inputMode={input.inputMode}
-                  minLength={input.labelText === "Postal Code:" ? 5 : undefined}
-                  maxLength={input.labelText === "Postal Code:" ? 5 : undefined}
-                  autoComplete={input.autoComplete}
-                />
+                <div className="inputFieldWithImage">
+                  {input.labelText.includes("Password") && eyeLogo}
+                  <input
+                    id={input.id}
+                    key={input.labelText + "2"}
+                    placeholder={input.placeholder}
+                    type={
+                      input.labelText.includes("Password")
+                        ? passwordFieldInputType
+                        : input.inputType
+                    }
+                    onChange={input.onChange}
+                    required={input.required}
+                    inputMode={input.inputMode}
+                    minLength={
+                      input.labelText === "Postal Code:" ? 5 : undefined
+                    }
+                    maxLength={
+                      input.labelText === "Postal Code:" ? 5 : undefined
+                    }
+                    autoComplete={input.autoComplete}
+                  />
+                </div>
                 {input.labelText === "Password:" && !isLoginMethodSelected ? (
                   <p>
                     Must contain at least 1 uppercase & 1 lowercase English
