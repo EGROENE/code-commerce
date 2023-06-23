@@ -55,9 +55,37 @@
     }
 }
 
+/* @media screen and (max-width: 914px) {
+    #deliveryInfoContainer {
+        width: 97%;
+    }
+} */
+
+@media screen and (max-width: 914px) {
+    #securityCode {
+        width: 39%;
+    }
+
+    #deliveryInfoContainer {
+        width: 96%;
+    }
+}
+
 @media screen and (max-width: 810px) {
     #securityCode {
         width: 60%;
+    }
+}
+
+@media screen and (max-width: 768px) and (min-height: 1024px) {
+    #deliveryInfoContainer {
+      width: 96%;
+    }
+}
+
+@media screen and (max-width: 615px) {
+    #deliveryInfoContainer {
+        width: 95%;
     }
 }
 

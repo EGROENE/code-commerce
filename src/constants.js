@@ -24,7 +24,7 @@ export const ITEMS_IN_CART = [
     unitPrice: 75.0,
     quantity: 2,
   },
-  {
+  /* {
     itemName: "The Holy JavaScript Bible",
     itemNameCamelCase: "theHolyJavaScriptBible",
     itemImage:
@@ -43,7 +43,7 @@ export const ITEMS_IN_CART = [
     language: "Git",
     unitPrice: 24.99,
     quantity: 4,
-  },
+  }, */
 ];
 
 export const cardRegexPatterns = {

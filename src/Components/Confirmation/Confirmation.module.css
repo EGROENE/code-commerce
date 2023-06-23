@@ -132,6 +132,17 @@
     }
 }
 
+
+@media screen and (max-width: 615px) {
+    #itemsInCartContainer {
+        height: 32rem;    
+    }
+
+    #closeModalBtn {
+        right: 6%;
+    }
+}
+
 @media screen and (max-width: 414px) {
     #closeModalBtn {
         top: 2%;
