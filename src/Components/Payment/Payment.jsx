@@ -365,33 +365,35 @@ class Payment extends React.Component {
                   Card Number:{" "}
                   <span>MasterCard, American Express, Visa, or Discover</span>
                 </header>
-                <input
-                  id="cardNumber"
-                  onChange={this.validateCardNumber}
-                  type="text"
-                  required
-                  inputMode="numeric"
-                  value={
-                    paymentDetails.cardNumberMask !== ""
-                      ? paymentDetails.cardNumberMask
-                      : ""
-                  }
-                  placeholder="Enter card number"
-                  minLength={
-                    paymentDetails.cardType === "AMERICAN_EXPRESS" ? 18 : 19
-                  }
-                  maxLength={
-                    paymentDetails.cardType === "AMERICAN_EXPRESS" ? 18 : 19
-                  }
-                  autoComplete="cc-number"
-                />
-                {paymentDetails.cardType !== "" && (
-                  <img
-                    className={style.cardImage}
-                    src={paymentDetails.cardImage}
-                    alt="card"
+                <div id={style.cardInputContainer}>
+                  <input
+                    id="cardNumber"
+                    onChange={this.validateCardNumber}
+                    type="text"
+                    required
+                    inputMode="numeric"
+                    value={
+                      paymentDetails.cardNumberMask !== ""
+                        ? paymentDetails.cardNumberMask
+                        : ""
+                    }
+                    placeholder="Enter card number"
+                    minLength={
+                      paymentDetails.cardType === "AMERICAN_EXPRESS" ? 18 : 19
+                    }
+                    maxLength={
+                      paymentDetails.cardType === "AMERICAN_EXPRESS" ? 18 : 19
+                    }
+                    autoComplete="cc-number"
                   />
-                )}
+                  {paymentDetails.cardType !== "" && (
+                    <img
+                      className={style.cardImage}
+                      src={paymentDetails.cardImage}
+                      alt="card"
+                    />
+                  )}
+                </div>
                 {errors.cardNumberError && <p>{errors.cardNumberError}</p>}
               </label>
               <div id={style.expiryAndCVV}>

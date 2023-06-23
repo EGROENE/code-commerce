@@ -1,8 +1,11 @@
+#cardInputContainer {
+    display: flex;
+    align-items: center;
+}
+
 .cardImage {
     position: absolute;
     right: 1%;
-    top: 36px;  
-    top: 64%;  
     height: 24px;
     background-color: white;
 }
@@ -46,73 +49,7 @@
     margin-right: 0.75rem;
 }
 
-/* MOBILE STYLING */ 
-@media screen and (min-width: 1920px) and (min-height: 1080px) {
-    .cardImage {
-        top: 60%;
-    }
-}
-
-@media screen and (min-width: 1600px) and (min-height: 900px) {
-    .cardImage {
-        top: 58%;
-    }
-}
-
-@media screen and (min-width: 1536px) and (min-height: 864px) {
-    .cardImage {
-        top: 39px;
-    }
-}
-
-@media screen and (min-width: 1440px) and (min-height: 900px) {
-    .cardImage {
-        top: 39px;
-    }
-}
-
-@media screen and (min-width: 1280px) and (min-height: 800px) {
-    .cardImage {
-        top: 56%;
-    }
-}
-
-@media screen and (min-width: 1280px) and (min-height: 720px) {
-    .cardImage {
-        top: 55%;
-    }
-}
-
-@media screen and (max-width: 962px) and (max-height: 601px) {
-    .cardImage {
-        top: 30px;
-    }
-}
-
-@media screen and (max-width: 810px) and (max-height: 1080px) {
-    .cardImage {
-        top: 66%;
-    }
-}
-
-@media screen and (max-width: 601px) and (max-height: 962px) {
-    .cardImage {
-        top: 51%;
-    }
-}
-
-@media screen and (max-width: 414px) and (max-height: 896px) {
-    .cardImage {
-        top: 65%;
-    }
-}
-
-@media screen and (max-width: 412px) and (max-height: 915px) {
-    .cardImage {
-        top: 66%;
-    }
-}
-
+/* MOBILE STYLING */
 @media screen and (max-width: 962px) {
     #deliveryInfoContainer {
         width: 85%;
