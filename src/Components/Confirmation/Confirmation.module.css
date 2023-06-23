@@ -159,6 +159,16 @@
     }
 }
 
+@media screen and (max-width: 375px) {
+    #itemsInCartContainer {
+        height: 11rem;
+    }
+
+    #closeModalBtn {
+        font-size: 1.25rem;
+    }
+}
+
 @media screen and (max-width: 360px) and (max-height: 800px) {
     #itemsInCartContainer {
         height: 18rem;

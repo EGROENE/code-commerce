@@ -339,6 +339,17 @@
   }
 }
 
+@media screen and (max-width: 375px) {
+  #itemsInCartSeveral,
+  #itemsInCartCouple {
+    width: 20rem;
+  }
+
+  #cartSummary {
+    width: 19rem;
+  }
+}
+
 @media screen and (max-width: 360px) {
   #cartSummary {
     width: 17rem;
