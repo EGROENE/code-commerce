@@ -7,6 +7,7 @@
 
 #expiryAndCVV {
     display: flex;
+    justify-content: space-between;
 }
 
 #deliveryInfoContainer {
@@ -52,6 +53,7 @@
 
     #expiryAndCVV {
         flex-direction: column;
+        justify-content: unset;
     }
 }
 
