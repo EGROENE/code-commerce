@@ -379,10 +379,10 @@ class Payment extends React.Component {
                     }
                     placeholder="Enter card number"
                     minLength={
-                      paymentDetails.cardType === "AMERICAN_EXPRESS" ? 18 : 19
+                      paymentDetails.cardType === "AMERICAN_EXPRESS" ? 17 : 19
                     }
                     maxLength={
-                      paymentDetails.cardType === "AMERICAN_EXPRESS" ? 18 : 19
+                      paymentDetails.cardType === "AMERICAN_EXPRESS" ? 17 : 19
                     }
                     autoComplete="cc-number"
                   />
@@ -577,6 +577,8 @@ class Payment extends React.Component {
           toPreviousPage={toPreviousPage}
           completedPages={completedPages}
           shipmentDetails={shipmentDetails}
+          cardNumber={paymentDetails.cardNumber}
+          cardType={paymentDetails.cardType}
           shippingAndHandling={shippingAndHandling}
           deliveryTime={deliveryTime}
         />
