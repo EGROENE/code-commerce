@@ -94,6 +94,14 @@
 }
 
 /* MOBILE STYLING */
+@media screen and (max-width: 480px) {
+    #facebookLogin i {
+        font-size: 2rem;
+        line-height: 1.5;
+        margin-right: 0;
+    }
+}
+
 @media screen and (max-width: 393px) {
     #loginBtnsContainer {
         margin: 1.5rem 0.5rem;

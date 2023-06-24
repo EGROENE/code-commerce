@@ -95,9 +95,22 @@
     }
 }
 
+@media screen and (max-width: 448px) {
+    #deliveryInfoContainer {
+        width: 91%;
+    }
+}
+
 @media screen and (max-width: 414px) {
     #deliveryInfoContainer {
         width: 90%;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    #deliveryInfoContainer {
+        width: 93%;
+        padding: 0.5rem;
     }
 }
 

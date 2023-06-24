@@ -154,6 +154,11 @@
         margin: 0.75rem auto;
     }
 
+    #itemsInCartContainer {
+        height: 13rem;
+        overflow-y: scroll !important;
+    }
+
     #orderItemsAndTotals {
         flex-direction: column;
     }
@@ -177,6 +182,10 @@
 
     #closeModalBtn {
         font-size: 1.25rem;
+    }
+
+    #itemsInCartContainer {
+        overflow-y: scroll !important;
     }
 }
 
@@ -213,5 +222,15 @@
 
     #detailsContainer header {
         font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    #orderSummaryContainer {
+        padding: 0.5rem;
+    }
+
+    #modalHeader {
+        font-size: 1.25rem;
     }
 }

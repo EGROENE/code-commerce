@@ -126,7 +126,7 @@ input::placeholder {
 
 label {
   text-align: left;
-  margin: var(--size-4) 3rem var(--size-4) 0;
+  /* margin: var(--size-4) 3rem var(--size-4) 0; */
   position: relative;
 }
 
@@ -519,9 +519,32 @@ a:hover {
   }
 }
 
+@media screen and (max-width: 540px) {
+  .itemInCartSummary {
+    width: 28rem;
+  }
+}
+
 @media screen and (max-width: 500px) {
   .itemInCartSummary {
     width: 26rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #homepageContainer form {
+    width: 68vw;
+    max-width: unset;
+  }
+
+  .cartSummary {
+    margin-left: 2rem;
+  }
+}
+
+@media screen and (max-width: 448px) {
+  .itemInCartSummary {
+    width: 23rem;
   }
 }
 
@@ -537,6 +560,16 @@ a:hover {
 
   form button, form a {
     width: 86%;
+  }
+
+  #homepageContainer form {
+    /* margin: 12px 42px 42px 42px; */
+    margin: 0.5rem 1rem;
+  }
+
+  #homepageContainer form {
+    width: 71vw;
+    max-width: unset;
   }
 
   .progressBar {
@@ -571,6 +604,23 @@ a:hover {
   }
 }
 
+@media screen and (max-width: 375px) {
+  .pageHeader {
+    margin: 1.5rem auto;
+  }
+
+  #homepageContainer form {
+    width: 69vw;
+    max-width: unset;
+    margin: 0.5rem 1rem;
+  }
+
+  form button, 
+  form a {
+    padding: 0.5rem;
+  }
+}
+
 @media screen and (max-width: 360px) {
   .checkoutPageMainItems {
     width: 88vw;
@@ -599,5 +649,15 @@ a:hover {
   .progressBar i {
     font-size: 1rem;
     padding: 0;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .pageHeader {
+    font-size: 1.5rem;
+  }
+
+  input {
+    font-size: 1rem;
   }
 }
