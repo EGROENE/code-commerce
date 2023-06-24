@@ -283,7 +283,7 @@ class Shipping extends React.Component {
                         onChange={(e) => {
                           this.validateNameCity(e, "name");
                         }}
-                        placeholder="Enter recipient name"
+                        placeholder="Recipient name"
                         required
                         inputMode="text"
                         minLength="1"
@@ -421,7 +421,7 @@ class Shipping extends React.Component {
                   <header>Phone: </header>
                   <input
                     id="phoneNumber"
-                    placeholder="Enter US phone number"
+                    placeholder="US phone number"
                     type="text"
                     onChange={this.validatePhoneNumber}
                     inputMode="numeric"

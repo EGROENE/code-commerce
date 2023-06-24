@@ -355,7 +355,7 @@ class Payment extends React.Component {
                   type="text"
                   required
                   inputMode="text"
-                  placeholder="Enter name as it appears on card"
+                  placeholder="Name on card"
                   autoComplete="cc-name"
                 />
                 {errors.cardHolderError && <p>{errors.cardHolderError}</p>}
@@ -377,7 +377,7 @@ class Payment extends React.Component {
                         ? paymentDetails.cardNumberMask
                         : ""
                     }
-                    placeholder="Enter card number"
+                    placeholder="Card number"
                     minLength={
                       paymentDetails.cardType === "AMERICAN_EXPRESS" ? 17 : 19
                     }
