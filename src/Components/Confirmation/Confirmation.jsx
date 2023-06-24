@@ -27,6 +27,8 @@ class Confirmation extends React.Component {
       numberOfItemsInCart,
       discountRate,
       shipmentDetails,
+      cardNumber,
+      cardType,
       shippingAndHandling,
       deliveryTime,
     } = this.props;
@@ -46,6 +48,11 @@ class Confirmation extends React.Component {
       { label: "Shipping & Handling:", value: shippingAndHandling },
       { label: "Cart Total:", value: cartTotal },
     ];
+
+    let lastDigitsOfCardNumber =
+      cardType === "AMERICAN_EXPRESS"
+        ? cardNumber.substr(cardNumber.length - 5)
+        : cardNumber.substr(cardNumber.length - 4);
 
     return (
       <div
@@ -155,6 +162,7 @@ class Confirmation extends React.Component {
                     {shipmentDetails.title !== "" && shipmentDetails.title}{" "}
                     {shipmentDetails.name}
                   </p>
+                  <p>Card ending in {lastDigitsOfCardNumber}</p>
                   <p>{shipmentDetails.streetAddress}</p>
                   <p>
                     {shipmentDetails.city}, {shipmentDetails.stateOrTerritory}{" "}
