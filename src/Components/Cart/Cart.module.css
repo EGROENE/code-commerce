@@ -19,9 +19,7 @@
   border: 2px solid var(--theme-color);
   height: 30rem;
   overflow-y: scroll;
-  width: 100%;
   width: 105rem;
-  /* max-width: 100%; */
 }
 
 .itemMainInfoContainer {
@@ -40,11 +38,9 @@
 
 .itemInCart {
   display: grid;
-  /* grid-template-columns: repeat(6, 1fr); */
   align-items: center;
   margin: 1rem auto;
   display: flex;
-  /* align-items: center; */
   width: 54rem;
 }
 

@@ -55,12 +55,6 @@
     }
 }
 
-/* @media screen and (max-width: 914px) {
-    #deliveryInfoContainer {
-        width: 97%;
-    }
-} */
-
 @media screen and (max-width: 914px) {
     #securityCode {
         width: 39%;

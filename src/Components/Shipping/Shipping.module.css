@@ -27,7 +27,6 @@
 
 #titleName label {
     display: flex;
-    /* flex-direction: column; */
     align-items: center;
 }
 
@@ -155,28 +154,3 @@
         width: 95%;
     }
 }
-
-/* @media screen and (max-width: 414px) {
-    #titleName {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    #nameField {
-        flex-direction: column;
-    }
-
-    #nameErrorMessage {
-        width: unset;
-        position: relative;
-        left: 0;
-    }
-
-    #moreAddressDetails {
-        flex-direction: column;
-    }
-
-    #phoneField {
-        width: 95%;
-    }
-} */
