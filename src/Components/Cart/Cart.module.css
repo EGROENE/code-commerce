@@ -42,6 +42,7 @@
   margin: 1rem auto;
   display: flex;
   width: 54rem;
+  padding-left: 0.5rem;
 }
 
 .itemTotalsContainer {
