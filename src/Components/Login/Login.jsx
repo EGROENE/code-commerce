@@ -1,6 +1,7 @@
 import React from "react";
 import style from "./Login.module.css";
 import Cart from "../Cart/Cart";
+import { alertFormErrors } from "../../methods";
 
 class Login extends React.Component {
   constructor(props) {
@@ -177,7 +178,7 @@ class Login extends React.Component {
   // Validate postal code:
   validatePostalCode = (e) => {
     let value = e.target.value.trim();
-    if (/^[0-9]$/i.test(value)) {
+    if (/[0-9]$/i.test(value)) {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -306,6 +307,10 @@ class Login extends React.Component {
       },
     ];
 
+    let areNoErrors = Object.values(this.state.errors).every(
+      (element) => element === ""
+    );
+
     return (
       <div id="loginAndCart">
         <div hidden={isLoginHidden} id="homepageContainer">
@@ -365,7 +370,10 @@ class Login extends React.Component {
               </label>
             ))}
             <div id={style.loginBtnsContainer}>
-              <button type="submit">
+              <button
+                type={!areNoErrors ? "button" : "submit"}
+                onClick={!areNoErrors ? alertFormErrors : undefined}
+              >
                 {isLoginMethodSelected ? "Log In" : "Create Account"}
               </button>
               <p>or</p>
