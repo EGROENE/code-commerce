@@ -35,7 +35,7 @@ class Payment extends React.Component {
   validateCardHolderName = (e) => {
     let value = e.target.value.trim();
     if (
-      /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -.]*$/i.test(value) &&
+      /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value) &&
       value.replace(/\s/g, "").length
     ) {
       this.setState((prevState) => ({

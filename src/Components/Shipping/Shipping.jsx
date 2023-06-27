@@ -45,7 +45,7 @@ class Shipping extends React.Component {
   validateNameCity = (e, field) => {
     let value = e.target.value.trim();
     if (
-      /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -.]*$/i.test(value) &&
+      /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value) &&
       value.replace(/\s/g, "").length
     ) {
       this.setState((prevState) => ({
