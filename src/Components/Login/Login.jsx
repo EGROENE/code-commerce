@@ -2,6 +2,11 @@ import React from "react";
 import style from "./Login.module.css";
 import Cart from "../Cart/Cart";
 import { alertFormErrors } from "../../methods";
+import { registeredAccounts } from "../../constants";
+
+const registeredEmailAddresses = registeredAccounts.map(
+  (account) => account.email
+);
 
 class Login extends React.Component {
   constructor(props) {
@@ -22,7 +27,8 @@ class Login extends React.Component {
       ),
       // Object containing error message for each form field:
       errors: {
-        emailError: "",
+        signupEmailError: "",
+        loginEmailError: "",
         passwordError: "",
         confirmPasswordError: "",
         nameError: "",
@@ -42,11 +48,15 @@ class Login extends React.Component {
           isLoginMethodSelected: true,
           passwordPlaceholder: "Enter your password",
           isRequired: false,
+          signupEmailFieldValue: "",
+          loginEmailFieldValue: undefined,
         })
       : this.setState({
           isLoginMethodSelected: false,
           passwordPlaceholder: "Create a password",
           isRequired: true,
+          signupEmailFieldValue: undefined,
+          loginEmailFieldValue: "",
         });
   };
 
@@ -80,10 +90,18 @@ class Login extends React.Component {
   };
 
   // Validate email address:
-  validateEmail = (e) => {
+  validateEmailSignup = (e) => {
     let value = e.target.value.trim();
-    // If value of email field matches regex:
-    if (
+
+    if (registeredEmailAddresses.includes(value)) {
+      this.setState((prevState) => ({
+        errors: {
+          accountEmailAddress: value,
+          ...prevState.errors,
+          signupEmailError: "E-mail address already in use",
+        },
+      }));
+    } else if (
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
         value.trim()
       )
@@ -93,7 +111,8 @@ class Login extends React.Component {
         accountEmailAddress: value,
         errors: {
           ...prevState.errors,
-          emailError: "",
+          signupEmailError: "",
+          loginEmailError: "",
         },
       }));
     } else {
@@ -102,7 +121,33 @@ class Login extends React.Component {
         errors: {
           accountEmailAddress: "",
           ...prevState.errors,
-          emailError: "Please enter a valid email address",
+          signupEmailError: "Please enter a valid email address",
+        },
+      }));
+    }
+  };
+
+  validateEmailLogin = (e) => {
+    let value = e.target.value.trim();
+
+    // If value of email field matches regex:
+    if (registeredEmailAddresses.includes(value)) {
+      // Update email error state value to "". Will need to access previous state values.
+      this.setState((prevState) => ({
+        accountEmailAddress: value,
+        errors: {
+          ...prevState.errors,
+          signupEmailError: "",
+          loginEmailError: "",
+        },
+      }));
+    } else {
+      // Update email error state value to an error message. Will need to access previous state values.
+      this.setState((prevState) => ({
+        errors: {
+          accountEmailAddress: "",
+          ...prevState.errors,
+          loginEmailError: "E-mail address not recognized",
         },
       }));
     }
@@ -217,6 +262,8 @@ class Login extends React.Component {
       errors,
       isRequired,
       accountEmailAddress,
+      signupEmailFieldValue,
+      loginEmailFieldValue,
     } = this.state;
 
     const loginMethodHeaders = [
@@ -234,16 +281,30 @@ class Login extends React.Component {
 
     const formInputs = [
       {
+        id: "signupEmail",
+        isHidden: isLoginMethodSelected,
+        labelText: "Email Address:",
+        placeholder: "E-mail address",
+        inputType: "signupEmail",
+        onChange: this.validateEmailSignup,
+        field: "signupEmail",
+        required: !isLoginMethodSelected,
+        inputMode: "email",
+        autoComplete: "email",
+        value: signupEmailFieldValue,
+      },
+      {
         id: "loginEmail",
-        isHidden: false,
+        isHidden: !isLoginMethodSelected,
         labelText: "Email Address:",
         placeholder: "E-mail address",
         inputType: "email",
-        onChange: this.validateEmail,
-        field: "email",
-        required: true,
+        onChange: this.validateEmailLogin,
+        field: "loginEmail",
+        required: isLoginMethodSelected,
         inputMode: "email",
         autoComplete: "email",
+        value: loginEmailFieldValue,
       },
       {
         id: "loginPassword",
@@ -356,6 +417,7 @@ class Login extends React.Component {
                       input.labelText === "Postal Code:" ? 5 : undefined
                     }
                     autoComplete={input.autoComplete}
+                    value={input.value}
                   />
                 </div>
                 {input.labelText === "Password:" && !isLoginMethodSelected ? (
