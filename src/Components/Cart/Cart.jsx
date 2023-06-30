@@ -26,20 +26,24 @@ class Cart extends React.Component {
   // Method to update item quantities state values onChange of quantity field:
   updateQuantities = (e, itemNameCamelCase) => {
     let newQuantity = Number(e.target.value.trim());
+    console.log(newQuantity);
     let selectedItem = this.state.itemsInCart.filter((item) => {
       return item.itemNameCamelCase === itemNameCamelCase;
     })[0];
 
     let selectedItemIndex = this.state.itemsInCart.indexOf(selectedItem);
 
-    this.setState((prevState) => ({
-      ...prevState,
-      itemsInCart: prevState.itemsInCart.map((item) =>
-        this.state.itemsInCart.indexOf(item) === selectedItemIndex
-          ? { ...item, quantity: newQuantity }
-          : item
-      ),
-    }));
+    // Prevent user from manually entering '0' or backspacing and deleting item quantities:
+    if (newQuantity !== "" && newQuantity !== 0) {
+      this.setState((prevState) => ({
+        ...prevState,
+        itemsInCart: prevState.itemsInCart.map((item) =>
+          this.state.itemsInCart.indexOf(item) === selectedItemIndex
+            ? { ...item, quantity: newQuantity }
+            : item
+        ),
+      }));
+    }
   };
 
   // Method to delete item from cart:
