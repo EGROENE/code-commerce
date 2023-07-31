@@ -8,6 +8,6 @@ export const roundToHundredth = (val) => {
 };
 export const alertFormErrors = () => {
   alert(
-    "Please fix any errors & make sure all fields are complete before proceeding to the next page."
+    "Please fix any errors & make sure all fields are complete & without errors before proceeding to the next page."
   );
 };
