@@ -204,7 +204,7 @@ class Login extends React.Component {
   validatePasswordLogin = (e) => {
     let value = e.target.value.trim();
     let userAccount = this.getRegisteredAccount(this.state.accountEmailAddress);
-    if (userAccount.password === value) {
+    if (userAccount && userAccount.password === value) {
       this.setState((prevState) => ({
         ...prevState,
         errors: {
