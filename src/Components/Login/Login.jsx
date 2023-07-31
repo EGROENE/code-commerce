@@ -4,10 +4,6 @@ import Cart from "../Cart/Cart";
 import { alertFormErrors } from "../../methods";
 import { registeredAccounts } from "../../constants";
 
-const registeredEmailAddresses = registeredAccounts.map(
-  (account) => account.email
-);
-
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -50,6 +46,7 @@ class Login extends React.Component {
           isRequired: false,
           signupEmailFieldValue: "",
           loginEmailFieldValue: undefined,
+          loginPasswordValue: undefined,
         })
       : this.setState({
           isLoginMethodSelected: false,
@@ -57,6 +54,7 @@ class Login extends React.Component {
           isRequired: true,
           signupEmailFieldValue: undefined,
           loginEmailFieldValue: "",
+          loginPasswordValue: "",
         });
   };
 
@@ -89,11 +87,16 @@ class Login extends React.Component {
         });
   };
 
+  // Call the method below to return the email address associated w/ the input password
+  getRegisteredAccount = (email) => {
+    return registeredAccounts.find((account) => account.email === email);
+  };
+
   // Validate email address:
   validateEmailSignup = (e) => {
     let value = e.target.value.trim();
-
-    if (registeredEmailAddresses.includes(value)) {
+    let userAccount = this.getRegisteredAccount(value);
+    if (userAccount) {
       this.setState((prevState) => ({
         errors: {
           accountEmailAddress: value,
@@ -129,10 +132,8 @@ class Login extends React.Component {
 
   validateEmailLogin = (e) => {
     let value = e.target.value.trim();
-
-    // If value of email field matches regex:
-    if (registeredEmailAddresses.includes(value)) {
-      // Update email error state value to "". Will need to access previous state values.
+    let registeredAccount = this.getRegisteredAccount(value);
+    if (registeredAccount) {
       this.setState((prevState) => ({
         accountEmailAddress: value,
         errors: {
@@ -153,8 +154,8 @@ class Login extends React.Component {
     }
   };
 
-  // Validate password:
-  validatePassword = (e) => {
+  // Validate password on signup:
+  validatePasswordSignup = (e) => {
     let value = e.target.value.trim();
     if (
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/.test(
@@ -195,6 +196,29 @@ class Login extends React.Component {
         errors: {
           ...prevState.errors,
           confirmPasswordError: "",
+        },
+      }));
+    }
+  };
+
+  validatePasswordLogin = (e) => {
+    let value = e.target.value.trim();
+    let userAccount = this.getRegisteredAccount(this.state.accountEmailAddress);
+    if (userAccount.password === value) {
+      this.setState((prevState) => ({
+        ...prevState,
+        errors: {
+          ...prevState.errors,
+          passwordError: "",
+        },
+      }));
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        errors: {
+          ...prevState.errors,
+          passwordError:
+            "Password doesn't match account with this e-mail address",
         },
       }));
     }
@@ -264,6 +288,7 @@ class Login extends React.Component {
       accountEmailAddress,
       signupEmailFieldValue,
       loginEmailFieldValue,
+      loginPasswordValue,
     } = this.state;
 
     const loginMethodHeaders = [
@@ -307,19 +332,19 @@ class Login extends React.Component {
         value: loginEmailFieldValue,
       },
       {
-        id: "loginPassword",
-        isHidden: false,
+        id: "signupPassword",
+        isHidden: isLoginMethodSelected,
         labelText: "Password:",
         placeholder: passwordPlaceholder,
         inputType: passwordFieldInputType,
-        onChange: this.validatePassword,
+        onChange: this.validatePasswordSignup,
         field: "password",
-        required: true,
+        required: !isLoginMethodSelected,
         inputMode: "password",
         autoComplete: "current-password",
       },
       {
-        id: "loginConfirmPassword",
+        id: "signupConfirmPassword",
         isHidden: isLoginMethodSelected,
         labelText: "Confirm Password:",
         placeholder: "Confirm Password",
@@ -329,6 +354,19 @@ class Login extends React.Component {
         required: isRequired,
         inputMode: "password",
         autoComplete: "off",
+      },
+      {
+        id: "loginPassword",
+        isHidden: !isLoginMethodSelected,
+        labelText: "Password:",
+        placeholder: passwordPlaceholder,
+        inputType: passwordFieldInputType,
+        onChange: this.validatePasswordLogin,
+        field: "password",
+        required: isLoginMethodSelected,
+        inputMode: "password",
+        autoComplete: "current-password",
+        value: loginPasswordValue,
       },
       {
         id: "loginFirstName",
