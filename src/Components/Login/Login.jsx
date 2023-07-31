@@ -35,7 +35,22 @@ class Login extends React.Component {
     };
   }
 
+  clearErrors = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      errors: {
+        signupEmailError: "",
+        loginEmailError: "",
+        passwordError: "",
+        confirmPasswordError: "",
+        nameError: "",
+        postalCodeError: "",
+      },
+    }));
+  };
+
   selectLoginMethod = (e) => {
+    this.clearErrors();
     if (!this.state.isOpenEye) {
       this.showHidePassword();
     }
@@ -207,6 +222,7 @@ class Login extends React.Component {
     if (userAccount && userAccount.password === value) {
       this.setState((prevState) => ({
         ...prevState,
+        password: value,
         errors: {
           ...prevState.errors,
           passwordError: "",
@@ -341,7 +357,7 @@ class Login extends React.Component {
         field: "password",
         required: !isLoginMethodSelected,
         inputMode: "password",
-        autoComplete: "current-password",
+        //autoComplete: "current-password",
       },
       {
         id: "signupConfirmPassword",
