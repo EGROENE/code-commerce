@@ -4,7 +4,7 @@ import AMERICAN_EXPRESS from "./Components/assets/amex.png";
 import DISCOVER from "./Components/assets/discover.png";
 
 export const registeredAccounts = [
-  { email: "richard.t@tmail.com", password: "password123!" },
+  { email: "richard.t@tmail.com", password: "Password123!" },
   { email: "skristina15@dw.de", password: "Dragonflies34$" },
   { email: "bruce.twarze@abc.com", password: "Ilikedandelions666#" },
 ];
