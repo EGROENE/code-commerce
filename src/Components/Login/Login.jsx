@@ -357,7 +357,6 @@ class Login extends React.Component {
         field: "password",
         required: !isLoginMethodSelected,
         inputMode: "password",
-        //autoComplete: "current-password",
       },
       {
         id: "signupConfirmPassword",
