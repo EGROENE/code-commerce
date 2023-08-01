@@ -447,7 +447,7 @@ class Login extends React.Component {
             }}
           >
             {formInputs.map((input) => (
-              <label key={input.labelText} hidden={input.isHidden}>
+              <label key={input.id} hidden={input.isHidden}>
                 <header key={input.labelText + "1"}>{input.labelText}</header>
                 <div className="inputFieldWithImage">
                   {input.labelText.includes("Password") && eyeLogo}
