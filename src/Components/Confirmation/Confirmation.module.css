@@ -29,8 +29,8 @@
 #modalContainer {
     height: 100vh;
     background: rgba(0,0,0,0.8);
-    z-index: 100;
-    width: 98vw;
+    z-index: 1;
+    width: 100vw;
     top: 0;
     align-items: center;
     justify-content: center;
@@ -96,8 +96,10 @@
     border: 2px solid var(--theme-color);
     padding: 2rem;
     width: 75vw;
-    position: relative;
+    top: 15%;
+    position: absolute;
     background-color: black;
+    z-index: 2;
 }
 
 #detailsContainer div:nth-child(2) {
