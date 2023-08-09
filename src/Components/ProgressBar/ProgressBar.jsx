@@ -15,27 +15,31 @@ class ProgressBar extends React.Component {
         id: "Cart",
         class: "fas fa-shopping-cart",
         isCompleted: completedPages.cart,
-        isLast: false,
       },
       {
         id: "Shipping",
         class: "fas fa-shipping-fast",
         isCompleted: isShippingCompleted,
-        isLast: false,
       },
       {
         id: "Payment",
         class: "fas fa-money-check-alt",
         isCompleted: isPaymentCompleted,
-        isLast: false,
       },
       {
         id: "Confirmation",
         class: "fas fa-check",
         isCompleted: isConfirmationCompleted,
-        isLast: true,
       },
     ];
+
+    const isElementLast = (element) => {
+      return progressBarElements.indexOf(element) ===
+        progressBarElements.length - 1
+        ? true
+        : false;
+    };
+
     return (
       <div className="progressBar">
         {progressBarElements.map((item) => (
@@ -48,7 +52,7 @@ class ProgressBar extends React.Component {
               ></i>
               <p>{item.id}</p>
             </div>
-            {!item.isLast && (
+            {!isElementLast(item) && (
               <div
                 className={
                   item.isCompleted
