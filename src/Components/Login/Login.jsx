@@ -1,311 +1,30 @@
 import React from "react";
 import style from "./Login.module.css";
-import Cart from "../Cart/Cart";
 import { alertFormErrors } from "../../methods";
-import { registeredAccounts } from "../../constants";
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoginMethodSelected: true,
-      accountEmailAddress: "",
-      passwordPlaceholder: "Enter your password",
-      passwordFieldInputType: "password",
-      isOpenEye: true,
-      eyeLogo: (
-        <i
-          id="openEye"
-          className={`far fa-eye ${style.eye}`}
-          title="Show Password"
-          onClick={this.showHidePassword}
-        ></i>
-      ),
-      // Object containing error message for each form field:
-      errors: {
-        signupEmailError: "",
-        loginEmailError: "",
-        passwordError: "",
-        confirmPasswordError: "",
-        nameError: "",
-        postalCodeError: "",
-      },
-      password: "",
-      isRequired: false,
-    };
-  }
-
-  clearErrors = () => {
-    this.setState((prevState) => ({
-      ...prevState,
-      errors: {
-        signupEmailError: "",
-        loginEmailError: "",
-        passwordError: "",
-        confirmPasswordError: "",
-        nameError: "",
-        postalCodeError: "",
-      },
-    }));
-  };
-
-  selectLoginMethod = (e) => {
-    this.clearErrors();
-    if (!this.state.isOpenEye) {
-      this.showHidePassword();
-    }
-    e.target.id === "logIn"
-      ? this.setState({
-          isLoginMethodSelected: true,
-          passwordPlaceholder: "Enter your password",
-          isRequired: false,
-          signupEmailFieldValue: "",
-          loginEmailFieldValue: undefined,
-          loginPasswordValue: undefined,
-        })
-      : this.setState({
-          isLoginMethodSelected: false,
-          passwordPlaceholder: "Create a password",
-          isRequired: true,
-          signupEmailFieldValue: undefined,
-          loginEmailFieldValue: "",
-          loginPasswordValue: "",
-        });
-  };
-
-  // Method that hides/reveals content of password fields & changes icon & its title:
-  showHidePassword = () => {
-    this.state.isOpenEye
-      ? this.setState({
-          isOpenEye: false,
-          eyeLogo: (
-            <i
-              id="slashedEye"
-              className={`far fa-eye-slash ${style.eye}`}
-              title="Hide Password"
-              onClick={this.showHidePassword}
-            ></i>
-          ),
-          passwordFieldInputType: "text",
-        })
-      : this.setState({
-          isOpenEye: true,
-          eyeLogo: (
-            <i
-              id="openEye"
-              className={`far fa-eye ${style.eye}`}
-              title="Show Password"
-              onClick={this.showHidePassword}
-            ></i>
-          ),
-          passwordFieldInputType: "password",
-        });
-  };
-
-  // Call the method below to return the email address associated w/ the input password
-  getRegisteredAccount = (email) => {
-    return registeredAccounts.find((account) => account.email === email);
-  };
-
-  // Validate email address:
-  validateEmailSignup = (e) => {
-    let value = e.target.value.trim();
-    let userAccount = this.getRegisteredAccount(value);
-    if (userAccount) {
-      this.setState((prevState) => ({
-        errors: {
-          accountEmailAddress: value,
-          ...prevState.errors,
-          signupEmailError: "E-mail address already in use",
-        },
-      }));
-    } else if (
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-        value.trim()
-      )
-    ) {
-      // Update email error state value to "". Will need to access previous state values.
-      this.setState((prevState) => ({
-        accountEmailAddress: value,
-        errors: {
-          ...prevState.errors,
-          signupEmailError: "",
-          loginEmailError: "",
-        },
-      }));
-    } else {
-      // Update email error state value to an error message. Will need to access previous state values.
-      this.setState((prevState) => ({
-        errors: {
-          accountEmailAddress: "",
-          ...prevState.errors,
-          signupEmailError: "Please enter a valid email address",
-        },
-      }));
-    }
-  };
-
-  validateEmailLogin = (e) => {
-    let value = e.target.value.trim();
-    let registeredAccount = this.getRegisteredAccount(value);
-    if (registeredAccount) {
-      this.setState((prevState) => ({
-        accountEmailAddress: value,
-        errors: {
-          ...prevState.errors,
-          signupEmailError: "",
-          loginEmailError: "",
-        },
-      }));
-    } else {
-      // Update email error state value to an error message. Will need to access previous state values.
-      this.setState((prevState) => ({
-        errors: {
-          accountEmailAddress: "",
-          ...prevState.errors,
-          loginEmailError: "E-mail address not recognized",
-        },
-      }));
-    }
-  };
-
-  // Validate password on signup:
-  validatePasswordSignup = (e) => {
-    let value = e.target.value.trim();
-    if (
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/.test(
-        value.trim()
-      )
-    ) {
-      this.setState((prevState) => ({
-        errors: {
-          ...prevState.errors,
-          passwordError: "",
-        },
-        password: value,
-      }));
-    } else {
-      this.setState((prevState) => ({
-        errors: {
-          ...prevState.errors,
-          passwordError:
-            "Password must contain >= 1 uppercase & 1 lowercase English letter, >= 1 digit, >= 1 special character (#, ?, !, @, $, %, ^, &, *, -), & be 8-20 characters long",
-        },
-        password: "",
-      }));
-    }
-  };
-
-  // Validate password confirmation:
-  validatePasswordConfirmation = (e) => {
-    let value = e.target.value.trim();
-    if (this.state.password !== value) {
-      this.setState((prevState) => ({
-        errors: {
-          ...prevState.errors,
-          confirmPasswordError: "Passwords do not match",
-        },
-      }));
-    } else {
-      this.setState((prevState) => ({
-        errors: {
-          ...prevState.errors,
-          confirmPasswordError: "",
-        },
-      }));
-    }
-  };
-
-  validatePasswordLogin = (e) => {
-    let value = e.target.value.trim();
-    let userAccount = this.getRegisteredAccount(this.state.accountEmailAddress);
-    if (userAccount && userAccount.password === value) {
-      this.setState((prevState) => ({
-        ...prevState,
-        password: value,
-        errors: {
-          ...prevState.errors,
-          passwordError: "",
-        },
-      }));
-    } else {
-      this.setState((prevState) => ({
-        ...prevState,
-        errors: {
-          ...prevState.errors,
-          passwordError:
-            "Password doesn't match account with this e-mail address",
-        },
-      }));
-    }
-  };
-
-  // Validate name:
-  validateNames = (e) => {
-    let value = e.target.value.trim();
-    if (/^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value)) {
-      this.setState((prevState) => ({
-        errors: {
-          ...prevState.errors,
-          nameError: "",
-        },
-      }));
-    } else {
-      this.setState((prevState) => ({
-        errors: {
-          ...prevState.errors,
-          nameError: "Enter only alphabetic characters & any hyphens b/t names",
-        },
-      }));
-    }
-  };
-
-  // Validate postal code:
-  validatePostalCode = (e) => {
-    let value = e.target.value.trim();
-    if (/[0-9]$/i.test(value)) {
-      this.setState((prevState) => ({
-        errors: {
-          ...prevState.errors,
-          postalCodeError: "",
-        },
-      }));
-    } else {
-      this.setState((prevState) => ({
-        errors: {
-          ...prevState.errors,
-          postalCodeError: "Enter first 5 digits of US postal code",
-        },
-      }));
-    }
-  };
-
   render() {
     // Destructure props:
     const {
-      isLoginHidden,
       toNextPage,
-      isCartHidden,
-      isShippingHidden,
-      isPaymentHidden,
-      isConfirmationHidden,
-      toPreviousPage,
-      completedPages,
-    } = this.props;
-
-    // Destructure state:
-    const {
+      loginErrors,
+      selectLoginMethod,
+      validateEmailSignup,
+      validateEmailLogin,
+      validatePasswordSignup,
+      validatePasswordConfirmation,
+      validatePasswordLogin,
+      validateNames,
+      validatePostalCode,
       isLoginMethodSelected,
-      eyeLogo,
-      passwordFieldInputType,
-      passwordPlaceholder,
-      errors,
       isRequired,
-      accountEmailAddress,
+      passwordPlaceholder,
+      passwordFieldInputType,
+      eyeLogo,
       signupEmailFieldValue,
       loginEmailFieldValue,
       loginPasswordValue,
-    } = this.state;
+    } = this.props;
 
     const loginMethodHeaders = [
       {
@@ -327,7 +46,7 @@ class Login extends React.Component {
         labelText: "Email Address:",
         placeholder: "E-mail address",
         inputType: "signupEmail",
-        onChange: this.validateEmailSignup,
+        onChange: validateEmailSignup,
         field: "signupEmail",
         required: !isLoginMethodSelected,
         inputMode: "email",
@@ -340,7 +59,7 @@ class Login extends React.Component {
         labelText: "Email Address:",
         placeholder: "E-mail address",
         inputType: "email",
-        onChange: this.validateEmailLogin,
+        onChange: validateEmailLogin,
         field: "loginEmail",
         required: isLoginMethodSelected,
         inputMode: "email",
@@ -353,7 +72,7 @@ class Login extends React.Component {
         labelText: "Password:",
         placeholder: passwordPlaceholder,
         inputType: passwordFieldInputType,
-        onChange: this.validatePasswordSignup,
+        onChange: validatePasswordSignup,
         field: "password",
         required: !isLoginMethodSelected,
         inputMode: "password",
@@ -364,7 +83,7 @@ class Login extends React.Component {
         labelText: "Confirm Password:",
         placeholder: "Confirm Password",
         inputType: passwordFieldInputType,
-        onChange: this.validatePasswordConfirmation,
+        onChange: validatePasswordConfirmation,
         field: "confirmPassword",
         required: isRequired,
         inputMode: "password",
@@ -376,7 +95,7 @@ class Login extends React.Component {
         labelText: "Password:",
         placeholder: passwordPlaceholder,
         inputType: passwordFieldInputType,
-        onChange: this.validatePasswordLogin,
+        onChange: validatePasswordLogin,
         field: "password",
         required: isLoginMethodSelected,
         inputMode: "password",
@@ -389,7 +108,7 @@ class Login extends React.Component {
         labelText: "First Name:",
         placeholder: "Enter first name",
         inputType: "text",
-        onChange: this.validateNames,
+        onChange: validateNames,
         field: "name",
         required: isRequired,
         inputMode: "text",
@@ -401,7 +120,7 @@ class Login extends React.Component {
         labelText: "Last Name:",
         placeholder: "Enter last name",
         inputType: "text",
-        onChange: this.validateNames,
+        onChange: validateNames,
         field: "name",
         required: isRequired,
         inputMode: "text",
@@ -413,7 +132,7 @@ class Login extends React.Component {
         labelText: "Postal Code:",
         placeholder: "5-digit US ZIP",
         inputType: "text",
-        onChange: this.validatePostalCode,
+        onChange: validatePostalCode,
         field: "postalCode",
         required: isRequired,
         inputMode: "numeric",
@@ -421,13 +140,13 @@ class Login extends React.Component {
       },
     ];
 
-    let areNoErrors = Object.values(this.state.errors).every(
+    let areNoErrors = Object.values(loginErrors).every(
       (element) => element === ""
     );
 
     return (
       <div id="loginAndCart">
-        <div hidden={isLoginHidden} id="homepageContainer">
+        <div id="homepageContainer">
           <header className="pageHeader">Welcome to codeCommerce!</header>
           <div id={style.homepageOptions}>
             {loginMethodHeaders.map((option) => (
@@ -435,7 +154,7 @@ class Login extends React.Component {
                 key={option.id}
                 id={option.id}
                 className={option.className}
-                onClick={this.selectLoginMethod}
+                onClick={selectLoginMethod}
               >
                 {option.textContent}
               </header>
@@ -443,7 +162,7 @@ class Login extends React.Component {
           </div>
           <form
             onSubmit={(e) => {
-              toNextPage(e, "isLoginHidden", "isCartHidden");
+              toNextPage(e, "Login");
             }}
           >
             {formInputs.map((input) => (
@@ -480,7 +199,7 @@ class Login extends React.Component {
                     ?, !, @, $, %, ^, &, *, -), & be 8-20 characters long
                   </p>
                 ) : (
-                  <p>{errors[`${input.field}Error`]}</p>
+                  <p>{loginErrors[`${input.field}Error`]}</p>
                 )}
               </label>
             ))}
@@ -512,16 +231,6 @@ class Login extends React.Component {
             </div>
           </form>
         </div>
-        <Cart
-          accountEmailAddress={accountEmailAddress}
-          isCartHidden={isCartHidden}
-          isShippingHidden={isShippingHidden}
-          isPaymentHidden={isPaymentHidden}
-          isConfirmationHidden={isConfirmationHidden}
-          toNextPage={toNextPage}
-          toPreviousPage={toPreviousPage}
-          completedPages={completedPages}
-        />
       </div>
     );
   }

@@ -2,7 +2,7 @@ import React from "react";
 import style from "./Cart.module.css";
 import { ITEMS_IN_CART } from "../../constants";
 import { roundToHundredth } from "../../methods";
-import Shipping from "../Shipping/Shipping";
+//import Shipping from "../Shipping/Shipping";
 
 class Cart extends React.Component {
   constructor(props) {
@@ -175,7 +175,7 @@ class Cart extends React.Component {
 
     return (
       <div id="cartAndShipping">
-        <div hidden={isCartHidden}>
+        <div>
           <header className="pageHeader">Cart</header>
           <div id={style.cartPageContainer}>
             <div
@@ -326,18 +326,6 @@ class Cart extends React.Component {
             </div>
           </div>
         </div>
-        <Shipping
-          accountEmailAddress={accountEmailAddress}
-          itemsInCart={itemsInCart}
-          numberOfItemsInCart={numberOfItemsInCart}
-          discountRate={discountRate}
-          isShippingHidden={isShippingHidden}
-          isPaymentHidden={isPaymentHidden}
-          isConfirmationHidden={isConfirmationHidden}
-          toNextPage={toNextPage}
-          toPreviousPage={toPreviousPage}
-          completedPages={completedPages}
-        />
       </div>
     );
   }
