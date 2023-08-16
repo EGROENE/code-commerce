@@ -73,6 +73,7 @@ class App extends React.Component {
     }));
   };
 
+  // METHODS FOR LOGIN
   // Method that hides/reveals content of password fields & changes icon & its title:
   showHidePassword = () => {
     this.state.isOpenEye
@@ -317,6 +318,7 @@ class App extends React.Component {
         });
   };
 
+  // METHODS FOR CART
   render() {
     let {
       isLoginComplete,
@@ -354,18 +356,13 @@ class App extends React.Component {
             />
           )}
           {isLoginComplete && <Cart />}
-          {isLoginComplete && isCartComplete && <Shipping />}
-          {isLoginComplete && isCartComplete && isShippingComplete && (
-            <Payment />
+          {isCartComplete && <Shipping />}
+          {isShippingComplete && <Payment />}
+          {isPaymentComplete && (
+            <Confirmation
+              accountEmailAddress={this.state.accountEmailAddress}
+            />
           )}
-          {isLoginComplete &&
-            isCartComplete &&
-            isShippingComplete &&
-            isPaymentComplete && (
-              <Confirmation
-                accountEmailAddress={this.state.accountEmailAddress}
-              />
-            )}
         </header>
       </div>
     );
