@@ -64,6 +64,26 @@ class App extends React.Component {
       inputPromoCode: "",
       acceptedPromoCode: "",
       discountRate: 0,
+
+      // State values for Shipping:
+      shippingErrors: {
+        name: "",
+        streetAddress: "",
+        postalCode: "",
+        city: "",
+        phoneNumber: "",
+      },
+      shipmentDetails: {
+        name: "",
+        streetAddress: "",
+        postalCode: "",
+        city: "",
+        stateOrTerritory: "",
+        phoneNumber: "",
+        phoneNumberMask: "",
+      },
+      shippingAndHandling: 50,
+      deliveryTime: "3 seconds",
     };
   }
 
@@ -83,13 +103,14 @@ class App extends React.Component {
 
   // Method to go to previous page:
   // Pass this as prop to children, except for Login, Cart, Confirmation
-  toPreviousPage = (e, pageIncompleted) => {
+  toPreviousPage = (e, pageIncompleted, prevPage) => {
     e.preventDefault();
 
     this.setState((prevState) => ({
       arePagesComplete: {
         ...prevState.arePagesComplete,
-        [`is${pageIncompleted.toUpperCase()}Complete`]: false,
+        [`is${prevPage}Complete`]: false,
+        [`is${pageIncompleted}Complete`]: false,
       },
     }));
   };
@@ -282,20 +303,51 @@ class App extends React.Component {
     }
   };
 
-  validatePostalCode = (e) => {
+  // Also use on Shipping
+  validatePostalCode = (e, formType) => {
     let value = e.target.value.trim();
     if (/[0-9]$/i.test(value)) {
-      this.setState((prevState) => ({
-        loginErrors: {
-          ...prevState.loginErrors,
-          postalCodeError: "",
-        },
-      }));
+      if (formType === "shipping") {
+        this.setState((prevState) => ({
+          ...prevState,
+          shippingErrors: {
+            ...prevState.shippingErrors,
+            postalCode: "",
+          },
+          shipmentDetails: {
+            ...prevState.shipmentDetails,
+            postalCode: value,
+          },
+        }));
+      } else {
+        if (formType === "shipping") {
+          this.setState((prevState) => ({
+            ...prevState,
+            shippingErrors: {
+              ...prevState.shippingErrors,
+              postalCode: "",
+            },
+            shipmentDetails: {
+              ...prevState.shipmentDetails,
+              postalCode: "",
+            },
+          }));
+        } else {
+          this.setState((prevState) => ({
+            ...prevState,
+            loginErrors: {
+              ...prevState.loginErrors,
+              postalCode: "",
+            },
+          }));
+        }
+      }
     } else {
       this.setState((prevState) => ({
-        errors: {
-          ...prevState.errors,
-          postalCodeError: "Enter first 5 digits of US postal code",
+        ...prevState,
+        shippingErrors: {
+          ...prevState.shippingErrors,
+          postalCode: "5-digit US postal code",
         },
       }));
     }
@@ -456,6 +508,141 @@ class App extends React.Component {
     }));
   };
 
+  // METHODS FOR SHIPPING
+  // Method to set state values of dropdown fields (initially, at least, 'title' & 'state/territory'):
+  setStateValuesOfDropdownFields = (e) => {
+    let value = e.target.value;
+    let field = e.target.id;
+    this.setState((prevState) => ({
+      ...prevState,
+      shipmentDetails: {
+        ...prevState.shipmentDetails,
+        [field]: value,
+      },
+    }));
+  };
+
+  // Method to validate title, name, city:
+  validateNameCity = (e, field) => {
+    let value = e.target.value.trim();
+    if (
+      /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value) &&
+      value.replace(/\s/g, "").length
+    ) {
+      this.setState((prevState) => ({
+        shippingErrors: {
+          ...prevState.shippingErrors,
+          [field]: "",
+        },
+        shipmentDetails: {
+          ...prevState.shipmentDetails,
+          [field]: value,
+        },
+      }));
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        shippingErrors: {
+          ...prevState.shippingErrors,
+          [field]: "Enter alphabetical characters & any spaces between words",
+        },
+        shipmentDetails: {
+          ...prevState.shipmentDetails,
+          [field]: "",
+        },
+      }));
+    }
+  };
+
+  // Method to validate street address:
+  validateStreetAddress = (e) => {
+    let value = e.target.value.trim();
+    if (/[A-Z0-9#/ '-]+/i.test(value)) {
+      this.setState((prevState) => ({
+        ...prevState,
+        shippingErrors: {
+          ...prevState.shippingErrors,
+          streetAddress: "",
+        },
+        shipmentDetails: {
+          ...prevState.shipmentDetails,
+          streetAddress: value,
+        },
+      }));
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        shippingErrors: {
+          ...prevState.shippingErrors,
+          streetAddress: "Please enter a valid address",
+        },
+        shipmentDetails: {
+          ...prevState.shipmentDetails,
+          streetAddress: "",
+        },
+      }));
+    }
+  };
+
+  formatPhoneNumber(phoneNumberString) {
+    let cleaned = ("" + phoneNumberString).replace(/\D/g, "");
+    let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      return "(" + match[1] + ") " + match[2] + "-" + match[3];
+    }
+    return undefined;
+  }
+
+  // Method to validate phone number:
+  validatePhoneNumber = (e) => {
+    let value = e.target.value.trim();
+    let phoneNumberMask = this.formatPhoneNumber(value);
+    if (/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/i.test(value)) {
+      this.setState((prevState) => ({
+        ...prevState,
+        shippingErrors: {
+          ...prevState.shippingErrors,
+          phoneNumber: "",
+        },
+        shipmentDetails: {
+          ...prevState.shipmentDetails,
+          phoneNumber: value.replace(/[^\d]/g, ""),
+          phoneNumberMask: phoneNumberMask,
+        },
+      }));
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        shippingErrors: {
+          ...prevState.shippingErrors,
+          phoneNumber: "Enter 10-digit, US number",
+        },
+        shipmentDetails: {
+          ...prevState.shipmentDetails,
+          phoneNumber: "",
+          phoneNumberMask: phoneNumberMask,
+        },
+      }));
+    }
+  };
+
+  // Method to update shipping & handling state value:
+  handleDeliveryOptionSelection = (e) => {
+    if (e.target.id === "expeditedDelivery") {
+      this.setState((prevState) => ({
+        ...prevState,
+        shippingAndHandling: 50,
+        deliveryTime: "3 seconds",
+      }));
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        shippingAndHandling: 10,
+        deliveryTime: "3 days",
+      }));
+    }
+  };
+
   render() {
     let {
       isLoginComplete,
@@ -492,7 +679,7 @@ class App extends React.Component {
               clearLoginErrors={this.clearLoginErrors}
             />
           )}
-          {isLoginComplete && (
+          {isLoginComplete && !isCartComplete && (
             <Cart
               toNextPage={this.toNextPage}
               updateQuantities={this.updateQuantities}
@@ -508,7 +695,29 @@ class App extends React.Component {
               acceptedPromoCode={this.state.acceptedPromoCode}
             />
           )}
-          {isCartComplete && <Shipping />}
+          {isCartComplete && !isShippingComplete && (
+            <Shipping
+              toNextPage={this.toNextPage}
+              toPreviousPage={this.toPreviousPage}
+              validatePostalCode={this.validatePostalCode}
+              setStateValuesOfDropdownFields={
+                this.setStateValuesOfDropdownFields
+              }
+              validateNameCity={this.validateNameCity}
+              validateStreetAddress={this.validateStreetAddress}
+              formatPhoneNumber={this.formatPhoneNumber}
+              validatePhoneNumber={this.validatePhoneNumber}
+              handleDeliveryOptionSelection={this.handleDeliveryOptionSelection}
+              shippingErrors={this.state.shippingErrors}
+              shippingAndHandling={this.state.shippingAndHandling}
+              deliveryTime={this.state.deliveryTime}
+              shipmentDetails={this.state.shipmentDetails}
+              discountRate={this.state.discountRate}
+              itemsInCart={this.state.itemsInCart}
+              numberOfItemsInCart={this.state.numberOfItemsInCart}
+              arePagesComplete={this.state.arePagesComplete}
+            />
+          )}
           {isShippingComplete && <Payment />}
           {isPaymentComplete && (
             <Confirmation
