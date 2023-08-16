@@ -1,30 +1,11 @@
 import React from "react";
 import style from "./Cart.module.css";
-import { ITEMS_IN_CART } from "../../constants";
+//import { ITEMS_IN_CART } from "../../constants";
 import { roundToHundredth } from "../../methods";
-//import Shipping from "../Shipping/Shipping";
 
 class Cart extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      itemsInCart: ITEMS_IN_CART,
-      numberOfItemsInCart: ITEMS_IN_CART.length,
-      promoCodes: [
-        "ilikebeachballs",
-        "codeislyfe",
-        "devslopes",
-        "jd911",
-        "etlb17",
-      ],
-      inputPromoCode: "",
-      acceptedPromoCode: "",
-      discountRate: 0,
-    };
-  }
-
   // Method to update item quantities state values onChange of quantity field:
-  updateQuantities = (e, itemNameCamelCase) => {
+  /* updateQuantities = (e, itemNameCamelCase) => {
     let newQuantity = Number(e.target.value.trim());
     console.log(newQuantity);
     let selectedItem = this.state.itemsInCart.filter((item) => {
@@ -44,10 +25,10 @@ class Cart extends React.Component {
         ),
       }));
     }
-  };
+  }; */
 
   // Method to delete item from cart:
-  deleteItem = (e, itemNameCamelCase) => {
+  /* deleteItem = (e, itemNameCamelCase) => {
     let itemToDelete = this.state.itemsInCart.filter((item) => {
       return item.itemNameCamelCase === itemNameCamelCase;
     })[0];
@@ -66,9 +47,9 @@ class Cart extends React.Component {
       ),
       numberOfItemsInCart: numberOfItemsInCart,
     }));
-  };
+  }; */
 
-  // Method that checks if all item.quantities are zero (no items in cart)
+  /* // Method that checks if all item.quantities are zero (no items in cart)
   isCartEmpty = () => {
     let allItemQuantities = this.state.itemsInCart.map((item) => item.quantity);
     return allItemQuantities.some((quantity) => quantity > 0) ? false : true;
@@ -81,9 +62,9 @@ class Cart extends React.Component {
       ...prevState,
       inputPromoCode: inputCode,
     }));
-  };
+  }; */
 
-  // Check input promo code to see if it matches an available promo, then apply appropriate discount:
+  /* // Check input promo code to see if it matches an available promo, then apply appropriate discount:
   checkPromoCode = () => {
     let inputPromoCode = this.state.inputPromoCode;
     if (this.state.promoCodes.includes(inputPromoCode)) {
@@ -130,38 +111,42 @@ class Cart extends React.Component {
         isInvalidPromo: true,
       }));
     }
-  };
+  }; */
 
-  // Method to remove discount:
+  /* // Method to remove discount:
   removeDiscount = () => {
     this.setState((prevState) => ({
       ...prevState,
       discountRate: 0,
       isInvalidPromo: false,
     }));
-  };
+  }; */
 
   render() {
     // Destructure props:
     const {
-      accountEmailAddress,
-      isCartHidden,
-      isShippingHidden,
-      isPaymentHidden,
-      isConfirmationHidden,
       toNextPage,
-      toPreviousPage,
-      completedPages,
+      updateQuantities,
+      deleteItem,
+      isCartEmpty,
+      getPromoCode,
+      checkPromoCode,
+      removeDiscount,
+      itemsInCart,
+      numberOfItemsInCart,
+      discountRate,
+      isInvalidPromo,
+      acceptedPromoCode,
     } = this.props;
 
     // Destructure state:
-    const {
+    /* const {
       itemsInCart,
       discountRate,
       numberOfItemsInCart,
       isInvalidPromo,
       acceptedPromoCode,
-    } = this.state;
+    } = this.state; */
 
     // Calculate totals based on current state values of unit prices & quantity:
     let cartSubtotal = itemsInCart.map(
@@ -185,7 +170,7 @@ class Cart extends React.Component {
                   : style.itemsInCartCouple
               }
             >
-              {this.isCartEmpty() ? (
+              {isCartEmpty() ? (
                 <p id={style.cartIsEmpty}>Cart is empty</p>
               ) : (
                 itemsInCart.map(
@@ -203,7 +188,7 @@ class Cart extends React.Component {
                           >
                             <i
                               onClick={(e) => {
-                                this.deleteItem(e, item.itemNameCamelCase);
+                                deleteItem(e, item.itemNameCamelCase);
                               }}
                               className="fas fa-times-circle"
                             ></i>
@@ -234,7 +219,7 @@ class Cart extends React.Component {
                             min={1}
                             step={1}
                             onChange={(e) => {
-                              this.updateQuantities(e, item.itemNameCamelCase);
+                              updateQuantities(e, item.itemNameCamelCase);
                             }}
                           />
                           <p>
@@ -260,9 +245,9 @@ class Cart extends React.Component {
                 <p>Do you have a promo code?</p>
                 <input
                   placeholder="Enter promo code"
-                  disabled={discountRate > 0 || this.isCartEmpty()}
+                  disabled={discountRate > 0 || isCartEmpty()}
                   onChange={(e) => {
-                    this.getPromoCode(e);
+                    getPromoCode(e);
                   }}
                   type="text"
                   inputMode="text"
@@ -272,7 +257,7 @@ class Cart extends React.Component {
                 <button
                   disabled={discountRate > 0}
                   title="Apply promo code"
-                  onClick={this.checkPromoCode}
+                  onClick={checkPromoCode}
                   id={style.applyPromo}
                 >
                   Apply
@@ -299,7 +284,7 @@ class Cart extends React.Component {
                 <p className={style.acceptedPromoCode}>
                   {acceptedPromoCode}
                   <i
-                    onClick={this.removeDiscount}
+                    onClick={removeDiscount}
                     title="Remove discount"
                     className="fas fa-times"
                   ></i>
@@ -315,9 +300,9 @@ class Cart extends React.Component {
               </p>
               <button
                 title="To Shipping"
-                disabled={this.isCartEmpty()}
+                disabled={isCartEmpty()}
                 onClick={(e) => {
-                  toNextPage(e, "isCartHidden", "isShippingHidden");
+                  toNextPage(e, "Cart");
                 }}
                 id="toNextPageBtn"
               >

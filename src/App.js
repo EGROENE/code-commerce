@@ -1,13 +1,18 @@
 import React from "react";
 import logo from "./new-logo.png";
 import "./App.css";
+
+// Imports for Login:
 import Login from "./Components/Login/Login";
 import loginStyle from "./Components/Login/Login.module.css";
-import Cart from "./Components/Cart/Cart";
 import Shipping from "./Components/Shipping/Shipping";
 import Payment from "./Components/Payment/Payment";
 import Confirmation from "./Components/Confirmation/Confirmation";
 import { registeredAccounts } from "./constants";
+
+// Imports for Cart:
+import Cart from "./Components/Cart/Cart";
+import { ITEMS_IN_CART } from "./constants";
 
 class App extends React.Component {
   constructor(props) {
@@ -20,6 +25,7 @@ class App extends React.Component {
         isPaymentComplete: false,
         isConfirmationComplete: false,
       },
+
       // LOGIN/SIGNUP STATE VALUES
       accountEmailAddress: "",
       password: "",
@@ -44,6 +50,20 @@ class App extends React.Component {
         nameError: "",
         postalCodeError: "",
       },
+
+      // State values for Cart:
+      itemsInCart: ITEMS_IN_CART,
+      numberOfItemsInCart: ITEMS_IN_CART.length,
+      promoCodes: [
+        "ilikebeachballs",
+        "codeislyfe",
+        "devslopes",
+        "jd911",
+        "etlb17",
+      ],
+      inputPromoCode: "",
+      acceptedPromoCode: "",
+      discountRate: 0,
     };
   }
 
@@ -53,6 +73,7 @@ class App extends React.Component {
     e.preventDefault();
 
     this.setState((prevState) => ({
+      ...prevState,
       arePagesComplete: {
         ...prevState.arePagesComplete,
         [`is${pageCompleted}Complete`]: true,
@@ -319,6 +340,122 @@ class App extends React.Component {
   };
 
   // METHODS FOR CART
+  updateQuantities = (e, itemNameCamelCase) => {
+    let newQuantity = Number(e.target.value.trim());
+    let selectedItem = this.state.itemsInCart.filter((item) => {
+      return item.itemNameCamelCase === itemNameCamelCase;
+    })[0];
+
+    let selectedItemIndex = this.state.itemsInCart.indexOf(selectedItem);
+
+    // Prevent user from manually entering '0' or backspacing and deleting item quantities:
+    if (newQuantity !== "" && newQuantity !== 0) {
+      this.setState((prevState) => ({
+        ...prevState,
+        itemsInCart: prevState.itemsInCart.map((item) =>
+          this.state.itemsInCart.indexOf(item) === selectedItemIndex
+            ? { ...item, quantity: newQuantity }
+            : item
+        ),
+      }));
+    }
+  };
+
+  // Method to delete item from cart:
+  deleteItem = (e, itemNameCamelCase) => {
+    let itemToDelete = this.state.itemsInCart.filter((item) => {
+      return item.itemNameCamelCase === itemNameCamelCase;
+    })[0];
+
+    let itemToDeleteIndex = this.state.itemsInCart.indexOf(itemToDelete);
+
+    let numberOfItemsInCart = this.state.numberOfItemsInCart - 1;
+
+    this.setState((prevState) => ({
+      ...prevState,
+      // If passed-in itemToDeleteIndex is equal to the index of that item in this.state.itemsInCart array, set the previous state values of that object, but change the quantity to 0. If indices are not equal, then item does not change.
+      itemsInCart: prevState.itemsInCart.map((item) =>
+        this.state.itemsInCart.indexOf(item) === itemToDeleteIndex
+          ? { ...item, quantity: 0 }
+          : item
+      ),
+      numberOfItemsInCart: numberOfItemsInCart,
+    }));
+  };
+
+  // Method that checks if all item.quantities are zero (no items in cart)
+  isCartEmpty = () => {
+    let allItemQuantities = this.state.itemsInCart.map((item) => item.quantity);
+    return allItemQuantities.some((quantity) => quantity > 0) ? false : true;
+  };
+
+  // Set state value inputPromoCode to what user inputs:
+  getPromoCode = (e) => {
+    let inputCode = e.target.value.trim().toLowerCase();
+    this.setState((prevState) => ({
+      ...prevState,
+      inputPromoCode: inputCode,
+    }));
+  };
+
+  // Check input promo code to see if it matches an available promo, then apply appropriate discount:
+  checkPromoCode = () => {
+    let inputPromoCode = this.state.inputPromoCode;
+    if (this.state.promoCodes.includes(inputPromoCode)) {
+      if (inputPromoCode === "ilikebeachballs") {
+        this.setState((prevState) => ({
+          ...prevState,
+          acceptedPromoCode: inputPromoCode,
+          discountRate: 0.1,
+          isInvalidPromo: false,
+        }));
+      } else if (inputPromoCode === "codeislyfe") {
+        this.setState((prevState) => ({
+          ...prevState,
+          acceptedPromoCode: inputPromoCode,
+          discountRate: 0.25,
+          isInvalidPromo: false,
+        }));
+      } else if (inputPromoCode === "devslopes") {
+        this.setState((prevState) => ({
+          ...prevState,
+          acceptedPromoCode: inputPromoCode,
+          discountRate: 0.5,
+          isInvalidPromo: false,
+        }));
+      } else if (inputPromoCode === "jd911") {
+        this.setState((prevState) => ({
+          ...prevState,
+          acceptedPromoCode: inputPromoCode,
+          discountRate: 0.75,
+          isInvalidPromo: false,
+        }));
+      } else if (inputPromoCode === "etlb17") {
+        this.setState((prevState) => ({
+          ...prevState,
+          acceptedPromoCode: inputPromoCode,
+          discountRate: 0.99,
+          isInvalidPromo: false,
+        }));
+      }
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        discountRate: 0,
+        isInvalidPromo: true,
+      }));
+    }
+  };
+
+  // Method to remove discount:
+  removeDiscount = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      discountRate: 0,
+      isInvalidPromo: false,
+    }));
+  };
+
   render() {
     let {
       isLoginComplete,
@@ -355,7 +492,22 @@ class App extends React.Component {
               clearLoginErrors={this.clearLoginErrors}
             />
           )}
-          {isLoginComplete && <Cart />}
+          {isLoginComplete && (
+            <Cart
+              toNextPage={this.toNextPage}
+              updateQuantities={this.updateQuantities}
+              deleteItem={this.deleteItem}
+              isCartEmpty={this.isCartEmpty}
+              getPromoCode={this.getPromoCode}
+              checkPromoCode={this.checkPromoCode}
+              removeDiscount={this.removeDiscount}
+              itemsInCart={this.state.itemsInCart}
+              numberOfItemsInCart={this.state.itemsInCart.length}
+              discountRate={this.state.discountRate}
+              isInvalidPromo={this.state.isInvalidPromo}
+              acceptedPromoCode={this.state.acceptedPromoCode}
+            />
+          )}
           {isCartComplete && <Shipping />}
           {isShippingComplete && <Payment />}
           {isPaymentComplete && (
