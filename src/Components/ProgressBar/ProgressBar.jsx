@@ -3,33 +3,28 @@ import React from "react";
 class ProgressBar extends React.Component {
   render() {
     // Destructure props:
-    const {
-      completedPages,
-      isShippingCompleted,
-      isPaymentCompleted,
-      isConfirmationCompleted,
-    } = this.props;
+    const { arePagesComplete } = this.props;
 
     const progressBarElements = [
       {
         id: "Cart",
         class: "fas fa-shopping-cart",
-        isCompleted: completedPages.cart,
+        isCompleted: arePagesComplete.isCartComplete,
       },
       {
         id: "Shipping",
         class: "fas fa-shipping-fast",
-        isCompleted: isShippingCompleted,
+        isCompleted: arePagesComplete.isShippingComplete,
       },
       {
         id: "Payment",
         class: "fas fa-money-check-alt",
-        isCompleted: isPaymentCompleted,
+        isCompleted: arePagesComplete.isPaymentComplete,
       },
       {
         id: "Confirmation",
         class: "fas fa-check",
-        isCompleted: isConfirmationCompleted,
+        isCompleted: arePagesComplete.isConfirmationComplete,
       },
     ];
 
