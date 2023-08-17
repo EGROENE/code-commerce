@@ -62,13 +62,6 @@ class App extends React.Component {
       // State values for Cart:
       itemsInCart: ITEMS_IN_CART,
       numberOfItemsInCart: ITEMS_IN_CART.length,
-      /* promoCodes: [
-        "ilikebeachballs",
-        "codeislyfe",
-        "devslopes",
-        "jd911",
-        "etlb17",
-      ], */
       inputPromoCode: "",
       acceptedPromoCode: "",
       discountRate: 0,
@@ -553,12 +546,13 @@ class App extends React.Component {
 
   // Method to validate title, name, city:
   validateNameCity = (e, field) => {
-    let value = e.target.value.trim();
+    let value = e.target.value;
     if (
-      /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ. -]*$/i.test(value) &&
+      /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -.]*$/i.test(value) &&
       value.replace(/\s/g, "").length
     ) {
       this.setState((prevState) => ({
+        ...prevState,
         shippingErrors: {
           ...prevState.shippingErrors,
           [field]: "",
@@ -577,7 +571,7 @@ class App extends React.Component {
         },
         shipmentDetails: {
           ...prevState.shipmentDetails,
-          [field]: "",
+          [field]: value,
         },
       }));
     }
@@ -585,7 +579,7 @@ class App extends React.Component {
 
   // Method to validate street address:
   validateStreetAddress = (e) => {
-    let value = e.target.value.trim();
+    let value = e.target.value;
     if (/[A-Z0-9#/ '-]+/i.test(value)) {
       this.setState((prevState) => ({
         ...prevState,
@@ -607,7 +601,7 @@ class App extends React.Component {
         },
         shipmentDetails: {
           ...prevState.shipmentDetails,
-          streetAddress: "",
+          streetAddress: value,
         },
       }));
     }
@@ -675,7 +669,7 @@ class App extends React.Component {
   // METHODS FOR PAYMENT
   // Validation methods:
   validateCardHolderName = (e) => {
-    let value = e.target.value.trim();
+    let value = e.target.value;
     if (
       /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value) &&
       value.replace(/\s/g, "").length
@@ -700,7 +694,7 @@ class App extends React.Component {
         },
         paymentDetails: {
           ...prevState.paymentDetails,
-          cardHolder: "",
+          cardHolder: value,
         },
       }));
     }

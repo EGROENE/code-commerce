@@ -108,6 +108,7 @@ class Payment extends React.Component {
               <label>
                 <header>Cardholder Name: </header>
                 <input
+                  value={paymentDetails.cardHolder}
                   id="cardholderName"
                   minLength="1"
                   onChange={validateCardHolderName}

@@ -82,18 +82,49 @@ class Shipping extends React.Component {
                       <option disabled selected>
                         -- select --
                       </option>
-                      <option value="Mr.">Mr.</option>
-                      <option value="Mrs.">Mrs.</option>
-                      <option value="Ms.">Ms.</option>
-                      <option value="Dr.">Dr.</option>
-                      <option value="Lord">Lord</option>
-                      <option value="Lady">Lady</option>
+                      <option
+                        selected={shipmentDetails.title === "Mr."}
+                        value="Mr."
+                      >
+                        Mr.
+                      </option>
+                      <option
+                        selected={shipmentDetails.title === "Mrs."}
+                        value="Mrs."
+                      >
+                        Mrs.
+                      </option>
+                      <option
+                        selected={shipmentDetails.title === "Ms."}
+                        value="Ms."
+                      >
+                        Ms.
+                      </option>
+                      <option
+                        selected={shipmentDetails.title === "Dr."}
+                        value="Dr."
+                      >
+                        Dr.
+                      </option>
+                      <option
+                        selected={shipmentDetails.title === "Lord"}
+                        value="Lord"
+                      >
+                        Lord
+                      </option>
+                      <option
+                        selected={shipmentDetails.title === "Lady"}
+                        value="Lady"
+                      >
+                        Lady
+                      </option>
                     </select>
                   </label>
                   <label id={style.nameField}>
                     <div>
                       <header>Name: </header>
                       <input
+                        value={shipmentDetails.name}
                         id="name"
                         type="text"
                         onChange={(e) => {
@@ -114,6 +145,7 @@ class Shipping extends React.Component {
                 <label>
                   <header>Street Address: </header>
                   <input
+                    value={shipmentDetails.streetAddress}
                     id="streetAddress"
                     type="text"
                     required
@@ -131,6 +163,7 @@ class Shipping extends React.Component {
                   <label>
                     <header>ZIP Code: </header>
                     <input
+                      value={shipmentDetails.postalCode}
                       id="postalCode"
                       placeholder="5-digit ZIP code"
                       type="text"
@@ -150,6 +183,7 @@ class Shipping extends React.Component {
                   <label>
                     <header>City: </header>
                     <input
+                      value={shipmentDetails.city}
                       minLength="1"
                       id="city"
                       placeholder="Enter city"
@@ -172,68 +206,366 @@ class Shipping extends React.Component {
                       <option disabled selected>
                         -- state or territory --
                       </option>
-                      <option value="AL">Alabama</option>
-                      <option value="AK">Alaska</option>
-                      <option value="AS">American Samoa</option>
-                      <option value="AZ">Arizona</option>
-                      <option value="AR">Arkansas</option>
-                      <option value="AA">Armed Forces Americas</option>
-                      <option value="AP">Armed Forces Pacific</option>
-                      <option value="AE">Armed Forces Others</option>
-                      <option value="CA">California</option>
-                      <option value="CO">Colorado</option>
-                      <option value="CT">Connecticut</option>
-                      <option value="DE">Delaware</option>
-                      <option value="DC">District Of Columbia</option>
-                      <option value="FL">Florida</option>
-                      <option value="GA">Georgia</option>
-                      <option value="GU">Guam</option>
-                      <option value="HI">Hawaii</option>
-                      <option value="ID">Idaho</option>
-                      <option value="IL">Illinois</option>
-                      <option value="IN">Indiana</option>
-                      <option value="IA">Iowa</option>
-                      <option value="KS">Kansas</option>
-                      <option value="KY">Kentucky</option>
-                      <option value="LA">Louisiana</option>
-                      <option value="ME">Maine</option>
-                      <option value="MD">Maryland</option>
-                      <option value="MA">Massachusetts</option>
-                      <option value="MI">Michigan</option>
-                      <option value="MN">Minnesota</option>
-                      <option value="MS">Mississippi</option>
-                      <option value="MO">Missouri</option>
-                      <option value="MT">Montana</option>
-                      <option value="MP">Northern Mariana Islands</option>
-                      <option value="NE">Nebraska</option>
-                      <option value="NV">Nevada</option>
-                      <option value="NH">New Hampshire</option>
-                      <option value="NJ">New Jersey</option>
-                      <option value="NM">New Mexico</option>
-                      <option value="NY">New York</option>
-                      <option value="NC">North Carolina</option>
-                      <option value="ND">North Dakota</option>
-                      <option value="OH">Ohio</option>
-                      <option value="OK">Oklahoma</option>
-                      <option value="OR">Oregon</option>
-                      <option value="PA">Pennsylvania</option>
-                      <option value="PR">Puerto Rico</option>
-                      <option value="RI">Rhode Island</option>
-                      <option value="SC">South Carolina</option>
-                      <option value="SD">South Dakota</option>
-                      <option value="TN">Tennessee</option>
-                      <option value="TX">Texas</option>
-                      <option value="UM">
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "AL"}
+                        value="AL"
+                      >
+                        Alabama
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "AK"}
+                        value="AK"
+                      >
+                        Alaska
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "AS"}
+                        value="AS"
+                      >
+                        American Samoa
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "AZ"}
+                        value="AZ"
+                      >
+                        Arizona
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "AR"}
+                        value="AR"
+                      >
+                        Arkansas
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "AA"}
+                        value="AA"
+                      >
+                        Armed Forces Americas
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "AP"}
+                        value="AP"
+                      >
+                        Armed Forces Pacific
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "AE"}
+                        value="AE"
+                      >
+                        Armed Forces Others
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "CA"}
+                        value="CA"
+                      >
+                        California
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "CO"}
+                        value="CO"
+                      >
+                        Colorado
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "CT"}
+                        value="CT"
+                      >
+                        Connecticut
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "DE"}
+                        value="DE"
+                      >
+                        Delaware
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "DC"}
+                        value="DC"
+                      >
+                        District Of Columbia
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "FL"}
+                        value="FL"
+                      >
+                        Florida
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "GA"}
+                        value="GA"
+                      >
+                        Georgia
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "GU"}
+                        value="GU"
+                      >
+                        Guam
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "HI"}
+                        value="HI"
+                      >
+                        Hawaii
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "ID"}
+                        value="ID"
+                      >
+                        Idaho
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "IL"}
+                        value="IL"
+                      >
+                        Illinois
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "IN"}
+                        value="IN"
+                      >
+                        Indiana
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "IA"}
+                        value="IA"
+                      >
+                        Iowa
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "KS"}
+                        value="KS"
+                      >
+                        Kansas
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "KY"}
+                        value="KY"
+                      >
+                        Kentucky
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "LA"}
+                        value="LA"
+                      >
+                        Louisiana
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "ME"}
+                        value="ME"
+                      >
+                        Maine
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "MD"}
+                        value="MD"
+                      >
+                        Maryland
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "MA"}
+                        value="MA"
+                      >
+                        Massachusetts
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "MI"}
+                        value="MI"
+                      >
+                        Michigan
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "MN"}
+                        value="MN"
+                      >
+                        Minnesota
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "MS"}
+                        value="MS"
+                      >
+                        Mississippi
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "MO"}
+                        value="MO"
+                      >
+                        Missouri
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "MT"}
+                        value="MT"
+                      >
+                        Montana
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "MP"}
+                        value="MP"
+                      >
+                        Northern Mariana Islands
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "NE"}
+                        value="NE"
+                      >
+                        Nebraska
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "NV"}
+                        value="NV"
+                      >
+                        Nevada
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "NH"}
+                        value="NH"
+                      >
+                        New Hampshire
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "NJ"}
+                        value="NJ"
+                      >
+                        New Jersey
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "NM"}
+                        value="NM"
+                      >
+                        New Mexico
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "NY"}
+                        value="NY"
+                      >
+                        New York
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "NC"}
+                        value="NC"
+                      >
+                        North Carolina
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "ND"}
+                        value="ND"
+                      >
+                        North Dakota
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "OH"}
+                        value="OH"
+                      >
+                        Ohio
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "OK"}
+                        value="OK"
+                      >
+                        Oklahoma
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "OR"}
+                        value="OR"
+                      >
+                        Oregon
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "PA"}
+                        value="PA"
+                      >
+                        Pennsylvania
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "PR"}
+                        value="PR"
+                      >
+                        Puerto Rico
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "RI"}
+                        value="RI"
+                      >
+                        Rhode Island
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "SC"}
+                        value="SC"
+                      >
+                        South Carolina
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "SD"}
+                        value="SD"
+                      >
+                        South Dakota
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "TN"}
+                        value="TN"
+                      >
+                        Tennessee
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "TX"}
+                        value="TX"
+                      >
+                        Texas
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "UM"}
+                        value="UM"
+                      >
                         United States Minor Outlying Islands
                       </option>
-                      <option value="UT">Utah</option>
-                      <option value="VT">Vermont</option>
-                      <option value="VA">Virginia</option>
-                      <option value="VI">Virgin Islands</option>
-                      <option value="WA">Washington</option>
-                      <option value="WV">West Virginia</option>
-                      <option value="WI">Wisconsin</option>
-                      <option value="WY">Wyoming</option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "UT"}
+                        value="UT"
+                      >
+                        Utah
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "VT"}
+                        value="VT"
+                      >
+                        Vermont
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "VA"}
+                        value="VA"
+                      >
+                        Virginia
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "VI"}
+                        value="VI"
+                      >
+                        Virgin Islands
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "WA"}
+                        value="WA"
+                      >
+                        Washington
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "WV"}
+                        value="WV"
+                      >
+                        West Virginia
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "WI"}
+                        value="WI"
+                      >
+                        Wisconsin
+                      </option>
+                      <option
+                        selected={shipmentDetails.stateOrTerritory === "WY"}
+                        value="WY"
+                      >
+                        Wyoming
+                      </option>
                     </select>
                   </label>
                 </div>
