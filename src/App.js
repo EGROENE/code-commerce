@@ -110,6 +110,9 @@ class App extends React.Component {
         securityCode: "",
         cardImage: "",
       },
+
+      // State values for Confirmation
+      isOrderSummaryDisplayed: false,
     };
   }
 
@@ -885,6 +888,13 @@ class App extends React.Component {
     }
   };
 
+  // METHODS FOR CONFIRMATION
+  showHideOrderDetails = () => {
+    !this.state.isOrderSummaryDisplayed
+      ? this.setState({ isOrderSummaryDisplayed: true })
+      : this.setState({ isOrderSummaryDisplayed: false });
+  };
+
   render() {
     let {
       isLoginComplete,
@@ -987,6 +997,17 @@ class App extends React.Component {
           {isPaymentComplete && (
             <Confirmation
               accountEmailAddress={this.state.accountEmailAddress}
+              arePagesComplete={this.state.arePagesComplete}
+              itemsInCart={this.state.itemsInCart}
+              numberOfItemsInCart={this.state.numberOfItemsInCart}
+              discountRate={this.state.discountRate}
+              shipmentDetails={this.state.shipmentDetails}
+              cardNumber={this.state.paymentDetails.cardNumber}
+              cardType={this.state.paymentDetails.cardType}
+              shippingAndHandling={this.state.shippingAndHandling}
+              deliveryTime={this.state.deliveryTime}
+              isOrderSummaryDisplayed={this.state.isOrderSummaryDisplayed}
+              showHideOrderDetails={this.showHideOrderDetails}
             />
           )}
         </header>

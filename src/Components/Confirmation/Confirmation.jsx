@@ -4,25 +4,17 @@ import style from "./Confirmation.module.css";
 import { roundToHundredth } from "../../methods";
 
 class Confirmation extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      isOrderSummaryDisplayed: false,
-    };
-  }
-
-  showHideOrderDetails = () => {
+  /* showHideOrderDetails = () => {
     !this.state.isOrderSummaryDisplayed
       ? this.setState({ isOrderSummaryDisplayed: true })
       : this.setState({ isOrderSummaryDisplayed: false });
-  };
+  }; */
 
   render() {
     // Destructure props:
     const {
-      isConfirmationHidden,
-      completedPages,
       accountEmailAddress,
+      arePagesComplete,
       itemsInCart,
       numberOfItemsInCart,
       discountRate,
@@ -31,6 +23,8 @@ class Confirmation extends React.Component {
       cardType,
       shippingAndHandling,
       deliveryTime,
+      isOrderSummaryDisplayed,
+      showHideOrderDetails,
     } = this.props;
 
     let cartSubtotal = itemsInCart.map(
@@ -55,48 +49,34 @@ class Confirmation extends React.Component {
         : cardNumber.substr(cardNumber.length - 4);
 
     return (
-      <div
-        className={!isConfirmationHidden ? "checkoutPageContainer" : undefined}
-        hidden={isConfirmationHidden}
-      >
-        <ProgressBar
-          completedPages={completedPages}
-          isShippingCompleted={!completedPages.shipping}
-          isPaymentCompleted={!completedPages.payment}
-          isConfirmationCompleted={!completedPages.confirmation}
-        />
+      <div className="checkoutPageContainer">
+        <ProgressBar arePagesComplete={arePagesComplete} />
         <div id={style.confirmationMessageContainer}>
           <header>Thanks for your order!</header>
           <p>It should be arriving within {deliveryTime}.</p>
           <div id={style.confirmationPageBtnContainer}>
             <button>Back to Homepage</button>
-            <button onClick={this.showHideOrderDetails}>
-              See Order Details
-            </button>
+            <button onClick={showHideOrderDetails}>See Order Details</button>
           </div>
         </div>
         <div
           id={style.modalContainer}
-          onClick={
-            this.state.isOrderSummaryDisplayed && this.showHideOrderDetails
-          }
+          onClick={isOrderSummaryDisplayed && showHideOrderDetails}
           style={
-            this.state.isOrderSummaryDisplayed
+            isOrderSummaryDisplayed
               ? { display: "flex", position: "fixed" }
               : { display: "none", position: "unset" }
           }
         ></div>
         <div
           style={
-            this.state.isOrderSummaryDisplayed
-              ? { display: "block" }
-              : { display: "none" }
+            isOrderSummaryDisplayed ? { display: "block" } : { display: "none" }
           }
           id={style.orderSummaryContainer}
         >
           <i
             title="Close Order Summary"
-            onClick={this.showHideOrderDetails}
+            onClick={showHideOrderDetails}
             id={style.closeModalBtn}
             className="fas fa-times"
           ></i>
