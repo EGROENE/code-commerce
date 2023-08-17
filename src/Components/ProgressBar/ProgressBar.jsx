@@ -24,7 +24,7 @@ class ProgressBar extends React.Component {
       {
         id: "Confirmation",
         class: "fas fa-check",
-        isCompleted: arePagesComplete.isConfirmationComplete,
+        isCompleted: arePagesComplete.isPaymentComplete,
       },
     ];
 
