@@ -6,4 +6,6 @@ However, I refactored the code according to the principle that, in a React appli
 
 ** No data entered into input fields is stored in any server from input fields, unless you choose to save info to your browser's autocomplete functionality, as this project is front-end-only. **
 
+To test the login feature, use 'bruce.twarze@abc.com' as the email & 'Ilikedandelions666#' as the password. To test a discount code, use any of the following: ilikebeachballs, etlb17, devslopes, codeislyfe, jd911.
+
 If you take the time to check out the project in action or read through the code, I would be happy to hear any feedback :)
