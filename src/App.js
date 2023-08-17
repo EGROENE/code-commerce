@@ -5,14 +5,22 @@ import "./App.css";
 // Imports for Login:
 import Login from "./Components/Login/Login";
 import loginStyle from "./Components/Login/Login.module.css";
-import Shipping from "./Components/Shipping/Shipping";
-import Payment from "./Components/Payment/Payment";
 import Confirmation from "./Components/Confirmation/Confirmation";
 import { registeredAccounts } from "./constants";
 
 // Imports for Cart:
 import Cart from "./Components/Cart/Cart";
 import { ITEMS_IN_CART } from "./constants";
+
+// Imports for Shipping:
+import Shipping from "./Components/Shipping/Shipping";
+
+// Imports for Payment:
+import Payment from "./Components/Payment/Payment";
+import { cardImages, cardRegexPatterns } from "./constants";
+
+let currentMonth = new Date().getMonth() + 1;
+let currentYear = new Date().getFullYear();
 
 class App extends React.Component {
   constructor(props) {
@@ -84,6 +92,24 @@ class App extends React.Component {
       },
       shippingAndHandling: 50,
       deliveryTime: "3 seconds",
+
+      // State values for Payment
+      paymentErrors: {
+        cardNumberError: "",
+        cardHolderError: "",
+        expiryError: "",
+        securityCodeError: "",
+      },
+      paymentDetails: {
+        cardType: "",
+        cardHolder: "",
+        cardNumber: "",
+        cardNumberMask: "",
+        expiryMonth: "",
+        expiryYear: "",
+        securityCode: "",
+        cardImage: "",
+      },
     };
   }
 
@@ -643,6 +669,222 @@ class App extends React.Component {
     }
   };
 
+  // METHODS FOR PAYMENT
+  // Validation methods:
+  validateCardHolderName = (e) => {
+    let value = e.target.value.trim();
+    if (
+      /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value) &&
+      value.replace(/\s/g, "").length
+    ) {
+      this.setState((prevState) => ({
+        ...prevState,
+        paymentErrors: {
+          ...prevState.paymentErrors,
+          cardHolderError: "",
+        },
+        paymentDetails: {
+          ...prevState.paymentDetails,
+          cardHolder: value,
+        },
+      }));
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        paymentErrors: {
+          ...prevState.paymentErrors,
+          cardHolderError: "Enter only alphabetic characters (and any hyphens)",
+        },
+        paymentDetails: {
+          ...prevState.paymentDetails,
+          cardHolder: "",
+        },
+      }));
+    }
+  };
+
+  // If input of card number field matches any RegEx patterns of accepted cards, the card type (AmEx, Visa, etc.) is returned. If not, nothing is returned.
+  findDebitCardType = (cardNumber) => {
+    for (const cardType in cardRegexPatterns) {
+      if (cardNumber.replace(/[^\d]/g, "").match(cardRegexPatterns[cardType])) {
+        return cardType;
+      }
+    }
+    return "";
+  };
+
+  // Method to format AmEx numbers:
+  formatAmex(inputNumber) {
+    let cleaned = ("" + inputNumber).replace(/\D/g, "");
+    let match = cleaned.match(/^(\d{4})(\d{6})(\d{5})$/);
+    if (match) {
+      return match[1] + " " + match[2] + " " + match[3];
+    }
+    return null;
+  }
+
+  // Check that card number is valid. Return error message if not.
+  checkCardNumberError = (cardNumber) => {
+    for (const card in cardRegexPatterns) {
+      // Remove any empty spaces (chars that are not digits) in card number:
+      if (cardNumber.replace(/[^\d]/g, "").match(cardRegexPatterns[card])) {
+        if (cardNumber) {
+          return cardNumber &&
+            /^[1-6]{1}[0-9]{14,15}$/i.test(
+              cardNumber.replace(/[^\d]/g, "").trim()
+            )
+            ? ""
+            : "Please enter a valid card number";
+        }
+      }
+    }
+    return "Please enter a valid card number";
+  };
+
+  validateCardNumber = (e) => {
+    let value = e.target.value.trim();
+    let errorText = this.checkCardNumberError(value);
+    let cardType = this.findDebitCardType(value);
+    let mask = value.split(" ").join("");
+    // If any input...
+    if (mask.length) {
+      if (cardType === "AMERICAN_EXPRESS") {
+        mask = this.formatAmex(value);
+      } else {
+        // Add space after every fourth character:
+        mask = mask.match(new RegExp(".{1,4}", "g")).join(" ");
+      }
+      // Set appropriate state values:
+      this.setState((prevState) => ({
+        ...prevState,
+        paymentDetails: {
+          ...prevState.paymentDetails,
+          cardNumberMask: mask,
+          cardNumber: value.replace(/\s/g, ""),
+          cardType: cardType,
+          cardImage: cardImages[cardType],
+        },
+        paymentErrors: {
+          ...prevState.paymentErrors,
+          cardNumberError: errorText,
+        },
+      }));
+      // If no input, reset appropriate state values:
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        paymentDetails: {
+          ...prevState.paymentDetails,
+          cardNumberMask: "",
+          cardNumber: "",
+          cardType: "",
+          cardImage: "",
+        },
+        paymentErrors: {
+          ...prevState.paymentErrors,
+          cardNumberError: "",
+        },
+      }));
+    }
+  };
+
+  getExpiryMonth = (e) => {
+    let value = e.target.value;
+    if (
+      (+value <= currentMonth &&
+        +this.state.paymentDetails.expiryYear === currentYear) ||
+      (+this.state.paymentDetails.expiryYear !== 0 &&
+        +this.state.paymentDetails.expiryYear < currentYear)
+    ) {
+      this.setState((prevState) => ({
+        ...prevState,
+        paymentDetails: {
+          ...prevState.paymentDetails,
+          expiryMonth: value,
+        },
+        paymentErrors: {
+          ...prevState.paymentErrors,
+          expiryError: "Invalid date",
+        },
+      }));
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        paymentDetails: {
+          ...prevState.paymentDetails,
+          expiryMonth: value,
+        },
+        paymentErrors: {
+          ...prevState.paymentErrors,
+          expiryError: "",
+        },
+      }));
+    }
+  };
+
+  getExpiryYear = (e) => {
+    let value = e.target.value;
+    if (
+      (+this.state.paymentDetails.expiryMonth !== "" &&
+        +this.state.paymentDetails.expiryMonth <= currentMonth &&
+        +value === currentYear) ||
+      +value < currentYear
+    ) {
+      this.setState((prevState) => ({
+        ...prevState,
+        paymentDetails: {
+          ...prevState.paymentDetails,
+          expiryYear: value,
+        },
+        paymentErrors: {
+          ...prevState.paymentErrors,
+          expiryError: "Invalid date",
+        },
+      }));
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        paymentDetails: {
+          ...prevState.paymentDetails,
+          expiryYear: value,
+        },
+        paymentErrors: {
+          ...prevState.paymentErrors,
+          expiryError: "",
+        },
+      }));
+    }
+  };
+
+  validateCVV = (e) => {
+    let value = e.target.value.trim();
+    if (/[0-9]$/i.test(value)) {
+      this.setState((prevState) => ({
+        ...prevState,
+        paymentErrors: {
+          ...prevState.paymentErrors,
+          securityCodeError: "",
+        },
+        paymentDetails: {
+          ...prevState.paymentDetails,
+          securityCode: value,
+        },
+      }));
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        paymentErrors: {
+          ...prevState.paymentErrors,
+          securityCodeError: "3-digit CVV (on card back)",
+        },
+        paymentDetails: {
+          ...prevState.paymentDetails,
+          securityCode: value,
+        },
+      }));
+    }
+  };
+
   render() {
     let {
       isLoginComplete,
@@ -718,7 +960,30 @@ class App extends React.Component {
               arePagesComplete={this.state.arePagesComplete}
             />
           )}
-          {isShippingComplete && <Payment />}
+          {isShippingComplete && !isPaymentComplete && (
+            <Payment
+              paymentErrors={this.state.paymentErrors}
+              arePagesComplete={this.state.arePagesComplete}
+              validateCardHolderName={this.validateCardHolderName}
+              findDebitCardType={this.findDebitCardType}
+              formatAmex={this.formatAmex}
+              checkCardNumberError={this.checkCardNumberError}
+              validateCardNumber={this.validateCardNumber}
+              getExpiryMonth={this.getExpiryMonth}
+              getExpiryYear={this.getExpiryYear}
+              validateCVV={this.validateCVV}
+              itemsInCart={this.state.itemsInCart}
+              numberOfItemsInCart={this.state.numberOfItemsInCart}
+              discountRate={this.state.discountRate}
+              toNextPage={this.toNextPage}
+              toPreviousPage={this.toPreviousPage}
+              shipmentDetails={this.state.shipmentDetails}
+              shippingAndHandling={this.state.shippingAndHandling}
+              deliveryTime={this.state.deliveryTime}
+              paymentDetails={this.state.paymentDetails}
+              accountEmailAddress={this.state.accountEmailAddress}
+            />
+          )}
           {isPaymentComplete && (
             <Confirmation
               accountEmailAddress={this.state.accountEmailAddress}
