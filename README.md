@@ -4,7 +4,7 @@ This project involved practicing organizing a React project, styling it (includi
 
 However, I refactored the code according to the principle that, in a React application, one should make as many components as possible stateless, so now the App component in src/App.js is the only parent component in the project. I defined all state values in src/App.js, as well as all methods, passing down state values & methods to the child components as props as necessary. Though this reconfiguration took a bit of time to plan & execute, it resulted in the app being more efficient (less time rendering components), as well as more scalable & less confusing, as prop drilling is no longer necessary. As part of the reconfiguration, I also conditionally rendered the 5 parts of the checkout process instead of conditionally hiding them; this keeps the DOM clean.
 
-** No data entered into input fields is stored in any server from input fields, unless you choose to save info to your browser's autocomplete functionality, as this project is front-end-only. **
+** No data entered into input fields is stored in any server, unless you choose to save info to your browser's autocomplete functionality, as this project is front-end-only. **
 
 To test the login feature, use 'bruce.twarze@abc.com' as the email & 'Ilikedandelions666#' as the password. To test a discount code, use any of the following: ilikebeachballs, etlb17, devslopes, codeislyfe, jd911.
 
