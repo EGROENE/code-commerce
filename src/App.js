@@ -10,7 +10,7 @@ import { registeredAccounts } from "./constants";
 
 // Imports for Cart:
 import Cart from "./Components/Cart/Cart";
-import { ITEMS_IN_CART } from "./constants";
+import { ITEMS_IN_CART, promoCodes } from "./constants";
 
 // Imports for Shipping:
 import Shipping from "./Components/Shipping/Shipping";
@@ -62,13 +62,13 @@ class App extends React.Component {
       // State values for Cart:
       itemsInCart: ITEMS_IN_CART,
       numberOfItemsInCart: ITEMS_IN_CART.length,
-      promoCodes: [
+      /* promoCodes: [
         "ilikebeachballs",
         "codeislyfe",
         "devslopes",
         "jd911",
         "etlb17",
-      ],
+      ], */
       inputPromoCode: "",
       acceptedPromoCode: "",
       discountRate: 0,
@@ -482,7 +482,7 @@ class App extends React.Component {
   // Check input promo code to see if it matches an available promo, then apply appropriate discount:
   checkPromoCode = () => {
     let inputPromoCode = this.state.inputPromoCode;
-    if (this.state.promoCodes.includes(inputPromoCode)) {
+    if (promoCodes.includes(inputPromoCode)) {
       if (inputPromoCode === "ilikebeachballs") {
         this.setState((prevState) => ({
           ...prevState,

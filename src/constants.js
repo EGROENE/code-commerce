@@ -52,6 +52,14 @@ export const ITEMS_IN_CART = [
   },
 ];
 
+export const promoCodes = [
+  "ilikebeachballs",
+  "codeislyfe",
+  "devslopes",
+  "jd911",
+  "etlb17",
+];
+
 export const cardRegexPatterns = {
   MASTERCARD: /^5[1-5][0-9]{1,}|^2[2-7][0-9]{1,}$/,
   VISA: /^4[0-9]{2,}$/,
