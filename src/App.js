@@ -543,16 +543,19 @@ class App extends React.Component {
   // Method to validate street address:
   validateStreetAddress = (e) => {
     let value = e.target.value;
+    this.setState((prevState) => ({
+      ...prevState,
+      shippingDetails: {
+        ...prevState.shippingDetails,
+        streetAddress: value,
+      },
+    }));
     if (/[A-Z0-9#/ '-]+/i.test(value) && value.replace(/\s/g, "").length) {
       this.setState((prevState) => ({
         ...prevState,
         shippingErrors: {
           ...prevState.shippingErrors,
           streetAddressError: "",
-        },
-        shippingDetails: {
-          ...prevState.shippingDetails,
-          streetAddress: value,
         },
       }));
     } else {
@@ -561,10 +564,6 @@ class App extends React.Component {
         shippingErrors: {
           ...prevState.shippingErrors,
           streetAddressError: "Please enter a valid address",
-        },
-        shippingDetails: {
-          ...prevState.shippingDetails,
-          streetAddress: value,
         },
       }));
     }
