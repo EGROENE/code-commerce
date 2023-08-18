@@ -530,7 +530,7 @@ class App extends React.Component {
   };
 
   // Method to validate title, name, city:
-  validateNameCity = (e, field, page) => {
+  validateNamesAndCityNames = (e, field, page) => {
     let value = e.target.value;
     if (
       /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -.]*$/i.test(value) &&
@@ -906,7 +906,7 @@ class App extends React.Component {
               validatePasswordSignup={this.validatePasswordSignup}
               validatePasswordConfirmation={this.validatePasswordConfirmation}
               validatePasswordLogin={this.validatePasswordLogin}
-              validateNameCity={this.validateNameCity}
+              validateNamesAndCityNames={this.validateNamesAndCityNames}
               validatePostalCode={this.validatePostalCode}
               clearLoginErrors={this.clearLoginErrors}
             />
@@ -935,7 +935,7 @@ class App extends React.Component {
               setStateValuesOfDropdownFields={
                 this.setStateValuesOfDropdownFields
               }
-              validateNameCity={this.validateNameCity}
+              validateNamesAndCityNames={this.validateNamesAndCityNames}
               validateStreetAddress={this.validateStreetAddress}
               formatPhoneNumber={this.formatPhoneNumber}
               validatePhoneNumber={this.validatePhoneNumber}

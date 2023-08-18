@@ -14,7 +14,7 @@ class Login extends React.Component {
       validatePasswordSignup,
       validatePasswordConfirmation,
       validatePasswordLogin,
-      validateNameCity,
+      validateNamesAndCityNames,
       validatePostalCode,
       isLoginMethodSelected,
       isRequired,
@@ -109,7 +109,7 @@ class Login extends React.Component {
         placeholder: "Enter first name",
         inputType: "text",
         onChange: (e) => {
-          validateNameCity(e, "firstName", "login");
+          validateNamesAndCityNames(e, "firstName", "login");
         },
         field: "firstName",
         required: isRequired,
@@ -123,7 +123,7 @@ class Login extends React.Component {
         placeholder: "Enter last name",
         inputType: "text",
         onChange: (e) => {
-          validateNameCity(e, "lastName", "login");
+          validateNamesAndCityNames(e, "lastName", "login");
         },
         field: "lastName",
         required: isRequired,

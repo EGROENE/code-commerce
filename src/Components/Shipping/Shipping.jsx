@@ -13,7 +13,7 @@ class Shipping extends React.Component {
       numberOfItemsInCart,
       discountRate,
       validatePostalCode,
-      validateNameCity,
+      validateNamesAndCityNames,
       setStateValuesOfDropdownFields,
       validateStreetAddress,
       validatePhoneNumber,
@@ -128,7 +128,7 @@ class Shipping extends React.Component {
                         id="name"
                         type="text"
                         onChange={(e) => {
-                          validateNameCity(e, "name", "shipping");
+                          validateNamesAndCityNames(e, "name", "shipping");
                         }}
                         placeholder="Recipient name"
                         required
@@ -191,7 +191,7 @@ class Shipping extends React.Component {
                       placeholder="Enter city"
                       type="text"
                       onChange={(e) => {
-                        validateNameCity(e, "city", "shipping");
+                        validateNamesAndCityNames(e, "city", "shipping");
                       }}
                       required
                       inputMode="text"
