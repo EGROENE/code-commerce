@@ -306,29 +306,6 @@ class App extends React.Component {
     }
   };
 
-  // Validate name:
-  /* validateNames = (e) => {
-    let value = e.target.value.trim();
-    if (
-      /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value) &&
-      !value.replace(/\s/g, "").length
-    ) {
-      this.setState((prevState) => ({
-        loginErrors: {
-          ...prevState.loginErrors,
-          nameError: "",
-        },
-      }));
-    } else {
-      this.setState((prevState) => ({
-        loginErrors: {
-          ...prevState.loginErrors,
-          nameError: "Enter only alphabetic characters & any hyphens b/t names",
-        },
-      }));
-    }
-  }; */
-
   // Also use on Shipping
   validatePostalCode = (e, formType) => {
     let value = e.target.value.trim();
@@ -529,7 +506,8 @@ class App extends React.Component {
     }));
   };
 
-  // Method to validate title, name, city:
+  // Method to validate names of humans & cities:
+  // Used on Signup, Shipping
   validateNamesAndCityNames = (e, field, page) => {
     let value = e.target.value;
     if (

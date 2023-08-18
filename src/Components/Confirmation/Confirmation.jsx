@@ -4,12 +4,6 @@ import style from "./Confirmation.module.css";
 import { roundToHundredth } from "../../methods";
 
 class Confirmation extends React.Component {
-  /* showHideOrderDetails = () => {
-    !this.state.isOrderSummaryDisplayed
-      ? this.setState({ isOrderSummaryDisplayed: true })
-      : this.setState({ isOrderSummaryDisplayed: false });
-  }; */
-
   render() {
     // Destructure props:
     const {
