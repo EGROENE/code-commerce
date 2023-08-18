@@ -14,7 +14,7 @@ class Login extends React.Component {
       validatePasswordSignup,
       validatePasswordConfirmation,
       validatePasswordLogin,
-      validateNames,
+      validateNameCity,
       validatePostalCode,
       isLoginMethodSelected,
       isRequired,
@@ -108,8 +108,10 @@ class Login extends React.Component {
         labelText: "First Name:",
         placeholder: "Enter first name",
         inputType: "text",
-        onChange: validateNames,
-        field: "name",
+        onChange: (e) => {
+          validateNameCity(e, "firstName", "login");
+        },
+        field: "firstName",
         required: isRequired,
         inputMode: "text",
         autoComplete: "given-name",
@@ -120,8 +122,10 @@ class Login extends React.Component {
         labelText: "Last Name:",
         placeholder: "Enter last name",
         inputType: "text",
-        onChange: validateNames,
-        field: "name",
+        onChange: (e) => {
+          validateNameCity(e, "lastName", "login");
+        },
+        field: "lastName",
         required: isRequired,
         inputMode: "text",
         autoComplete: "family-name",
@@ -132,7 +136,9 @@ class Login extends React.Component {
         labelText: "Postal Code:",
         placeholder: "5-digit US ZIP",
         inputType: "text",
-        onChange: validatePostalCode,
+        onChange: (e) => {
+          validatePostalCode(e, "login");
+        },
         field: "postalCode",
         required: isRequired,
         inputMode: "numeric",

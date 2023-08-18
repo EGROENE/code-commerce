@@ -13,7 +13,7 @@ class Payment extends React.Component {
       discountRate,
       toNextPage,
       toPreviousPage,
-      shipmentDetails,
+      shippingDetails,
       shippingAndHandling,
       deliveryTime,
       paymentErrors,
@@ -243,18 +243,18 @@ class Payment extends React.Component {
                 <header>Delivery Information:</header>
                 <div id={style.deliveryInfoContainerInfoColumns}>
                   <p>
-                    {shipmentDetails.title !== "" && shipmentDetails.title}{" "}
-                    {shipmentDetails.name}
+                    {shippingDetails.title !== "" && shippingDetails.title}{" "}
+                    {shippingDetails.name}
                   </p>
                   <div>
-                    <p>{shipmentDetails.streetAddress}</p>
+                    <p>{shippingDetails.streetAddress}</p>
                     <p>
-                      {shipmentDetails.city}, {shipmentDetails.stateOrTerritory}{" "}
-                      {shipmentDetails.postalCode}
+                      {shippingDetails.city}, {shippingDetails.stateOrTerritory}{" "}
+                      {shippingDetails.postalCode}
                     </p>
                   </div>
                   <div>
-                    <p>Phone: {shipmentDetails.phoneNumberMask}</p>
+                    <p>Phone: {shippingDetails.phoneNumberMask}</p>
                     <p>E-mail: {accountEmailAddress}</p>
                   </div>
                 </div>

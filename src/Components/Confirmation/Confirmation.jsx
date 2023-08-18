@@ -18,7 +18,7 @@ class Confirmation extends React.Component {
       itemsInCart,
       numberOfItemsInCart,
       discountRate,
-      shipmentDetails,
+      shippingDetails,
       cardNumber,
       cardType,
       shippingAndHandling,
@@ -139,19 +139,19 @@ class Confirmation extends React.Component {
                   </p>
                 ))}
               </div>
-              <div id={style.orderShipmentDetails}>
+              <div id={style.ordershippingDetails}>
                 <header>Delivering To:</header>
                 <p>
-                  {shipmentDetails.title !== "" && shipmentDetails.title}{" "}
-                  {shipmentDetails.name}
+                  {shippingDetails.title !== "" && shippingDetails.title}{" "}
+                  {shippingDetails.name}
                 </p>
                 <p>Card ending in {lastDigitsOfCardNumber}</p>
-                <p>{shipmentDetails.streetAddress}</p>
+                <p>{shippingDetails.streetAddress}</p>
                 <p>
-                  {shipmentDetails.city}, {shipmentDetails.stateOrTerritory}{" "}
-                  {shipmentDetails.postalCode}
+                  {shippingDetails.city}, {shippingDetails.stateOrTerritory}{" "}
+                  {shippingDetails.postalCode}
                 </p>
-                <p>Phone: {shipmentDetails.phoneNumberMask}</p>
+                <p>Phone: {shippingDetails.phoneNumberMask}</p>
                 <p>E-mail: {accountEmailAddress}</p>
               </div>
             </div>

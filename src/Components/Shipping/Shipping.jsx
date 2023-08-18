@@ -20,7 +20,7 @@ class Shipping extends React.Component {
       handleDeliveryOptionSelection,
       shippingErrors,
       shippingAndHandling,
-      shipmentDetails,
+      shippingDetails,
       arePagesComplete,
     } = this.props;
 
@@ -83,37 +83,37 @@ class Shipping extends React.Component {
                         -- select --
                       </option>
                       <option
-                        selected={shipmentDetails.title === "Mr."}
+                        selected={shippingDetails.title === "Mr."}
                         value="Mr."
                       >
                         Mr.
                       </option>
                       <option
-                        selected={shipmentDetails.title === "Mrs."}
+                        selected={shippingDetails.title === "Mrs."}
                         value="Mrs."
                       >
                         Mrs.
                       </option>
                       <option
-                        selected={shipmentDetails.title === "Ms."}
+                        selected={shippingDetails.title === "Ms."}
                         value="Ms."
                       >
                         Ms.
                       </option>
                       <option
-                        selected={shipmentDetails.title === "Dr."}
+                        selected={shippingDetails.title === "Dr."}
                         value="Dr."
                       >
                         Dr.
                       </option>
                       <option
-                        selected={shipmentDetails.title === "Lord"}
+                        selected={shippingDetails.title === "Lord"}
                         value="Lord"
                       >
                         Lord
                       </option>
                       <option
-                        selected={shipmentDetails.title === "Lady"}
+                        selected={shippingDetails.title === "Lady"}
                         value="Lady"
                       >
                         Lady
@@ -124,11 +124,11 @@ class Shipping extends React.Component {
                     <div>
                       <header>Name: </header>
                       <input
-                        value={shipmentDetails.name}
+                        value={shippingDetails.name}
                         id="name"
                         type="text"
                         onChange={(e) => {
-                          validateNameCity(e, "name");
+                          validateNameCity(e, "name", "shipping");
                         }}
                         placeholder="Recipient name"
                         required
@@ -137,15 +137,17 @@ class Shipping extends React.Component {
                         autoComplete="on"
                       />
                     </div>
-                    {shippingErrors.name !== "" && (
-                      <p id={style.nameErrorMessage}>{shippingErrors.name}</p>
+                    {shippingErrors.nameError !== "" && (
+                      <p id={style.nameErrorMessage}>
+                        {shippingErrors.nameError}
+                      </p>
                     )}
                   </label>
                 </div>
                 <label>
                   <header>Street Address: </header>
                   <input
-                    value={shipmentDetails.streetAddress}
+                    value={shippingDetails.streetAddress}
                     id="streetAddress"
                     type="text"
                     required
@@ -155,15 +157,15 @@ class Shipping extends React.Component {
                     minLength="1"
                     autoComplete="street-address"
                   />
-                  {shippingErrors.streetAddress !== "" && (
-                    <p>{shippingErrors.streetAddress}</p>
+                  {shippingErrors.streetAddressError !== "" && (
+                    <p>{shippingErrors.streetAddressError}</p>
                   )}
                 </label>
                 <div id={style.moreAddressDetails}>
                   <label>
                     <header>ZIP Code: </header>
                     <input
-                      value={shipmentDetails.postalCode}
+                      value={shippingDetails.postalCode}
                       id="postalCode"
                       placeholder="5-digit ZIP code"
                       type="text"
@@ -176,26 +178,28 @@ class Shipping extends React.Component {
                       maxLength="5"
                       autoComplete="postal-code"
                     />
-                    {shippingErrors.postalCode !== "" && (
-                      <p>{shippingErrors.postalCode}</p>
+                    {shippingErrors.postalCodeError !== "" && (
+                      <p>{shippingErrors.postalCodeError}</p>
                     )}
                   </label>
                   <label>
                     <header>City: </header>
                     <input
-                      value={shipmentDetails.city}
+                      value={shippingDetails.city}
                       minLength="1"
                       id="city"
                       placeholder="Enter city"
                       type="text"
                       onChange={(e) => {
-                        validateNameCity(e, "city");
+                        validateNameCity(e, "city", "shipping");
                       }}
                       required
                       inputMode="text"
                       autoComplete="on"
                     />
-                    {shippingErrors.city !== "" && <p>{shippingErrors.city}</p>}
+                    {shippingErrors.cityError !== "" && (
+                      <p>{shippingErrors.cityError}</p>
+                    )}
                   </label>
                   <label>
                     <header>State/Territory: </header>
@@ -207,361 +211,361 @@ class Shipping extends React.Component {
                         -- state or territory --
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "AL"}
+                        selected={shippingDetails.stateOrTerritory === "AL"}
                         value="AL"
                       >
                         Alabama
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "AK"}
+                        selected={shippingDetails.stateOrTerritory === "AK"}
                         value="AK"
                       >
                         Alaska
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "AS"}
+                        selected={shippingDetails.stateOrTerritory === "AS"}
                         value="AS"
                       >
                         American Samoa
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "AZ"}
+                        selected={shippingDetails.stateOrTerritory === "AZ"}
                         value="AZ"
                       >
                         Arizona
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "AR"}
+                        selected={shippingDetails.stateOrTerritory === "AR"}
                         value="AR"
                       >
                         Arkansas
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "AA"}
+                        selected={shippingDetails.stateOrTerritory === "AA"}
                         value="AA"
                       >
                         Armed Forces Americas
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "AP"}
+                        selected={shippingDetails.stateOrTerritory === "AP"}
                         value="AP"
                       >
                         Armed Forces Pacific
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "AE"}
+                        selected={shippingDetails.stateOrTerritory === "AE"}
                         value="AE"
                       >
                         Armed Forces Others
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "CA"}
+                        selected={shippingDetails.stateOrTerritory === "CA"}
                         value="CA"
                       >
                         California
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "CO"}
+                        selected={shippingDetails.stateOrTerritory === "CO"}
                         value="CO"
                       >
                         Colorado
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "CT"}
+                        selected={shippingDetails.stateOrTerritory === "CT"}
                         value="CT"
                       >
                         Connecticut
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "DE"}
+                        selected={shippingDetails.stateOrTerritory === "DE"}
                         value="DE"
                       >
                         Delaware
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "DC"}
+                        selected={shippingDetails.stateOrTerritory === "DC"}
                         value="DC"
                       >
                         District Of Columbia
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "FL"}
+                        selected={shippingDetails.stateOrTerritory === "FL"}
                         value="FL"
                       >
                         Florida
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "GA"}
+                        selected={shippingDetails.stateOrTerritory === "GA"}
                         value="GA"
                       >
                         Georgia
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "GU"}
+                        selected={shippingDetails.stateOrTerritory === "GU"}
                         value="GU"
                       >
                         Guam
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "HI"}
+                        selected={shippingDetails.stateOrTerritory === "HI"}
                         value="HI"
                       >
                         Hawaii
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "ID"}
+                        selected={shippingDetails.stateOrTerritory === "ID"}
                         value="ID"
                       >
                         Idaho
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "IL"}
+                        selected={shippingDetails.stateOrTerritory === "IL"}
                         value="IL"
                       >
                         Illinois
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "IN"}
+                        selected={shippingDetails.stateOrTerritory === "IN"}
                         value="IN"
                       >
                         Indiana
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "IA"}
+                        selected={shippingDetails.stateOrTerritory === "IA"}
                         value="IA"
                       >
                         Iowa
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "KS"}
+                        selected={shippingDetails.stateOrTerritory === "KS"}
                         value="KS"
                       >
                         Kansas
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "KY"}
+                        selected={shippingDetails.stateOrTerritory === "KY"}
                         value="KY"
                       >
                         Kentucky
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "LA"}
+                        selected={shippingDetails.stateOrTerritory === "LA"}
                         value="LA"
                       >
                         Louisiana
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "ME"}
+                        selected={shippingDetails.stateOrTerritory === "ME"}
                         value="ME"
                       >
                         Maine
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "MD"}
+                        selected={shippingDetails.stateOrTerritory === "MD"}
                         value="MD"
                       >
                         Maryland
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "MA"}
+                        selected={shippingDetails.stateOrTerritory === "MA"}
                         value="MA"
                       >
                         Massachusetts
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "MI"}
+                        selected={shippingDetails.stateOrTerritory === "MI"}
                         value="MI"
                       >
                         Michigan
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "MN"}
+                        selected={shippingDetails.stateOrTerritory === "MN"}
                         value="MN"
                       >
                         Minnesota
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "MS"}
+                        selected={shippingDetails.stateOrTerritory === "MS"}
                         value="MS"
                       >
                         Mississippi
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "MO"}
+                        selected={shippingDetails.stateOrTerritory === "MO"}
                         value="MO"
                       >
                         Missouri
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "MT"}
+                        selected={shippingDetails.stateOrTerritory === "MT"}
                         value="MT"
                       >
                         Montana
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "MP"}
+                        selected={shippingDetails.stateOrTerritory === "MP"}
                         value="MP"
                       >
                         Northern Mariana Islands
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "NE"}
+                        selected={shippingDetails.stateOrTerritory === "NE"}
                         value="NE"
                       >
                         Nebraska
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "NV"}
+                        selected={shippingDetails.stateOrTerritory === "NV"}
                         value="NV"
                       >
                         Nevada
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "NH"}
+                        selected={shippingDetails.stateOrTerritory === "NH"}
                         value="NH"
                       >
                         New Hampshire
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "NJ"}
+                        selected={shippingDetails.stateOrTerritory === "NJ"}
                         value="NJ"
                       >
                         New Jersey
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "NM"}
+                        selected={shippingDetails.stateOrTerritory === "NM"}
                         value="NM"
                       >
                         New Mexico
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "NY"}
+                        selected={shippingDetails.stateOrTerritory === "NY"}
                         value="NY"
                       >
                         New York
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "NC"}
+                        selected={shippingDetails.stateOrTerritory === "NC"}
                         value="NC"
                       >
                         North Carolina
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "ND"}
+                        selected={shippingDetails.stateOrTerritory === "ND"}
                         value="ND"
                       >
                         North Dakota
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "OH"}
+                        selected={shippingDetails.stateOrTerritory === "OH"}
                         value="OH"
                       >
                         Ohio
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "OK"}
+                        selected={shippingDetails.stateOrTerritory === "OK"}
                         value="OK"
                       >
                         Oklahoma
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "OR"}
+                        selected={shippingDetails.stateOrTerritory === "OR"}
                         value="OR"
                       >
                         Oregon
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "PA"}
+                        selected={shippingDetails.stateOrTerritory === "PA"}
                         value="PA"
                       >
                         Pennsylvania
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "PR"}
+                        selected={shippingDetails.stateOrTerritory === "PR"}
                         value="PR"
                       >
                         Puerto Rico
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "RI"}
+                        selected={shippingDetails.stateOrTerritory === "RI"}
                         value="RI"
                       >
                         Rhode Island
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "SC"}
+                        selected={shippingDetails.stateOrTerritory === "SC"}
                         value="SC"
                       >
                         South Carolina
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "SD"}
+                        selected={shippingDetails.stateOrTerritory === "SD"}
                         value="SD"
                       >
                         South Dakota
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "TN"}
+                        selected={shippingDetails.stateOrTerritory === "TN"}
                         value="TN"
                       >
                         Tennessee
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "TX"}
+                        selected={shippingDetails.stateOrTerritory === "TX"}
                         value="TX"
                       >
                         Texas
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "UM"}
+                        selected={shippingDetails.stateOrTerritory === "UM"}
                         value="UM"
                       >
                         United States Minor Outlying Islands
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "UT"}
+                        selected={shippingDetails.stateOrTerritory === "UT"}
                         value="UT"
                       >
                         Utah
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "VT"}
+                        selected={shippingDetails.stateOrTerritory === "VT"}
                         value="VT"
                       >
                         Vermont
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "VA"}
+                        selected={shippingDetails.stateOrTerritory === "VA"}
                         value="VA"
                       >
                         Virginia
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "VI"}
+                        selected={shippingDetails.stateOrTerritory === "VI"}
                         value="VI"
                       >
                         Virgin Islands
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "WA"}
+                        selected={shippingDetails.stateOrTerritory === "WA"}
                         value="WA"
                       >
                         Washington
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "WV"}
+                        selected={shippingDetails.stateOrTerritory === "WV"}
                         value="WV"
                       >
                         West Virginia
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "WI"}
+                        selected={shippingDetails.stateOrTerritory === "WI"}
                         value="WI"
                       >
                         Wisconsin
                       </option>
                       <option
-                        selected={shipmentDetails.stateOrTerritory === "WY"}
+                        selected={shippingDetails.stateOrTerritory === "WY"}
                         value="WY"
                       >
                         Wyoming
@@ -579,12 +583,12 @@ class Shipping extends React.Component {
                     inputMode="numeric"
                     minLength="14"
                     maxLength="14"
-                    value={shipmentDetails.phoneNumberMask}
+                    value={shippingDetails.phoneNumberMask}
                     required
                     autoComplete="tel-national"
                   />
-                  {shippingErrors.phoneNumber !== "" && (
-                    <p>{shippingErrors.phoneNumber}</p>
+                  {shippingErrors.phoneNumberError !== "" && (
+                    <p>{shippingErrors.phoneNumberError}</p>
                   )}
                 </label>
               </form>
@@ -620,13 +624,13 @@ class Shipping extends React.Component {
                 <button
                   form="shippingForm"
                   type={
-                    !areNoErrors || shipmentDetails.stateOrTerritory === ""
+                    !areNoErrors || shippingDetails.stateOrTerritory === ""
                       ? "button"
                       : "submit"
                   }
                   title="To Payment"
                   onClick={
-                    !areNoErrors || shipmentDetails.stateOrTerritory === ""
+                    !areNoErrors || shippingDetails.stateOrTerritory === ""
                       ? alertFormErrors
                       : undefined
                   }

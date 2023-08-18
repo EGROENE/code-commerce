@@ -55,7 +55,8 @@ class App extends React.Component {
         loginEmailError: "",
         passwordError: "",
         confirmPasswordError: "",
-        nameError: "",
+        firstNameError: "",
+        lastNameError: "",
         postalCodeError: "",
       },
 
@@ -68,13 +69,13 @@ class App extends React.Component {
 
       // State values for Shipping:
       shippingErrors: {
-        name: "",
-        streetAddress: "",
-        postalCode: "",
-        city: "",
-        phoneNumber: "",
+        nameError: "",
+        streetAddressError: "",
+        postalCodeError: "",
+        cityError: "",
+        phoneNumberError: "",
       },
-      shipmentDetails: {
+      shippingDetails: {
         name: "",
         streetAddress: "",
         postalCode: "",
@@ -306,9 +307,12 @@ class App extends React.Component {
   };
 
   // Validate name:
-  validateNames = (e) => {
+  /* validateNames = (e) => {
     let value = e.target.value.trim();
-    if (/^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value)) {
+    if (
+      /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value) &&
+      !value.replace(/\s/g, "").length
+    ) {
       this.setState((prevState) => ({
         loginErrors: {
           ...prevState.loginErrors,
@@ -323,53 +327,34 @@ class App extends React.Component {
         },
       }));
     }
-  };
+  }; */
 
   // Also use on Shipping
   validatePostalCode = (e, formType) => {
     let value = e.target.value.trim();
+    if (formType === "shipping") {
+      this.setState((prevState) => ({
+        ...prevState,
+        shippingDetails: {
+          ...prevState.shippingDetails,
+          postalCode: value,
+        },
+      }));
+    }
     if (/[0-9]$/i.test(value)) {
-      if (formType === "shipping") {
-        this.setState((prevState) => ({
-          ...prevState,
-          shippingErrors: {
-            ...prevState.shippingErrors,
-            postalCode: "",
-          },
-          shipmentDetails: {
-            ...prevState.shipmentDetails,
-            postalCode: value,
-          },
-        }));
-      } else {
-        if (formType === "shipping") {
-          this.setState((prevState) => ({
-            ...prevState,
-            shippingErrors: {
-              ...prevState.shippingErrors,
-              postalCode: "",
-            },
-            shipmentDetails: {
-              ...prevState.shipmentDetails,
-              postalCode: "",
-            },
-          }));
-        } else {
-          this.setState((prevState) => ({
-            ...prevState,
-            loginErrors: {
-              ...prevState.loginErrors,
-              postalCode: "",
-            },
-          }));
-        }
-      }
+      this.setState((prevState) => ({
+        ...prevState,
+        [`${formType}Errors`]: {
+          ...prevState[`${formType}Errors`],
+          postalCodeError: "",
+        },
+      }));
     } else {
       this.setState((prevState) => ({
         ...prevState,
-        shippingErrors: {
-          ...prevState.shippingErrors,
-          postalCode: "5-digit US postal code",
+        [`${formType}Errors`]: {
+          ...prevState[`${formType}Errors`],
+          postalCodeError: "5-digit US postal code",
         },
       }));
     }
@@ -537,15 +522,15 @@ class App extends React.Component {
     let field = e.target.id;
     this.setState((prevState) => ({
       ...prevState,
-      shipmentDetails: {
-        ...prevState.shipmentDetails,
+      shippingDetails: {
+        ...prevState.shippingDetails,
         [field]: value,
       },
     }));
   };
 
   // Method to validate title, name, city:
-  validateNameCity = (e, field) => {
+  validateNameCity = (e, field, page) => {
     let value = e.target.value;
     if (
       /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -.]*$/i.test(value) &&
@@ -553,24 +538,25 @@ class App extends React.Component {
     ) {
       this.setState((prevState) => ({
         ...prevState,
-        shippingErrors: {
-          ...prevState.shippingErrors,
-          [field]: "",
+        [`${page}Errors`]: {
+          ...prevState[`${page}Errors`],
+          [`${field}Error`]: "",
         },
-        shipmentDetails: {
-          ...prevState.shipmentDetails,
+        [`${page}Details`]: {
+          ...prevState[`${page}Details`],
           [field]: value,
         },
       }));
     } else {
       this.setState((prevState) => ({
         ...prevState,
-        shippingErrors: {
-          ...prevState.shippingErrors,
-          [field]: "Enter alphabetical characters & any spaces between words",
+        [`${page}Errors`]: {
+          ...prevState[`${page}Errors`],
+          [`${field}Error`]:
+            "Enter alphabetical characters & any spaces between words",
         },
-        shipmentDetails: {
-          ...prevState.shipmentDetails,
+        [`${page}Details`]: {
+          ...prevState[`${page}Details`],
           [field]: value,
         },
       }));
@@ -580,15 +566,15 @@ class App extends React.Component {
   // Method to validate street address:
   validateStreetAddress = (e) => {
     let value = e.target.value;
-    if (/[A-Z0-9#/ '-]+/i.test(value)) {
+    if (/[A-Z0-9#/ '-]+/i.test(value) && value.replace(/\s/g, "").length) {
       this.setState((prevState) => ({
         ...prevState,
         shippingErrors: {
           ...prevState.shippingErrors,
           streetAddress: "",
         },
-        shipmentDetails: {
-          ...prevState.shipmentDetails,
+        shippingDetails: {
+          ...prevState.shippingDetails,
           streetAddress: value,
         },
       }));
@@ -599,8 +585,8 @@ class App extends React.Component {
           ...prevState.shippingErrors,
           streetAddress: "Please enter a valid address",
         },
-        shipmentDetails: {
-          ...prevState.shipmentDetails,
+        shippingDetails: {
+          ...prevState.shippingDetails,
           streetAddress: value,
         },
       }));
@@ -627,8 +613,8 @@ class App extends React.Component {
           ...prevState.shippingErrors,
           phoneNumber: "",
         },
-        shipmentDetails: {
-          ...prevState.shipmentDetails,
+        shippingDetails: {
+          ...prevState.shippingDetails,
           phoneNumber: value.replace(/[^\d]/g, ""),
           phoneNumberMask: phoneNumberMask,
         },
@@ -640,8 +626,8 @@ class App extends React.Component {
           ...prevState.shippingErrors,
           phoneNumber: "Enter 10-digit, US number",
         },
-        shipmentDetails: {
-          ...prevState.shipmentDetails,
+        shippingDetails: {
+          ...prevState.shippingDetails,
           phoneNumber: "",
           phoneNumberMask: phoneNumberMask,
         },
@@ -920,7 +906,7 @@ class App extends React.Component {
               validatePasswordSignup={this.validatePasswordSignup}
               validatePasswordConfirmation={this.validatePasswordConfirmation}
               validatePasswordLogin={this.validatePasswordLogin}
-              validateNames={this.validateNames}
+              validateNameCity={this.validateNameCity}
               validatePostalCode={this.validatePostalCode}
               clearLoginErrors={this.clearLoginErrors}
             />
@@ -957,7 +943,7 @@ class App extends React.Component {
               shippingErrors={this.state.shippingErrors}
               shippingAndHandling={this.state.shippingAndHandling}
               deliveryTime={this.state.deliveryTime}
-              shipmentDetails={this.state.shipmentDetails}
+              shippingDetails={this.state.shippingDetails}
               discountRate={this.state.discountRate}
               itemsInCart={this.state.itemsInCart}
               numberOfItemsInCart={this.state.numberOfItemsInCart}
@@ -981,7 +967,7 @@ class App extends React.Component {
               discountRate={this.state.discountRate}
               toNextPage={this.toNextPage}
               toPreviousPage={this.toPreviousPage}
-              shipmentDetails={this.state.shipmentDetails}
+              shippingDetails={this.state.shippingDetails}
               shippingAndHandling={this.state.shippingAndHandling}
               deliveryTime={this.state.deliveryTime}
               paymentDetails={this.state.paymentDetails}
@@ -995,7 +981,7 @@ class App extends React.Component {
               itemsInCart={this.state.itemsInCart}
               numberOfItemsInCart={this.state.numberOfItemsInCart}
               discountRate={this.state.discountRate}
-              shipmentDetails={this.state.shipmentDetails}
+              shippingDetails={this.state.shippingDetails}
               cardNumber={this.state.paymentDetails.cardNumber}
               cardType={this.state.paymentDetails.cardType}
               shippingAndHandling={this.state.shippingAndHandling}
