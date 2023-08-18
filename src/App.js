@@ -507,9 +507,16 @@ class App extends React.Component {
   };
 
   // Method to validate names of humans & cities:
-  // Used on Signup, Shipping
+  // Used on Signup, Shipping, Payment
   validateNamesAndCityNames = (e, field, page) => {
     let value = e.target.value;
+    this.setState((prevState) => ({
+      ...prevState,
+      [`${page}Details`]: {
+        ...prevState[`${page}Details`],
+        [field]: value,
+      },
+    }));
     if (
       /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -.]*$/i.test(value) &&
       value.replace(/\s/g, "").length
@@ -520,10 +527,6 @@ class App extends React.Component {
           ...prevState[`${page}Errors`],
           [`${field}Error`]: "",
         },
-        [`${page}Details`]: {
-          ...prevState[`${page}Details`],
-          [field]: value,
-        },
       }));
     } else {
       this.setState((prevState) => ({
@@ -532,10 +535,6 @@ class App extends React.Component {
           ...prevState[`${page}Errors`],
           [`${field}Error`]:
             "Enter alphabetical characters & any spaces between words",
-        },
-        [`${page}Details`]: {
-          ...prevState[`${page}Details`],
-          [field]: value,
         },
       }));
     }
@@ -549,7 +548,7 @@ class App extends React.Component {
         ...prevState,
         shippingErrors: {
           ...prevState.shippingErrors,
-          streetAddress: "",
+          streetAddressError: "",
         },
         shippingDetails: {
           ...prevState.shippingDetails,
@@ -561,7 +560,7 @@ class App extends React.Component {
         ...prevState,
         shippingErrors: {
           ...prevState.shippingErrors,
-          streetAddress: "Please enter a valid address",
+          streetAddressError: "Please enter a valid address",
         },
         shippingDetails: {
           ...prevState.shippingDetails,
@@ -631,39 +630,6 @@ class App extends React.Component {
   };
 
   // METHODS FOR PAYMENT
-  // Validation methods:
-  validateCardHolderName = (e) => {
-    let value = e.target.value;
-    if (
-      /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -]*$/i.test(value) &&
-      value.replace(/\s/g, "").length
-    ) {
-      this.setState((prevState) => ({
-        ...prevState,
-        paymentErrors: {
-          ...prevState.paymentErrors,
-          cardHolderError: "",
-        },
-        paymentDetails: {
-          ...prevState.paymentDetails,
-          cardHolder: value,
-        },
-      }));
-    } else {
-      this.setState((prevState) => ({
-        ...prevState,
-        paymentErrors: {
-          ...prevState.paymentErrors,
-          cardHolderError: "Enter only alphabetic characters (and any hyphens)",
-        },
-        paymentDetails: {
-          ...prevState.paymentDetails,
-          cardHolder: value,
-        },
-      }));
-    }
-  };
-
   // If input of card number field matches any RegEx patterns of accepted cards, the card type (AmEx, Visa, etc.) is returned. If not, nothing is returned.
   findDebitCardType = (cardNumber) => {
     for (const cardType in cardRegexPatterns) {
@@ -932,7 +898,7 @@ class App extends React.Component {
             <Payment
               paymentErrors={this.state.paymentErrors}
               arePagesComplete={this.state.arePagesComplete}
-              validateCardHolderName={this.validateCardHolderName}
+              validateNamesAndCityNames={this.validateNamesAndCityNames}
               findDebitCardType={this.findDebitCardType}
               formatAmex={this.formatAmex}
               checkCardNumberError={this.checkCardNumberError}

@@ -17,7 +17,7 @@ class Payment extends React.Component {
       shippingAndHandling,
       deliveryTime,
       paymentErrors,
-      validateCardHolderName,
+      validateNamesAndCityNames,
       validateCardNumber,
       getExpiryMonth,
       getExpiryYear,
@@ -111,7 +111,9 @@ class Payment extends React.Component {
                   value={paymentDetails.cardHolder}
                   id="cardholderName"
                   minLength="1"
-                  onChange={validateCardHolderName}
+                  onChange={(e) => {
+                    validateNamesAndCityNames(e, "cardHolder", "payment");
+                  }}
                   type="text"
                   required
                   inputMode="text"
