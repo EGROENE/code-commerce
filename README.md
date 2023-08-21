@@ -6,6 +6,6 @@ However, I refactored the code according to the principle that, in a React appli
 
 ** No data entered into input fields is stored in any server, unless you choose to save info to your browser's autocomplete functionality, as this project is front-end-only. **
 
-To test the login feature, use 'bruce.twarze@abc.com' as the email & 'Ilikedandelions666#' as the password. To test a discount code, use any of the following: ilikebeachballs, etlb17, devslopes, codeislyfe, jd911.
+To test the login feature, use 'bruce.twarze@abc.com' as the email & 'Ilikedandelions666#' as the password. You can otherwise go to the signup page & enter data in as it fits requirements in order to advance to the next page. To test a discount code functionality on the cart page, use any of the following: ilikebeachballs, etlb17, devslopes, codeislyfe, jd911.
 
 If you take the time to check out the project in action or read through the code, I would be happy to hear any feedback :)
