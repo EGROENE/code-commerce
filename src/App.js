@@ -519,7 +519,10 @@ class App extends React.Component {
     }));
     if (
       /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -.]*$/i.test(value) &&
-      value.replace(/\s/g, "").length
+      value.replace(/\s/g, "").length &&
+      value.replace(/\./g, "").length &&
+      value.replace(/'/g, "").length &&
+      value.replace(/-/g, "").length
     ) {
       this.setState((prevState) => ({
         ...prevState,
@@ -550,7 +553,12 @@ class App extends React.Component {
         streetAddress: value,
       },
     }));
-    if (/[A-Z0-9#/ '-]+/i.test(value) && value.replace(/\s/g, "").length) {
+    if (
+      /[A-Z0-9#/ '-]+/i.test(value) &&
+      value.replace(/\s/g, "").length &&
+      value.replace(/'/g, "").length &&
+      value.replace(/-/g, "").length
+    ) {
       this.setState((prevState) => ({
         ...prevState,
         shippingErrors: {
