@@ -245,7 +245,7 @@ class App extends React.Component {
     let value = e.target.value.trim();
     if (
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/.test(
-        value.trim()
+        value
       )
     ) {
       this.setState((prevState) => ({
