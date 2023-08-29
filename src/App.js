@@ -6,7 +6,7 @@ import "./App.css";
 import Login from "./Components/Login/Login";
 import loginStyle from "./Components/Login/Login.module.css";
 import Confirmation from "./Components/Confirmation/Confirmation";
-import { registeredAccounts } from "./constants";
+import { registeredAccounts, allRegisteredPasswords } from "./constants";
 
 // Imports for Cart:
 import Cart from "./Components/Cart/Cart";
@@ -173,6 +173,10 @@ class App extends React.Component {
     return registeredAccounts.find((account) => account.email === email);
   };
 
+  doesPasswordExist = (password) => {
+    return allRegisteredPasswords.includes(password);
+  };
+
   // Validate email address:
   validateEmailSignup = (e) => {
     let value = e.target.value.trim();
@@ -226,6 +230,7 @@ class App extends React.Component {
     } else {
       // Update email error state value to an error message. Will need to access previous state values.
       this.setState((prevState) => ({
+        accountEmailAddress: value,
         loginErrors: {
           accountEmailAddress: "",
           ...prevState.loginErrors,
@@ -282,10 +287,12 @@ class App extends React.Component {
     }
   };
 
+  // Use .includes() on all PWs in registeredAccounts, not .find(), as multiple accounts could have same PW
   validatePasswordLogin = (e) => {
     let value = e.target.value.trim();
     let userAccount = this.getRegisteredAccount(this.state.accountEmailAddress);
-    if (userAccount && userAccount.password === value) {
+    let passwordExists = this.doesPasswordExist(value);
+    if (userAccount?.password === value || passwordExists) {
       this.setState((prevState) => ({
         ...prevState,
         password: value,
@@ -294,13 +301,23 @@ class App extends React.Component {
           passwordError: "",
         },
       }));
+    } else if (!passwordExists && !userAccount) {
+      this.setState((prevState) => ({
+        ...prevState,
+        password: value,
+        loginErrors: {
+          ...prevState.loginErrors,
+          passwordError: "Password doesn't match any registered account",
+        },
+      }));
     } else {
       this.setState((prevState) => ({
         ...prevState,
+        password: value,
         loginErrors: {
           ...prevState.loginErrors,
           passwordError:
-            "Password doesn't match account with this e-mail address",
+            "Password doesn't match account with this email address",
         },
       }));
     }
