@@ -218,7 +218,8 @@ class App extends React.Component {
   validateEmailLogin = (e) => {
     let value = e.target.value.trim();
     let registeredAccount = this.getRegisteredAccount(value);
-    if (registeredAccount) {
+    // If account exists w/ input email, but no PW has been entered yet
+    if (registeredAccount && !this.state.password.length) {
       this.setState((prevState) => ({
         accountEmailAddress: value,
         loginErrors: {
@@ -227,14 +228,36 @@ class App extends React.Component {
           loginEmailError: "",
         },
       }));
-    } else {
-      // Update email error state value to an error message. Will need to access previous state values.
+      // If input PW matches PW of registered account
+    } else if (registeredAccount?.password === this.state.password) {
+      this.setState((prevState) => ({
+        accountEmailAddress: value,
+        loginErrors: {
+          ...prevState.loginErrors,
+          signupEmailError: "",
+          loginEmailError: "",
+          passwordError: "",
+        },
+      }));
+      // If no account was found w/ input email
+    } else if (!registeredAccount) {
       this.setState((prevState) => ({
         accountEmailAddress: value,
         loginErrors: {
           accountEmailAddress: "",
           ...prevState.loginErrors,
           loginEmailError: "E-mail address not recognized",
+        },
+      }));
+      // If input email & PW are not associated
+    } else {
+      this.setState((prevState) => ({
+        accountEmailAddress: value,
+        loginErrors: {
+          accountEmailAddress: "",
+          ...prevState.loginErrors,
+          loginEmailError:
+            "E-mail address is not associated with password below",
         },
       }));
     }
@@ -287,12 +310,12 @@ class App extends React.Component {
     }
   };
 
-  // Use .includes() on all PWs in registeredAccounts, not .find(), as multiple accounts could have same PW
   validatePasswordLogin = (e) => {
     let value = e.target.value.trim();
     let userAccount = this.getRegisteredAccount(this.state.accountEmailAddress);
     let passwordExists = this.doesPasswordExist(value);
-    if (userAccount?.password === value || passwordExists) {
+    // User enters PW that is registered w/ at least one account, but there is no email input
+    if (passwordExists && !this.state.accountEmailAddress.length) {
       this.setState((prevState) => ({
         ...prevState,
         password: value,
@@ -301,23 +324,36 @@ class App extends React.Component {
           passwordError: "",
         },
       }));
-    } else if (!passwordExists && !userAccount) {
+      // If input PW matches PW associated w/ userAccount
+    } else if (userAccount?.password === value) {
       this.setState((prevState) => ({
         ...prevState,
         password: value,
         loginErrors: {
           ...prevState.loginErrors,
-          passwordError: "Password doesn't match any registered account",
+          loginEmailError: "",
+          passwordError: "",
         },
       }));
+      // If PW isn't registered
+      // Error messages made vague for security purposes
+    } else if (!passwordExists) {
+      this.setState((prevState) => ({
+        ...prevState,
+        password: value,
+        loginErrors: {
+          ...prevState.loginErrors,
+          passwordError: "Password not recognized",
+        },
+      }));
+      // If PW is registered, but doesn't match input email address
     } else {
       this.setState((prevState) => ({
         ...prevState,
         password: value,
         loginErrors: {
           ...prevState.loginErrors,
-          passwordError:
-            "Password doesn't match account with this email address",
+          passwordError: "Password not recognized",
         },
       }));
     }
