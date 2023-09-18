@@ -9,10 +9,6 @@ export const registeredAccounts = [
   { email: "bruce.twarze@abc.com", password: "Ilikedandelions666#" },
 ];
 
-export const allRegisteredPasswords = registeredAccounts.map(
-  (account) => account.password
-);
-
 export const ITEMS_IN_CART = [
   {
     itemName: "The Ultimate JS RegEx Pack",
