@@ -234,7 +234,7 @@ class App extends React.Component {
   };
 
   // Method that checks if all item.quantities are zero (no items in cart)
-  isCartEmpty = () => {
+  cartIsEmpty = () => {
     let allItemQuantities = this.state.itemsInCart.map((item) => item.quantity);
     return allItemQuantities.some((quantity) => quantity > 0) ? false : true;
   };
@@ -628,7 +628,7 @@ class App extends React.Component {
               toNextPage={this.toNextPage}
               updateQuantities={this.updateQuantities}
               deleteItem={this.deleteItem}
-              isCartEmpty={this.isCartEmpty}
+              cartIsEmpty={this.cartIsEmpty}
               getPromoCode={this.getPromoCode}
               checkPromoCode={this.checkPromoCode}
               removeDiscount={this.removeDiscount}

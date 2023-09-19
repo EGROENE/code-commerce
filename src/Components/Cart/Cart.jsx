@@ -10,7 +10,7 @@ class Cart extends React.Component {
       toNextPage,
       updateQuantities,
       deleteItem,
-      isCartEmpty,
+      cartIsEmpty,
       getPromoCode,
       checkPromoCode,
       removeDiscount,
@@ -43,7 +43,7 @@ class Cart extends React.Component {
                   : style.itemsInCartCouple
               }
             >
-              {isCartEmpty() ? (
+              {cartIsEmpty() ? (
                 <p id={style.cartIsEmpty}>Cart is empty</p>
               ) : (
                 itemsInCart.map(
@@ -118,7 +118,7 @@ class Cart extends React.Component {
                 <p>Do you have a promo code?</p>
                 <input
                   placeholder="Enter promo code"
-                  disabled={discountRate > 0 || isCartEmpty()}
+                  disabled={discountRate > 0 || cartIsEmpty()}
                   onChange={(e) => {
                     getPromoCode(e);
                   }}
@@ -173,7 +173,7 @@ class Cart extends React.Component {
               </p>
               <button
                 title="To Shipping"
-                disabled={isCartEmpty()}
+                disabled={cartIsEmpty()}
                 onClick={(e) => {
                   toNextPage(e, "Cart");
                 }}
