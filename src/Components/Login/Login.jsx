@@ -1,110 +1,403 @@
 import React from "react";
 import style from "./Login.module.css";
 import { alertFormErrors } from "../../methods";
+import loginStyle from "./Login.module.css";
+import { registeredAccounts } from "../../constants";
 
 class Login extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      password: "",
+      isLoginMethodSelected: true,
+      isRequired: false,
+      passwordPlaceholder: "Enter your password",
+      passwordFieldInputType: "password",
+      isOpenEye: true,
+      eyeLogo: (
+        <i
+          id="openEye"
+          className={`far fa-eye ${loginStyle.eye}`}
+          title="Show Password"
+          onClick={this.showHidePassword}
+        ></i>
+      ),
+      loginErrors: {
+        signupEmailError: "",
+        loginEmailError: "",
+        passwordError: "",
+        confirmPasswordError: "",
+        firstNameError: "",
+        lastNameError: "",
+        postalCodeError: "",
+      },
+    };
+  }
+
+  showHidePassword = () => {
+    this.state.isOpenEye
+      ? this.setState({
+          isOpenEye: false,
+          eyeLogo: (
+            <i
+              id="slashedEye"
+              className={`far fa-eye-slash ${loginStyle.eye}`}
+              title="Hide Password"
+              onClick={this.showHidePassword}
+            ></i>
+          ),
+          passwordFieldInputType: "text",
+        })
+      : this.setState({
+          isOpenEye: true,
+          eyeLogo: (
+            <i
+              id="openEye"
+              className={`far fa-eye ${loginStyle.eye}`}
+              title="Show Password"
+              onClick={this.showHidePassword}
+            ></i>
+          ),
+          passwordFieldInputType: "password",
+        });
+  };
+
+  // Define in Login
+  clearLoginErrors = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      loginErrors: {
+        signupEmailError: "",
+        loginEmailError: "",
+        passwordError: "",
+        confirmPasswordError: "",
+        nameError: "",
+        postalCodeError: "",
+      },
+    }));
+  };
+
+  // Define to Login
+  userSelectsLogin = () => {
+    this.setState({
+      isLoginMethodSelected: true,
+      passwordPlaceholder: "Enter your password",
+      isRequired: false,
+      signupEmailFieldValue: "",
+      loginEmailFieldValue: undefined,
+      loginPasswordValue: undefined,
+    });
+  };
+
+  // Define to Login
+  userSelectsSignUp = () => {
+    this.setState({
+      isLoginMethodSelected: false,
+      passwordPlaceholder: "Create a password",
+      isRequired: true,
+      signupEmailFieldValue: undefined,
+      loginEmailFieldValue: "",
+      loginPasswordValue: "",
+    });
+  };
+
+  // Define in Login
+  selectLoginMethod = (e) => {
+    this.clearLoginErrors();
+    if (!this.state.isOpenEye) {
+      this.showHidePassword();
+    }
+    e.target.id === "logIn"
+      ? this.userSelectsLogin()
+      : this.userSelectsSignUp();
+  };
+
+  // Call the method below to return the account associated w/ the input email address
+  getRegisteredAccount = (email) => {
+    return registeredAccounts.find((account) => account.email === email);
+  };
+
+  passwordExists = (password) => {
+    return registeredAccounts
+      .map((account) => account.password)
+      .includes(password);
+  };
+
+  // Validate password on signup:
+  validatePasswordOnSignup = (e) => {
+    let value = e.target.value.trim();
+    if (
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/.test(
+        value
+      )
+    ) {
+      this.setState((prevState) => ({
+        loginErrors: {
+          ...prevState.loginErrors,
+          passwordError: "",
+        },
+        password: value,
+      }));
+    } else {
+      this.setState((prevState) => ({
+        loginErrors: {
+          ...prevState.loginErrors,
+          passwordError:
+            "Password must contain >= 1 uppercase & 1 lowercase English letter, >= 1 digit, >= 1 special character (#, ?, !, @, $, %, ^, &, *, -), & be 8-20 characters long",
+        },
+        password: value,
+      }));
+    }
+  };
+
+  // Validate passwords:
+  validatePasswordConfirmation = (e) => {
+    let value = e.target.value.trim();
+    if (this.state.password !== value) {
+      this.setState((prevState) => ({
+        loginErrors: {
+          ...prevState.loginErrors,
+          confirmPasswordError: "Passwords do not match",
+        },
+      }));
+    } else {
+      this.setState((prevState) => ({
+        loginErrors: {
+          ...prevState.loginErrors,
+          confirmPasswordError: "",
+        },
+      }));
+    }
+  };
+
+  validatePasswordOnLogin = (e) => {
+    let value = e.target.value.trim();
+    let userAccount = this.getRegisteredAccount(this.state.accountEmailAddress);
+    let passwordExists = this.passwordExists(value);
+    // User enters PW that is registered w/ at least one account, but there is no email input
+    if (passwordExists && !this.state.accountEmailAddress.length) {
+      this.setState((prevState) => ({
+        ...prevState,
+        password: value,
+        loginErrors: {
+          ...prevState.loginErrors,
+          passwordError: "",
+        },
+      }));
+      // If input PW matches PW associated w/ userAccount
+    } else if (userAccount?.password === value) {
+      this.setState((prevState) => ({
+        ...prevState,
+        password: value,
+        loginErrors: {
+          ...prevState.loginErrors,
+          loginEmailError: "",
+          passwordError: "",
+        },
+      }));
+      // If PW isn't registered
+      // Error message made vague for security purposes
+    } else if (!passwordExists) {
+      this.setState((prevState) => ({
+        ...prevState,
+        password: value,
+        loginErrors: {
+          ...prevState.loginErrors,
+          passwordError: "Password not recognized",
+        },
+      }));
+      // If PW is registered, but doesn't match input email address
+      // Error message made vague for security purposes
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        password: value,
+        loginErrors: {
+          ...prevState.loginErrors,
+          passwordError: "Password not recognized",
+        },
+      }));
+    }
+  };
+
   render() {
     // Destructure props:
     const {
       toNextPage,
-      loginErrors,
-      selectLoginMethod,
-      validateEmailSignup,
-      validateEmailLogin,
-      validatePasswordSignup,
-      validatePasswordConfirmation,
-      validatePasswordLogin,
+      setAccountEmailAddress,
       validateNamesAndCityNames,
       validatePostalCode,
-      isLoginMethodSelected,
-      isRequired,
-      passwordPlaceholder,
-      passwordFieldInputType,
-      eyeLogo,
-      signupEmailFieldValue,
-      loginEmailFieldValue,
-      loginPasswordValue,
     } = this.props;
 
     const loginMethodHeaders = [
       {
         id: "logIn",
-        className: isLoginMethodSelected ? style.selected : style.unselected,
+        className: this.state.isLoginMethodSelected
+          ? style.selected
+          : style.unselected,
         textContent: "Log In",
       },
       {
         id: "signUp",
-        className: !isLoginMethodSelected ? style.selected : style.unselected,
+        className: !this.state.isLoginMethodSelected
+          ? style.selected
+          : style.unselected,
         textContent: "Sign Up",
       },
     ];
 
+    // Validate email address:
+    const validateEmailSignup = (e) => {
+      let value = e.target.value.trim();
+      let userAccount = this.getRegisteredAccount(value);
+      if (userAccount) {
+        setAccountEmailAddress(value);
+        this.setState((prevState) => ({
+          loginErrors: {
+            ...prevState.loginErrors,
+            signupEmailError: "E-mail address already in use",
+          },
+        }));
+      } else if (
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+          value.trim()
+        )
+      ) {
+        setAccountEmailAddress(value);
+        // Update email error state value to "". Will need to access previous state values.
+        this.setState((prevState) => ({
+          loginErrors: {
+            ...prevState.loginErrors,
+            signupEmailError: "",
+            loginEmailError: "",
+          },
+        }));
+      } else {
+        setAccountEmailAddress("");
+        // Update email error state value to an error message. Will need to access previous state values.
+        this.setState((prevState) => ({
+          loginErrors: {
+            ...prevState.loginErrors,
+            signupEmailError: "Please enter a valid email address",
+          },
+        }));
+      }
+    };
+
+    const validateEmailLogin = (e) => {
+      let value = e.target.value.trim();
+      let registeredAccount = this.getRegisteredAccount(value);
+      // If account exists w/ input email, but no PW has been entered yet
+      if (registeredAccount && !this.state.password.length) {
+        this.setState((prevState) => ({
+          accountEmailAddress: value,
+          loginErrors: {
+            ...prevState.loginErrors,
+            signupEmailError: "",
+            loginEmailError: "",
+          },
+        }));
+        // If input PW matches PW of registered account
+      } else if (registeredAccount?.password === this.state.password) {
+        this.setState((prevState) => ({
+          accountEmailAddress: value,
+          loginErrors: {
+            ...prevState.loginErrors,
+            signupEmailError: "",
+            loginEmailError: "",
+            passwordError: "",
+          },
+        }));
+        // If no account was found w/ input email
+      } else if (!registeredAccount) {
+        this.setState((prevState) => ({
+          accountEmailAddress: value,
+          loginErrors: {
+            accountEmailAddress: "",
+            ...prevState.loginErrors,
+            loginEmailError: "E-mail address not recognized",
+          },
+        }));
+        // If input email & PW are not associated
+      } else {
+        this.setState((prevState) => ({
+          accountEmailAddress: value,
+          loginErrors: {
+            accountEmailAddress: "",
+            ...prevState.loginErrors,
+            loginEmailError:
+              "E-mail address is not associated with password below",
+          },
+        }));
+      }
+    };
+
     const formInputs = [
       {
         id: "signupEmail",
-        isHidden: isLoginMethodSelected,
+        isHidden: this.state.isLoginMethodSelected,
         labelText: "Email Address:",
         placeholder: "E-mail address",
         inputType: "signupEmail",
         onChange: validateEmailSignup,
         field: "signupEmail",
-        required: !isLoginMethodSelected,
+        required: !this.state.isLoginMethodSelected,
         inputMode: "email",
         autoComplete: "email",
-        value: signupEmailFieldValue,
+        value: this.state.signupEmailFieldValue,
       },
       {
         id: "loginEmail",
-        isHidden: !isLoginMethodSelected,
+        isHidden: !this.state.isLoginMethodSelected,
         labelText: "Email Address:",
         placeholder: "E-mail address",
         inputType: "email",
         onChange: validateEmailLogin,
         field: "loginEmail",
-        required: isLoginMethodSelected,
+        required: this.state.isLoginMethodSelected,
         inputMode: "email",
         autoComplete: "email",
-        value: loginEmailFieldValue,
+        value: this.state.loginEmailFieldValue,
       },
       {
         id: "signupPassword",
-        isHidden: isLoginMethodSelected,
+        isHidden: this.state.isLoginMethodSelected,
         labelText: "Password:",
-        placeholder: passwordPlaceholder,
-        inputType: passwordFieldInputType,
-        onChange: validatePasswordSignup,
+        placeholder: this.state.passwordPlaceholder,
+        inputType: this.state.passwordFieldInputType,
+        onChange: this.validatePasswordOnSignup,
         field: "password",
-        required: !isLoginMethodSelected,
+        required: !this.state.isLoginMethodSelected,
         inputMode: "password",
       },
       {
         id: "signupConfirmPassword",
-        isHidden: isLoginMethodSelected,
+        isHidden: this.state.isLoginMethodSelected,
         labelText: "Confirm Password:",
         placeholder: "Confirm Password",
-        inputType: passwordFieldInputType,
-        onChange: validatePasswordConfirmation,
+        inputType: this.state.passwordFieldInputType,
+        onChange: this.validatePasswordConfirmation,
         field: "confirmPassword",
-        required: isRequired,
+        required: this.state.isRequired,
         inputMode: "password",
         autoComplete: "off",
       },
       {
         id: "loginPassword",
-        isHidden: !isLoginMethodSelected,
+        isHidden: !this.state.isLoginMethodSelected,
         labelText: "Password:",
-        placeholder: passwordPlaceholder,
-        inputType: passwordFieldInputType,
-        onChange: validatePasswordLogin,
+        placeholder: this.state.passwordPlaceholder,
+        inputType: this.state.passwordFieldInputType,
+        onChange: this.validatePasswordOnLogin,
         field: "password",
-        required: isLoginMethodSelected,
+        required: this.state.isLoginMethodSelected,
         inputMode: "password",
         autoComplete: "current-password",
-        value: loginPasswordValue,
+        value: this.state.loginPasswordValue,
       },
       {
         id: "loginFirstName",
-        isHidden: isLoginMethodSelected,
+        isHidden: this.state.isLoginMethodSelected,
         labelText: "First Name:",
         placeholder: "Enter first name",
         inputType: "text",
@@ -112,13 +405,13 @@ class Login extends React.Component {
           validateNamesAndCityNames(e, "firstName", "login");
         },
         field: "firstName",
-        required: isRequired,
+        required: this.state.isRequired,
         inputMode: "text",
         autoComplete: "given-name",
       },
       {
         id: "loginLastName",
-        isHidden: isLoginMethodSelected,
+        isHidden: this.state.isLoginMethodSelected,
         labelText: "Last Name:",
         placeholder: "Enter last name",
         inputType: "text",
@@ -126,13 +419,13 @@ class Login extends React.Component {
           validateNamesAndCityNames(e, "lastName", "login");
         },
         field: "lastName",
-        required: isRequired,
+        required: this.state.isRequired,
         inputMode: "text",
         autoComplete: "family-name",
       },
       {
         id: "loginPostalCode",
-        isHidden: isLoginMethodSelected,
+        isHidden: this.state.isLoginMethodSelected,
         labelText: "Postal Code:",
         placeholder: "5-digit US ZIP",
         inputType: "text",
@@ -140,13 +433,13 @@ class Login extends React.Component {
           validatePostalCode(e, "login");
         },
         field: "postalCode",
-        required: isRequired,
+        required: this.state.isRequired,
         inputMode: "numeric",
         autoComplete: "postal-code",
       },
     ];
 
-    let areNoErrors = Object.values(loginErrors).every(
+    let areNoErrors = Object.values(this.state.loginErrors).every(
       (element) => element === ""
     );
 
@@ -160,7 +453,7 @@ class Login extends React.Component {
                 key={option.id}
                 id={option.id}
                 className={option.className}
-                onClick={selectLoginMethod}
+                onClick={this.selectLoginMethod}
               >
                 {option.textContent}
               </header>
@@ -175,14 +468,14 @@ class Login extends React.Component {
               <label key={input.id} hidden={input.isHidden}>
                 <header key={input.labelText + "1"}>{input.labelText}</header>
                 <div className="inputFieldWithImage">
-                  {input.labelText.includes("Password") && eyeLogo}
+                  {input.labelText.includes("Password") && this.state.eyeLogo}
                   <input
                     id={input.id}
                     key={input.labelText + "2"}
                     placeholder={input.placeholder}
                     type={
                       input.labelText.includes("Password")
-                        ? passwordFieldInputType
+                        ? this.state.passwordFieldInputType
                         : input.inputType
                     }
                     onChange={input.onChange}
@@ -198,14 +491,15 @@ class Login extends React.Component {
                     value={input.value}
                   />
                 </div>
-                {input.labelText === "Password:" && !isLoginMethodSelected ? (
+                {input.labelText === "Password:" &&
+                !this.state.isLoginMethodSelected ? (
                   <p>
                     Must contain at least 1 uppercase & 1 lowercase English
                     letter, at least 1 digit, at least 1 special character (#,
                     ?, !, @, $, %, ^, &, *, -), & be 8-20 characters long
                   </p>
                 ) : (
-                  <p>{loginErrors[`${input.field}Error`]}</p>
+                  <p>{this.state.loginErrors[`${input.field}Error`]}</p>
                 )}
               </label>
             ))}
@@ -214,7 +508,7 @@ class Login extends React.Component {
                 type={!areNoErrors ? "button" : "submit"}
                 onClick={!areNoErrors ? alertFormErrors : undefined}
               >
-                {isLoginMethodSelected ? "Log In" : "Create Account"}
+                {this.state.isLoginMethodSelected ? "Log In" : "Create Account"}
               </button>
               <p>or</p>
               <button id={style.facebookLogin}>
