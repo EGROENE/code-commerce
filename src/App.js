@@ -29,15 +29,6 @@ class App extends React.Component {
       itemsInCart: ITEMS_IN_CART,
       numberOfItemsInCart: ITEMS_IN_CART.length,
       discountRate: 0,
-
-      // State values for Shipping:
-      shippingErrors: {
-        nameError: "",
-        streetAddressError: "",
-        postalCodeError: "",
-        cityError: "",
-        phoneNumberError: "",
-      },
       shippingDetails: {
         name: "",
         streetAddress: "",
@@ -49,6 +40,8 @@ class App extends React.Component {
       },
       shippingAndHandling: 50,
       deliveryTime: "3 seconds",
+
+      // State values for Shipping:
 
       // State values for Payment
       paymentErrors: {
@@ -103,6 +96,7 @@ class App extends React.Component {
     }));
   };
 
+  // Pass to Login, Shipping
   validatePostalCode = (e, formType) => {
     let value = e.target.value.trim();
     if (formType === "shipping") {
@@ -134,7 +128,7 @@ class App extends React.Component {
   };
 
   // Method to validate names of humans & cities:
-  // Used on Signup, Shipping, Payment
+  // Used on Signup (part of Login), Shipping, Payment
   validateNamesAndCityNames = (e, field, page) => {
     let value = e.target.value;
     this.setState((prevState) => ({
@@ -225,114 +219,36 @@ class App extends React.Component {
       discountRate: value,
     }));
   };
+
+  // Pass to Shipping
+  setShippingDetails = (key, value) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      shippingDetails: {
+        ...prevState.shippingDetails,
+        [key]: value,
+      },
+    }));
+  };
+
+  // Pass to Shipping
+  setShippingAndHandling = (value) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      shippingAndHandling: value,
+    }));
+  };
+
+  // Pass to Shipping
+  setDeliveryTime = (value) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      deliveryTime: value,
+    }));
+  };
   // END SETTERS
 
   // METHODS FOR SHIPPING
-  // Method to set state values of dropdown fields (initially, at least, 'title' & 'state/territory'):
-  setStateValuesOfDropdownFields = (e) => {
-    let value = e.target.value;
-    let field = e.target.id;
-    this.setState((prevState) => ({
-      ...prevState,
-      shippingDetails: {
-        ...prevState.shippingDetails,
-        [field]: value,
-      },
-    }));
-  };
-
-  // Method to validate street address:
-  validateStreetAddress = (e) => {
-    let value = e.target.value;
-    this.setState((prevState) => ({
-      ...prevState,
-      shippingDetails: {
-        ...prevState.shippingDetails,
-        streetAddress: value,
-      },
-    }));
-    if (
-      /[A-Z0-9#/ '-]+/i.test(value) &&
-      value.replace(/\s/g, "").length &&
-      value.replace(/'/g, "").length &&
-      value.replace(/-/g, "").length
-    ) {
-      this.setState((prevState) => ({
-        ...prevState,
-        shippingErrors: {
-          ...prevState.shippingErrors,
-          streetAddressError: "",
-        },
-      }));
-    } else {
-      this.setState((prevState) => ({
-        ...prevState,
-        shippingErrors: {
-          ...prevState.shippingErrors,
-          streetAddressError: "Please enter a valid address",
-        },
-      }));
-    }
-  };
-
-  formatPhoneNumber(phoneNumberString) {
-    let cleaned = ("" + phoneNumberString).replace(/\D/g, "");
-    let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-    if (match) {
-      return "(" + match[1] + ") " + match[2] + "-" + match[3];
-    }
-    return undefined;
-  }
-
-  // Method to validate phone number:
-  validatePhoneNumber = (e) => {
-    let value = e.target.value.trim();
-    let phoneNumberMask = this.formatPhoneNumber(value);
-    if (/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/i.test(value)) {
-      this.setState((prevState) => ({
-        ...prevState,
-        shippingErrors: {
-          ...prevState.shippingErrors,
-          phoneNumber: "",
-        },
-        shippingDetails: {
-          ...prevState.shippingDetails,
-          phoneNumber: value.replace(/[^\d]/g, ""),
-          phoneNumberMask: phoneNumberMask,
-        },
-      }));
-    } else {
-      this.setState((prevState) => ({
-        ...prevState,
-        shippingErrors: {
-          ...prevState.shippingErrors,
-          phoneNumber: "Enter 10-digit, US number",
-        },
-        shippingDetails: {
-          ...prevState.shippingDetails,
-          phoneNumber: "",
-          phoneNumberMask: phoneNumberMask,
-        },
-      }));
-    }
-  };
-
-  // Method to update shipping & handling state value:
-  handleDeliveryOptionSelection = (e) => {
-    if (e.target.id === "expeditedDelivery") {
-      this.setState((prevState) => ({
-        ...prevState,
-        shippingAndHandling: 50,
-        deliveryTime: "3 seconds",
-      }));
-    } else {
-      this.setState((prevState) => ({
-        ...prevState,
-        shippingAndHandling: 10,
-        deliveryTime: "3 days",
-      }));
-    }
-  };
 
   // METHODS FOR PAYMENT
   // If input of card number field matches any RegEx patterns of accepted cards, the card type (AmEx, Visa, etc.) is returned. If not, nothing is returned.
@@ -544,7 +460,7 @@ class App extends React.Component {
               validatePostalCode={this.validatePostalCode}
             />
           )}
-          {!isLoginComplete && !isCartComplete && (
+          {!isLoginComplete && isCartComplete && (
             <Cart
               toNextPage={this.toNextPage}
               setItemsAndNumberOfItemsInCart={
@@ -556,30 +472,24 @@ class App extends React.Component {
               setDiscountRate={this.setDiscountRate}
             />
           )}
-          {isCartComplete && !isShippingComplete && (
+          {!isCartComplete && !isShippingComplete && (
             <Shipping
               toNextPage={this.toNextPage}
               toPreviousPage={this.toPreviousPage}
-              validatePostalCode={this.validatePostalCode}
-              setStateValuesOfDropdownFields={
-                this.setStateValuesOfDropdownFields
-              }
-              validateNamesAndCityNames={this.validateNamesAndCityNames}
-              validateStreetAddress={this.validateStreetAddress}
-              formatPhoneNumber={this.formatPhoneNumber}
-              validatePhoneNumber={this.validatePhoneNumber}
-              handleDeliveryOptionSelection={this.handleDeliveryOptionSelection}
-              shippingErrors={this.state.shippingErrors}
-              shippingAndHandling={this.state.shippingAndHandling}
-              deliveryTime={this.state.deliveryTime}
-              shippingDetails={this.state.shippingDetails}
-              discountRate={this.state.discountRate}
               itemsInCart={this.state.itemsInCart}
               numberOfItemsInCart={this.state.numberOfItemsInCart}
+              discountRate={this.state.discountRate}
+              shippingDetails={this.state.shippingDetails}
+              setShippingDetails={this.setShippingDetails}
+              validatePostalCode={this.validatePostalCode}
+              validateNamesAndCityNames={this.validateNamesAndCityNames}
+              shippingAndHandling={this.state.shippingAndHandling}
+              setShippingAndHandling={this.setShippingAndHandling}
+              setDeliveryTime={this.setDeliveryTime}
               arePagesComplete={this.state.arePagesComplete}
             />
           )}
-          {isShippingComplete && !isPaymentComplete && (
+          {!isShippingComplete && isPaymentComplete && (
             <Payment
               paymentErrors={this.state.paymentErrors}
               arePagesComplete={this.state.arePagesComplete}

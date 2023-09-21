@@ -4,6 +4,28 @@ import { alertFormErrors, roundToHundredth } from "../../methods";
 import ProgressBar from "../ProgressBar/ProgressBar";
 
 class Shipping extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      shippingErrors: {
+        nameError: "",
+        streetAddressError: "",
+        postalCodeError: "",
+        cityError: "",
+        phoneNumberError: "",
+      },
+    };
+  }
+
+  formatPhoneNumber(phoneNumberString) {
+    let cleaned = ("" + phoneNumberString).replace(/\D/g, "");
+    let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      return "(" + match[1] + ") " + match[2] + "-" + match[3];
+    }
+    return undefined;
+  }
+
   render() {
     // Destructure props:
     const {
@@ -12,17 +34,80 @@ class Shipping extends React.Component {
       itemsInCart,
       numberOfItemsInCart,
       discountRate,
+      shippingDetails,
+      setShippingDetails,
       validatePostalCode,
       validateNamesAndCityNames,
-      setStateValuesOfDropdownFields,
-      validateStreetAddress,
-      validatePhoneNumber,
-      handleDeliveryOptionSelection,
-      shippingErrors,
       shippingAndHandling,
-      shippingDetails,
+      setShippingAndHandling,
+      setDeliveryTime,
       arePagesComplete,
     } = this.props;
+
+    const validateStreetAddress = (e) => {
+      let value = e.target.value;
+      setShippingDetails("streetAddress", value);
+      if (
+        /[A-Z0-9#/ '-]+/i.test(value) &&
+        value.replace(/\s/g, "").length &&
+        value.replace(/'/g, "").length &&
+        value.replace(/-/g, "").length
+      ) {
+        this.setState((prevState) => ({
+          ...prevState,
+          shippingErrors: {
+            ...prevState.shippingErrors,
+            streetAddressError: "",
+          },
+        }));
+      } else {
+        this.setState((prevState) => ({
+          ...prevState,
+          shippingErrors: {
+            ...prevState.shippingErrors,
+            streetAddressError: "Please enter a valid address",
+          },
+        }));
+      }
+    };
+
+    const validatePhoneNumber = (e) => {
+      let value = e.target.value.trim();
+      let phoneNumberMask = this.formatPhoneNumber(value);
+
+      setShippingDetails("phoneNumber", value);
+      setShippingDetails("phoneNumberMask", phoneNumberMask);
+
+      if (
+        /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/i.test(value)
+      ) {
+        this.setState((prevState) => ({
+          ...prevState,
+          shippingErrors: {
+            ...prevState.shippingErrors,
+            phoneNumber: "",
+          },
+        }));
+      } else {
+        this.setState((prevState) => ({
+          ...prevState,
+          shippingErrors: {
+            ...prevState.shippingErrors,
+            phoneNumber: "Enter 10-digit, US number",
+          },
+        }));
+      }
+    };
+
+    const handleDeliveryOptionSelection = (e) => {
+      if (e.target.id === "expeditedDelivery") {
+        setShippingAndHandling(50);
+        setDeliveryTime("3 seconds");
+      } else {
+        setShippingAndHandling(10);
+        setDeliveryTime("3 days");
+      }
+    };
 
     // Calculate totals based on current state values of unit prices & quantity:
     let cartSubtotal = itemsInCart.map(
@@ -54,7 +139,7 @@ class Shipping extends React.Component {
       { label: "Cart Total:", value: cartTotal },
     ];
 
-    let areNoErrors = Object.values(shippingErrors).every(
+    let areNoErrors = Object.values(this.state.shippingErrors).every(
       (element) => element === ""
     );
 
@@ -77,7 +162,9 @@ class Shipping extends React.Component {
                     <header>Title: </header>
                     <select
                       id="title"
-                      onChange={setStateValuesOfDropdownFields}
+                      onChange={(e) =>
+                        setShippingDetails("title", e.target.value)
+                      }
                     >
                       <option disabled selected>
                         -- select --
@@ -137,9 +224,9 @@ class Shipping extends React.Component {
                         autoComplete="on"
                       />
                     </div>
-                    {shippingErrors.nameError !== "" && (
+                    {this.state.shippingErrors.nameError !== "" && (
                       <p id={style.nameErrorMessage}>
-                        {shippingErrors.nameError}
+                        {this.state.shippingErrors.nameError}
                       </p>
                     )}
                   </label>
@@ -157,8 +244,8 @@ class Shipping extends React.Component {
                     minLength="1"
                     autoComplete="street-address"
                   />
-                  {shippingErrors.streetAddressError !== "" && (
-                    <p>{shippingErrors.streetAddressError}</p>
+                  {this.state.shippingErrors.streetAddressError !== "" && (
+                    <p>{this.state.shippingErrors.streetAddressError}</p>
                   )}
                 </label>
                 <div id={style.moreAddressDetails}>
@@ -178,8 +265,8 @@ class Shipping extends React.Component {
                       maxLength="5"
                       autoComplete="postal-code"
                     />
-                    {shippingErrors.postalCodeError !== "" && (
-                      <p>{shippingErrors.postalCodeError}</p>
+                    {this.state.shippingErrors.postalCodeError !== "" && (
+                      <p>{this.state.shippingErrors.postalCodeError}</p>
                     )}
                   </label>
                   <label>
@@ -197,15 +284,17 @@ class Shipping extends React.Component {
                       inputMode="text"
                       autoComplete="on"
                     />
-                    {shippingErrors.cityError !== "" && (
-                      <p>{shippingErrors.cityError}</p>
+                    {this.state.shippingErrors.cityError !== "" && (
+                      <p>{this.state.shippingErrors.cityError}</p>
                     )}
                   </label>
                   <label>
                     <header>State/Territory: </header>
                     <select
                       id="stateOrTerritory"
-                      onChange={setStateValuesOfDropdownFields}
+                      onChange={(e) =>
+                        setShippingDetails("stateOrTerritory", e.target.value)
+                      }
                     >
                       <option disabled selected>
                         -- state or territory --
@@ -587,8 +676,8 @@ class Shipping extends React.Component {
                     required
                     autoComplete="tel-national"
                   />
-                  {shippingErrors.phoneNumberError !== "" && (
-                    <p>{shippingErrors.phoneNumberError}</p>
+                  {this.state.shippingErrors.phoneNumberError !== "" && (
+                    <p>{this.state.shippingErrors.phoneNumberError}</p>
                   )}
                 </label>
               </form>
