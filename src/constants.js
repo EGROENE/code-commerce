@@ -52,12 +52,13 @@ export const ITEMS_IN_CART = [
   },
 ];
 
-export const promoCodes = [
-  "ilikebeachballs",
-  "codeislyfe",
-  "devslopes",
-  "jd911",
-  "etlb17",
+// Make into array of objects, each containing code and its discount rate:
+export const promoInfos = [
+  { code: "ilikebeachballs", discountRate: 0.1 },
+  { code: "devslopes", discountRate: 0.5 },
+  { code: "jd911", discountRate: 0.75 },
+  { code: "codeislyfe", discountRate: 0.25 },
+  { code: "etlb17", discountRate: 0.99 },
 ];
 
 export const cardRegexPatterns = {

@@ -1,24 +1,26 @@
 import React from "react";
 import style from "./Cart.module.css";
-//import { ITEMS_IN_CART } from "../../constants";
+import { promoInfos } from "../../constants";
 import { roundToHundredth } from "../../methods";
 
 class Cart extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      inputPromoCode: "",
+      acceptedPromoCode: "",
+    };
+  }
+
   render() {
     // Destructure props:
     const {
       toNextPage,
-      updateQuantities,
-      deleteItem,
-      cartIsEmpty,
-      getPromoCode,
-      checkPromoCode,
-      removeDiscount,
+      setItemsAndNumberOfItemsInCart,
       itemsInCart,
       numberOfItemsInCart,
       discountRate,
-      isInvalidPromo,
-      acceptedPromoCode,
+      setDiscountRate,
     } = this.props;
 
     // Calculate totals based on current state values of unit prices & quantity:
@@ -30,6 +32,76 @@ class Cart extends React.Component {
     let cartTotal = roundToHundredth(
       cartSubtotal - cartSubtotal * discountRate
     );
+
+    // Runs in onChange of quantity input box of each item in cart
+    const updateItemQuantities = (e, itemNameCamelCase) => {
+      let newQuantity = Number(e.target.value.trim());
+      let selectedItem = itemsInCart.filter((item) => {
+        return item.itemNameCamelCase === itemNameCamelCase;
+      })[0];
+
+      let selectedItemIndex = itemsInCart.indexOf(selectedItem);
+
+      // Prevent user from manually entering '0' or backspacing and deleting item quantities:
+      if (newQuantity !== "" && newQuantity !== 0) {
+        setItemsAndNumberOfItemsInCart(newQuantity, selectedItemIndex);
+      }
+    };
+
+    // Runs onClick of 'X' button to left of each item in cart
+    // Delete 'e' from params and thou shalt surely die...
+    const deleteItem = (e, itemNameCamelCase) => {
+      setItemsAndNumberOfItemsInCart(undefined, undefined, itemNameCamelCase);
+    };
+
+    // Method that checks if all item.quantities are zero (no items in cart)
+    const cartIsEmpty = () => {
+      let allItemQuantities = itemsInCart.map((item) => item.quantity);
+      return allItemQuantities.some((quantity) => quantity > 0) ? false : true;
+    };
+
+    // Set state value inputPromoCode to what user inputs:
+    // Needed so field and 'apply' btn don't automatically become disabled when user enters a valid code
+    const setInputPromoCode = (e) => {
+      let inputPromoCode = e.target.value.trim().toLowerCase();
+      this.setState((prevState) => ({
+        ...prevState,
+        inputPromoCode: inputPromoCode,
+      }));
+    };
+
+    // Check input promo code to see if it matches an available promo, then apply appropriate discount:
+    const checkPromoCode = () => {
+      // Returns object containing passed promo code, if it exists...
+      const getMatchingPromo = (promoCode) =>
+        promoInfos.find((promo) => promo.code === promoCode);
+
+      const matchingPromo = getMatchingPromo(this.state.inputPromoCode);
+
+      if (matchingPromo) {
+        setDiscountRate(matchingPromo.discountRate);
+        this.setState((prevState) => ({
+          ...prevState,
+          acceptedPromoCode: this.state.inputPromoCode,
+          isInvalidPromo: false,
+        }));
+      } else {
+        setDiscountRate(0);
+        this.setState((prevState) => ({
+          ...prevState,
+          isInvalidPromo: true,
+        }));
+      }
+    };
+
+    // Method to remove discount:
+    const removeDiscount = () => {
+      setDiscountRate(0);
+      this.setState((prevState) => ({
+        ...prevState,
+        isInvalidPromo: false,
+      }));
+    };
 
     return (
       <div id="cartAndShipping">
@@ -92,7 +164,7 @@ class Cart extends React.Component {
                             min={1}
                             step={1}
                             onChange={(e) => {
-                              updateQuantities(e, item.itemNameCamelCase);
+                              updateItemQuantities(e, item.itemNameCamelCase);
                             }}
                           />
                           <p>
@@ -120,13 +192,14 @@ class Cart extends React.Component {
                   placeholder="Enter promo code"
                   disabled={discountRate > 0 || cartIsEmpty()}
                   onChange={(e) => {
-                    getPromoCode(e);
+                    setInputPromoCode(e);
                   }}
                   type="text"
                   inputMode="text"
                   id="promoCode"
                 />
-                {isInvalidPromo && <p>Invalid code</p>}
+                {this.state.isInvalidPromo &&
+                  this.state.inputPromoCode !== "" && <p>Invalid code</p>}
                 <button
                   disabled={discountRate > 0}
                   title="Apply promo code"
@@ -155,7 +228,7 @@ class Cart extends React.Component {
               </p>
               {discountRate > 0 && (
                 <p className={style.acceptedPromoCode}>
-                  {acceptedPromoCode}
+                  {this.state.acceptedPromoCode}
                   <i
                     onClick={removeDiscount}
                     title="Remove discount"

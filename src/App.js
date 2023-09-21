@@ -3,15 +3,9 @@ import logo from "./new-logo.png";
 import "./App.css";
 import Confirmation from "./Components/Confirmation/Confirmation";
 import Login from "./Components/Login/Login";
-
-// Imports for Cart:
 import Cart from "./Components/Cart/Cart";
-import { ITEMS_IN_CART, promoCodes } from "./constants";
-
-// Imports for Shipping:
+import { ITEMS_IN_CART } from "./constants";
 import Shipping from "./Components/Shipping/Shipping";
-
-// Imports for Payment:
 import Payment from "./Components/Payment/Payment";
 import { cardImages, cardRegexPatterns } from "./constants";
 
@@ -32,12 +26,8 @@ class App extends React.Component {
         isConfirmationComplete: false,
       },
       accountEmailAddress: "",
-
-      // State values for Cart:
       itemsInCart: ITEMS_IN_CART,
       numberOfItemsInCart: ITEMS_IN_CART.length,
-      inputPromoCode: "",
-      acceptedPromoCode: "",
       discountRate: 0,
 
       // State values for Shipping:
@@ -113,14 +103,6 @@ class App extends React.Component {
     }));
   };
 
-  // Pass to Login:
-  setAccountEmailAddress = (value) => {
-    this.setState((prevState) => ({
-      ...prevState,
-      accountEmailAddress: value,
-    }));
-  };
-
   validatePostalCode = (e, formType) => {
     let value = e.target.value.trim();
     if (formType === "shipping") {
@@ -189,17 +171,23 @@ class App extends React.Component {
   };
   // END UNIVERSAL METHODS
 
-  // METHODS FOR CART
-  updateQuantities = (e, itemNameCamelCase) => {
-    let newQuantity = Number(e.target.value.trim());
-    let selectedItem = this.state.itemsInCart.filter((item) => {
-      return item.itemNameCamelCase === itemNameCamelCase;
-    })[0];
+  // SETTERS
+  // Pass to Login:
+  setAccountEmailAddress = (value) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      accountEmailAddress: value,
+    }));
+  };
 
-    let selectedItemIndex = this.state.itemsInCart.indexOf(selectedItem);
-
-    // Prevent user from manually entering '0' or backspacing and deleting item quantities:
-    if (newQuantity !== "" && newQuantity !== 0) {
+  // Pass to Cart:
+  setItemsAndNumberOfItemsInCart = (
+    newQuantity,
+    selectedItemIndex,
+    itemNameCamelCase
+  ) => {
+    // Update quantity of item w/o removing it:
+    if (newQuantity !== undefined) {
       this.setState((prevState) => ({
         ...prevState,
         itemsInCart: prevState.itemsInCart.map((item) =>
@@ -208,103 +196,36 @@ class App extends React.Component {
             : item
         ),
       }));
-    }
-  };
-
-  // Method to delete item from cart:
-  deleteItem = (e, itemNameCamelCase) => {
-    let itemToDelete = this.state.itemsInCart.filter((item) => {
-      return item.itemNameCamelCase === itemNameCamelCase;
-    })[0];
-
-    let itemToDeleteIndex = this.state.itemsInCart.indexOf(itemToDelete);
-
-    let numberOfItemsInCart = this.state.numberOfItemsInCart - 1;
-
-    this.setState((prevState) => ({
-      ...prevState,
-      // If passed-in itemToDeleteIndex is equal to the index of that item in this.state.itemsInCart array, set the previous state values of that object, but change the quantity to 0. If indices are not equal, then item does not change.
-      itemsInCart: prevState.itemsInCart.map((item) =>
-        this.state.itemsInCart.indexOf(item) === itemToDeleteIndex
-          ? { ...item, quantity: 0 }
-          : item
-      ),
-      numberOfItemsInCart: numberOfItemsInCart,
-    }));
-  };
-
-  // Method that checks if all item.quantities are zero (no items in cart)
-  cartIsEmpty = () => {
-    let allItemQuantities = this.state.itemsInCart.map((item) => item.quantity);
-    return allItemQuantities.some((quantity) => quantity > 0) ? false : true;
-  };
-
-  // Set state value inputPromoCode to what user inputs:
-  getPromoCode = (e) => {
-    let inputCode = e.target.value.trim().toLowerCase();
-    this.setState((prevState) => ({
-      ...prevState,
-      inputPromoCode: inputCode,
-    }));
-  };
-
-  // Check input promo code to see if it matches an available promo, then apply appropriate discount:
-  checkPromoCode = () => {
-    let inputPromoCode = this.state.inputPromoCode;
-    if (promoCodes.includes(inputPromoCode)) {
-      if (inputPromoCode === "ilikebeachballs") {
-        this.setState((prevState) => ({
-          ...prevState,
-          acceptedPromoCode: inputPromoCode,
-          discountRate: 0.1,
-          isInvalidPromo: false,
-        }));
-      } else if (inputPromoCode === "codeislyfe") {
-        this.setState((prevState) => ({
-          ...prevState,
-          acceptedPromoCode: inputPromoCode,
-          discountRate: 0.25,
-          isInvalidPromo: false,
-        }));
-      } else if (inputPromoCode === "devslopes") {
-        this.setState((prevState) => ({
-          ...prevState,
-          acceptedPromoCode: inputPromoCode,
-          discountRate: 0.5,
-          isInvalidPromo: false,
-        }));
-      } else if (inputPromoCode === "jd911") {
-        this.setState((prevState) => ({
-          ...prevState,
-          acceptedPromoCode: inputPromoCode,
-          discountRate: 0.75,
-          isInvalidPromo: false,
-        }));
-      } else if (inputPromoCode === "etlb17") {
-        this.setState((prevState) => ({
-          ...prevState,
-          acceptedPromoCode: inputPromoCode,
-          discountRate: 0.99,
-          isInvalidPromo: false,
-        }));
-      }
+      // Update quantity to 0 (this runs when called in deleteItems)
     } else {
+      const itemToDelete = this.state.itemsInCart.filter((item) => {
+        return item.itemNameCamelCase === itemNameCamelCase;
+      })[0];
+
+      const itemToDeleteIndex = this.state.itemsInCart.indexOf(itemToDelete);
+
+      const newNumberOfItemsInCart = this.state.numberOfItemsInCart - 1;
       this.setState((prevState) => ({
         ...prevState,
-        discountRate: 0,
-        isInvalidPromo: true,
+        // If passed-in itemToDeleteIndex is equal to the index of that item in this.state.itemsInCart array, set the previous state values of that object, but change the quantity to 0. If indices are not equal, then item does not change.
+        itemsInCart: prevState.itemsInCart.map((item) =>
+          this.state.itemsInCart.indexOf(item) === itemToDeleteIndex
+            ? { ...item, quantity: 0 }
+            : item
+        ),
+        numberOfItemsInCart: newNumberOfItemsInCart,
       }));
     }
   };
 
-  // Method to remove discount:
-  removeDiscount = () => {
+  // Pass to Cart:
+  setDiscountRate = (value) => {
     this.setState((prevState) => ({
       ...prevState,
-      discountRate: 0,
-      isInvalidPromo: false,
+      discountRate: value,
     }));
   };
+  // END SETTERS
 
   // METHODS FOR SHIPPING
   // Method to set state values of dropdown fields (initially, at least, 'title' & 'state/territory'):
@@ -615,7 +536,7 @@ class App extends React.Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1>codeCommerce</h1>
-          {!isLoginComplete && (
+          {isLoginComplete && (
             <Login
               toNextPage={this.toNextPage}
               setAccountEmailAddress={this.setAccountEmailAddress}
@@ -623,20 +544,16 @@ class App extends React.Component {
               validatePostalCode={this.validatePostalCode}
             />
           )}
-          {isLoginComplete && !isCartComplete && (
+          {!isLoginComplete && !isCartComplete && (
             <Cart
               toNextPage={this.toNextPage}
-              updateQuantities={this.updateQuantities}
-              deleteItem={this.deleteItem}
-              cartIsEmpty={this.cartIsEmpty}
-              getPromoCode={this.getPromoCode}
-              checkPromoCode={this.checkPromoCode}
-              removeDiscount={this.removeDiscount}
+              setItemsAndNumberOfItemsInCart={
+                this.setItemsAndNumberOfItemsInCart
+              }
               itemsInCart={this.state.itemsInCart}
               numberOfItemsInCart={this.state.itemsInCart.length}
               discountRate={this.state.discountRate}
-              isInvalidPromo={this.state.isInvalidPromo}
-              acceptedPromoCode={this.state.acceptedPromoCode}
+              setDiscountRate={this.setDiscountRate}
             />
           )}
           {isCartComplete && !isShippingComplete && (
