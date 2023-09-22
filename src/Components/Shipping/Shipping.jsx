@@ -36,7 +36,7 @@ class Shipping extends React.Component {
       discountRate,
       shippingDetails,
       setShippingDetails,
-      validatePostalCode,
+      postalCodeIsValid,
       validateNamesAndCityNames,
       shippingAndHandling,
       setShippingAndHandling,
@@ -257,7 +257,24 @@ class Shipping extends React.Component {
                       placeholder="5-digit ZIP code"
                       type="text"
                       onChange={(e) => {
-                        validatePostalCode(e, "shipping");
+                        setShippingDetails("postalCode", e.target.value);
+                        if (postalCodeIsValid(e.target.value)) {
+                          this.setState((prevState) => ({
+                            ...prevState,
+                            shippingErrors: {
+                              ...prevState.loginErrors,
+                              postalCodeError: "",
+                            },
+                          }));
+                        } else {
+                          this.setState((prevState) => ({
+                            ...prevState,
+                            shippingErrors: {
+                              ...prevState.loginErrors,
+                              postalCodeError: "5-digit US postal code",
+                            },
+                          }));
+                        }
                       }}
                       required
                       inputMode="numeric"

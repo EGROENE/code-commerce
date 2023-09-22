@@ -97,34 +97,8 @@ class App extends React.Component {
   };
 
   // Pass to Login, Shipping
-  validatePostalCode = (e, formType) => {
-    let value = e.target.value.trim();
-    if (formType === "shipping") {
-      this.setState((prevState) => ({
-        ...prevState,
-        shippingDetails: {
-          ...prevState.shippingDetails,
-          postalCode: value,
-        },
-      }));
-    }
-    if (/[0-9]$/i.test(value)) {
-      this.setState((prevState) => ({
-        ...prevState,
-        [`${formType}Errors`]: {
-          ...prevState[`${formType}Errors`],
-          postalCodeError: "",
-        },
-      }));
-    } else {
-      this.setState((prevState) => ({
-        ...prevState,
-        [`${formType}Errors`]: {
-          ...prevState[`${formType}Errors`],
-          postalCodeError: "5-digit US postal code",
-        },
-      }));
-    }
+  postalCodeIsValid = (postalCode) => {
+    return /[0-9]$/i.test(postalCode) && postalCode.length === 5;
   };
 
   // Method to validate names of humans & cities:
@@ -452,15 +426,15 @@ class App extends React.Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1>codeCommerce</h1>
-          {isLoginComplete && (
+          {!isLoginComplete && (
             <Login
               toNextPage={this.toNextPage}
               setAccountEmailAddress={this.setAccountEmailAddress}
               validateNamesAndCityNames={this.validateNamesAndCityNames}
-              validatePostalCode={this.validatePostalCode}
+              postalCodeIsValid={this.postalCodeIsValid}
             />
           )}
-          {!isLoginComplete && isCartComplete && (
+          {isLoginComplete && isCartComplete && (
             <Cart
               toNextPage={this.toNextPage}
               setItemsAndNumberOfItemsInCart={
@@ -481,12 +455,12 @@ class App extends React.Component {
               discountRate={this.state.discountRate}
               shippingDetails={this.state.shippingDetails}
               setShippingDetails={this.setShippingDetails}
-              validatePostalCode={this.validatePostalCode}
               validateNamesAndCityNames={this.validateNamesAndCityNames}
               shippingAndHandling={this.state.shippingAndHandling}
               setShippingAndHandling={this.setShippingAndHandling}
               setDeliveryTime={this.setDeliveryTime}
               arePagesComplete={this.state.arePagesComplete}
+              postalCodeIsValid={this.postalCodeIsValid}
             />
           )}
           {!isShippingComplete && isPaymentComplete && (

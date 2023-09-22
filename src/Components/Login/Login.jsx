@@ -62,7 +62,6 @@ class Login extends React.Component {
         });
   };
 
-  // Define in Login
   clearLoginErrors = () => {
     this.setState((prevState) => ({
       ...prevState,
@@ -77,7 +76,6 @@ class Login extends React.Component {
     }));
   };
 
-  // Define to Login
   userSelectsLogin = () => {
     this.setState({
       isLoginMethodSelected: true,
@@ -89,7 +87,6 @@ class Login extends React.Component {
     });
   };
 
-  // Define to Login
   userSelectsSignUp = () => {
     this.setState({
       isLoginMethodSelected: false,
@@ -101,7 +98,6 @@ class Login extends React.Component {
     });
   };
 
-  // Define in Login
   selectLoginMethod = (e) => {
     this.clearLoginErrors();
     if (!this.state.isOpenEye) {
@@ -226,7 +222,7 @@ class Login extends React.Component {
       toNextPage,
       setAccountEmailAddress,
       validateNamesAndCityNames,
-      validatePostalCode,
+      postalCodeIsValid,
     } = this.props;
 
     const loginMethodHeaders = [
@@ -430,7 +426,21 @@ class Login extends React.Component {
         placeholder: "5-digit US ZIP",
         inputType: "text",
         onChange: (e) => {
-          validatePostalCode(e, "login");
+          postalCodeIsValid(e.target.value.trim())
+            ? this.setState((prevState) => ({
+                ...prevState,
+                loginErrors: {
+                  ...prevState.loginErrors,
+                  postalCodeError: "",
+                },
+              }))
+            : this.setState((prevState) => ({
+                ...prevState,
+                loginErrors: {
+                  ...prevState.loginErrors,
+                  postalCodeError: "5-digit US postal code",
+                },
+              }));
         },
         field: "postalCode",
         required: this.state.isRequired,
