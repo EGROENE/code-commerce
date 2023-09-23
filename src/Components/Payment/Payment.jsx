@@ -2,11 +2,63 @@ import React from "react";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import style from "./Payment.module.css";
 import { alertFormErrors, roundToHundredth } from "../../methods";
+import { cardRegexPatterns, cardImages } from "../../constants";
 
 class Payment extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      paymentErrors: {
+        cardNumberError: "",
+        cardHolderError: "",
+        expiryError: "",
+        securityCodeError: "",
+      },
+    };
+  }
+  // If input of card number field matches any RegEx patterns of accepted cards, the card type (AmEx, Visa, etc.) is returned. If not, nothing is returned.
+  findDebitCardType = (cardNumber) => {
+    for (const cardType in cardRegexPatterns) {
+      if (cardNumber.replace(/[^\d]/g, "").match(cardRegexPatterns[cardType])) {
+        return cardType;
+      }
+    }
+    return "";
+  };
+
+  // Method to format AmEx numbers:
+  formatAmex(inputNumber) {
+    let cleaned = ("" + inputNumber).replace(/\D/g, "");
+    let match = cleaned.match(/^(\d{4})(\d{6})(\d{5})$/);
+    if (match) {
+      return match[1] + " " + match[2] + " " + match[3];
+    }
+    return null;
+  }
+
+  // Check that card number is valid. Return error message if not.
+  checkCardNumberError = (cardNumber) => {
+    for (const card in cardRegexPatterns) {
+      // Remove any empty spaces (chars that are not digits) in card number:
+      if (cardNumber.replace(/[^\d]/g, "").match(cardRegexPatterns[card])) {
+        if (cardNumber) {
+          return cardNumber &&
+            /^[1-6]{1}[0-9]{14,15}$/i.test(
+              cardNumber.replace(/[^\d]/g, "").trim()
+            )
+            ? ""
+            : "Please enter a valid card number";
+        }
+      }
+    }
+    return "Please enter a valid card number";
+  };
+
   render() {
     // Destructure props:
     const {
+      setOrderDetails,
+      nameOrCityIsValid,
       arePagesComplete,
       itemsInCart,
       numberOfItemsInCart,
@@ -16,12 +68,6 @@ class Payment extends React.Component {
       shippingDetails,
       shippingAndHandling,
       deliveryTime,
-      paymentErrors,
-      validateNamesAndCityNames,
-      validateCardNumber,
-      getExpiryMonth,
-      getExpiryYear,
-      validateCVV,
       paymentDetails,
       accountEmailAddress,
     } = this.props;
@@ -43,7 +89,7 @@ class Payment extends React.Component {
       { label: "Cart Total:", value: cartTotal },
     ];
 
-    let areNoErrors = Object.values(paymentErrors).every(
+    let areNoErrors = Object.values(this.state.paymentErrors).every(
       (element) => element === ""
     );
 
@@ -93,6 +139,127 @@ class Payment extends React.Component {
       "2050",
     ];
 
+    const validateCardNumber = (e) => {
+      let value = e.target.value.trim();
+      let errorText = this.checkCardNumberError(value);
+      let cardType = this.findDebitCardType(value);
+      let mask = value.split(" ").join("");
+      // If any input...
+      if (mask.length) {
+        if (cardType === "AMERICAN_EXPRESS") {
+          mask = this.formatAmex(value);
+        } else {
+          // Add space after every fourth character:
+          mask = mask.match(new RegExp(".{1,4}", "g")).join(" ");
+        }
+        // Set appropriate state values:
+        setOrderDetails("payment", "cardNumberMask", mask);
+        setOrderDetails("payment", "cardNumber", value.replace(/\s/g, ""));
+        setOrderDetails("payment", "cardType", cardType);
+        setOrderDetails("payment", "cardImage", cardImages[cardType]);
+        this.setState((prevState) => ({
+          ...prevState,
+          paymentErrors: {
+            ...prevState.paymentErrors,
+            cardNumberError: errorText,
+          },
+        }));
+        // If no input, reset appropriate state values:
+      } else {
+        setOrderDetails("payment", "cardNumberMask", mask);
+        setOrderDetails("payment", "cardNumber", value.replace(/\s/g, ""));
+        setOrderDetails("payment", "cardType", cardType);
+        setOrderDetails("payment", "cardImage", cardImages[cardType]);
+        this.setState((prevState) => ({
+          ...prevState,
+          // USE setState IN PAYMENT.JSX FOR THIS
+          paymentErrors: {
+            ...prevState.paymentErrors,
+            cardNumberError: "",
+          },
+        }));
+      }
+    };
+
+    const currentMonth = new Date().getMonth() + 1;
+    const currentYear = new Date().getFullYear();
+
+    const getExpiryMonth = (e) => {
+      let value = e.target.value;
+      setOrderDetails("payment", "expiryMonth", value);
+      if (
+        (+value <= currentMonth &&
+          +paymentDetails.expiryYear === currentYear) ||
+        (+paymentDetails.expiryYear !== 0 &&
+          +paymentDetails.expiryYear < currentYear)
+      ) {
+        this.setState((prevState) => ({
+          ...prevState,
+          paymentErrors: {
+            ...prevState.paymentErrors,
+            expiryError: "Invalid date",
+          },
+        }));
+      } else {
+        this.setState((prevState) => ({
+          ...prevState,
+          paymentErrors: {
+            ...prevState.paymentErrors,
+            expiryError: "",
+          },
+        }));
+      }
+    };
+
+    const getExpiryYear = (e) => {
+      let value = e.target.value;
+      setOrderDetails("payment", "expiryYear", value);
+      if (
+        (+paymentDetails.expiryMonth !== "" &&
+          +paymentDetails.expiryMonth <= currentMonth &&
+          +value === currentYear) ||
+        +value < currentYear
+      ) {
+        this.setState((prevState) => ({
+          ...prevState,
+          paymentErrors: {
+            ...prevState.paymentErrors,
+            expiryError: "Invalid date",
+          },
+        }));
+      } else {
+        this.setState((prevState) => ({
+          ...prevState,
+          paymentErrors: {
+            ...prevState.paymentErrors,
+            expiryError: "",
+          },
+        }));
+      }
+    };
+
+    const validateCVV = (e) => {
+      let value = e.target.value.trim();
+      setOrderDetails("payment", "securityCode", value);
+      if (/[0-9]$/i.test(value)) {
+        this.setState((prevState) => ({
+          ...prevState,
+          paymentErrors: {
+            ...prevState.paymentErrors,
+            securityCodeError: "",
+          },
+        }));
+      } else {
+        this.setState((prevState) => ({
+          ...prevState,
+          paymentErrors: {
+            ...prevState.paymentErrors,
+            securityCodeError: "3-digit CVV (on card back)",
+          },
+        }));
+      }
+    };
+
     return (
       <div id="paymentAndConfirmation">
         <div className="checkoutPageContainer">
@@ -112,7 +279,25 @@ class Payment extends React.Component {
                   id="cardholderName"
                   minLength="1"
                   onChange={(e) => {
-                    validateNamesAndCityNames(e, "cardHolder", "payment");
+                    setOrderDetails("payment", "cardHolder", e.target.value);
+                    if (nameOrCityIsValid(e.target.value)) {
+                      this.setState((prevState) => ({
+                        ...prevState,
+                        paymentErrors: {
+                          ...prevState.paymentErrors,
+                          cardHolderError: "",
+                        },
+                      }));
+                    } else {
+                      this.setState((prevState) => ({
+                        ...prevState,
+                        paymentErrors: {
+                          ...prevState.paymentErrors,
+                          cardHolderError:
+                            "Enter alphabetical characters & any spaces between words",
+                        },
+                      }));
+                    }
                   }}
                   type="text"
                   required
@@ -120,8 +305,8 @@ class Payment extends React.Component {
                   placeholder="Name on card"
                   autoComplete="cc-name"
                 />
-                {paymentErrors.cardHolderError && (
-                  <p>{paymentErrors.cardHolderError}</p>
+                {this.state.paymentErrors.cardHolderError && (
+                  <p>{this.state.paymentErrors.cardHolderError}</p>
                 )}
               </label>
               <label>
@@ -158,8 +343,8 @@ class Payment extends React.Component {
                     />
                   )}
                 </div>
-                {paymentErrors.cardNumberError && (
-                  <p>{paymentErrors.cardNumberError}</p>
+                {this.state.paymentErrors.cardNumberError && (
+                  <p>{this.state.paymentErrors.cardNumberError}</p>
                 )}
               </label>
               <div id={style.expiryAndCVV}>
@@ -185,8 +370,8 @@ class Payment extends React.Component {
                       </option>
                     ))}
                   </select>
-                  {paymentErrors.expiryError && (
-                    <p>{paymentErrors.expiryError}</p>
+                  {this.state.paymentErrors.expiryError && (
+                    <p>{this.state.paymentErrors.expiryError}</p>
                   )}
                 </label>
                 <label>
@@ -203,8 +388,8 @@ class Payment extends React.Component {
                     value={paymentDetails.securityCode}
                     autoComplete="cc-csc"
                   />
-                  {paymentErrors.securityCodeError && (
-                    <p>{paymentErrors.securityCodeError}</p>
+                  {this.state.paymentErrors.securityCodeError && (
+                    <p>{this.state.paymentErrors.securityCodeError}</p>
                   )}
                 </label>
               </div>

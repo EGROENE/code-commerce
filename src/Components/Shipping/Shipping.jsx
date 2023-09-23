@@ -35,7 +35,7 @@ class Shipping extends React.Component {
       numberOfItemsInCart,
       discountRate,
       shippingDetails,
-      setShippingDetails,
+      setOrderDetails,
       postalCodeIsValid,
       shippingAndHandling,
       setShippingAndHandling,
@@ -46,7 +46,7 @@ class Shipping extends React.Component {
 
     const validateStreetAddress = (e) => {
       let value = e.target.value;
-      setShippingDetails("streetAddress", value);
+      setOrderDetails("shipping", "streetAddress", value);
       if (
         /[A-Z0-9#/ '-]+/i.test(value) &&
         value.replace(/\s/g, "").length &&
@@ -75,8 +75,8 @@ class Shipping extends React.Component {
       let value = e.target.value.trim();
       let phoneNumberMask = this.formatPhoneNumber(value);
 
-      setShippingDetails("phoneNumber", value);
-      setShippingDetails("phoneNumberMask", phoneNumberMask);
+      setOrderDetails("shipping", "phoneNumber", value);
+      setOrderDetails("shipping", "phoneNumberMask", phoneNumberMask);
 
       if (
         /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/i.test(value)
@@ -163,7 +163,7 @@ class Shipping extends React.Component {
                     <select
                       id="title"
                       onChange={(e) =>
-                        setShippingDetails("title", e.target.value)
+                        setOrderDetails("shipping", "title", e.target.value)
                       }
                     >
                       <option disabled selected>
@@ -215,7 +215,7 @@ class Shipping extends React.Component {
                         id="name"
                         type="text"
                         onChange={(e) => {
-                          setShippingDetails("name", e.target.value);
+                          setOrderDetails("shipping", "name", e.target.value);
                           if (nameOrCityIsValid(e.target.value)) {
                             this.setState((prevState) => ({
                               ...prevState,
@@ -275,7 +275,11 @@ class Shipping extends React.Component {
                       placeholder="5-digit ZIP code"
                       type="text"
                       onChange={(e) => {
-                        setShippingDetails("postalCode", e.target.value);
+                        setOrderDetails(
+                          "shipping",
+                          "postalCode",
+                          e.target.value
+                        );
                         if (postalCodeIsValid(e.target.value)) {
                           this.setState((prevState) => ({
                             ...prevState,
@@ -313,7 +317,7 @@ class Shipping extends React.Component {
                       placeholder="Enter city"
                       type="text"
                       onChange={(e) => {
-                        setShippingDetails("city", e.target.value);
+                        setOrderDetails("shipping", "city", e.target.value);
                         if (nameOrCityIsValid(e.target.value)) {
                           this.setState((prevState) => ({
                             ...prevState,
@@ -346,7 +350,11 @@ class Shipping extends React.Component {
                     <select
                       id="stateOrTerritory"
                       onChange={(e) =>
-                        setShippingDetails("stateOrTerritory", e.target.value)
+                        setOrderDetails(
+                          "shipping",
+                          "stateOrTerritory",
+                          e.target.value
+                        )
                       }
                     >
                       <option disabled selected>
