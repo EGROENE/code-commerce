@@ -221,8 +221,8 @@ class Login extends React.Component {
     const {
       toNextPage,
       setAccountEmailAddress,
-      validateNamesAndCityNames,
       postalCodeIsValid,
+      nameOrCityIsValid,
     } = this.props;
 
     const loginMethodHeaders = [
@@ -398,12 +398,34 @@ class Login extends React.Component {
         placeholder: "Enter first name",
         inputType: "text",
         onChange: (e) => {
-          validateNamesAndCityNames(e, "firstName", "login");
+          this.setState((prevState) => ({
+            ...prevState,
+            firstName: e.target.value,
+          }));
+          if (nameOrCityIsValid(e.target.value)) {
+            this.setState((prevState) => ({
+              ...prevState,
+              loginErrors: {
+                ...prevState.loginErrors,
+                firstNameError: "",
+              },
+            }));
+          } else {
+            this.setState((prevState) => ({
+              ...prevState,
+              loginErrors: {
+                ...prevState.loginErrors,
+                firstNameError:
+                  "Enter alphabetical characters & any spaces or hyphens between words",
+              },
+            }));
+          }
         },
         field: "firstName",
         required: this.state.isRequired,
         inputMode: "text",
         autoComplete: "given-name",
+        value: this.state.firstName ? this.state.firstName : "",
       },
       {
         id: "loginLastName",
@@ -412,7 +434,28 @@ class Login extends React.Component {
         placeholder: "Enter last name",
         inputType: "text",
         onChange: (e) => {
-          validateNamesAndCityNames(e, "lastName", "login");
+          this.setState((prevState) => ({
+            ...prevState,
+            lastName: e.target.value,
+          }));
+          if (nameOrCityIsValid(e.target.value)) {
+            this.setState((prevState) => ({
+              ...prevState,
+              loginErrors: {
+                ...prevState.loginErrors,
+                lastNameError: "",
+              },
+            }));
+          } else {
+            this.setState((prevState) => ({
+              ...prevState,
+              loginErrors: {
+                ...prevState.loginErrors,
+                lastNameError:
+                  "Enter alphabetical characters & any spaces or hyphens between words",
+              },
+            }));
+          }
         },
         field: "lastName",
         required: this.state.isRequired,

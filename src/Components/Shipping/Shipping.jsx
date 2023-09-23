@@ -37,11 +37,11 @@ class Shipping extends React.Component {
       shippingDetails,
       setShippingDetails,
       postalCodeIsValid,
-      validateNamesAndCityNames,
       shippingAndHandling,
       setShippingAndHandling,
       setDeliveryTime,
       arePagesComplete,
+      nameOrCityIsValid,
     } = this.props;
 
     const validateStreetAddress = (e) => {
@@ -85,7 +85,7 @@ class Shipping extends React.Component {
           ...prevState,
           shippingErrors: {
             ...prevState.shippingErrors,
-            phoneNumber: "",
+            phoneNumberError: "",
           },
         }));
       } else {
@@ -93,7 +93,7 @@ class Shipping extends React.Component {
           ...prevState,
           shippingErrors: {
             ...prevState.shippingErrors,
-            phoneNumber: "Enter 10-digit, US number",
+            phoneNumberError: "Enter 10-digit, US number",
           },
         }));
       }
@@ -215,7 +215,25 @@ class Shipping extends React.Component {
                         id="name"
                         type="text"
                         onChange={(e) => {
-                          validateNamesAndCityNames(e, "name", "shipping");
+                          setShippingDetails("name", e.target.value);
+                          if (nameOrCityIsValid(e.target.value)) {
+                            this.setState((prevState) => ({
+                              ...prevState,
+                              shippingErrors: {
+                                ...prevState.shippingErrors,
+                                nameError: "",
+                              },
+                            }));
+                          } else {
+                            this.setState((prevState) => ({
+                              ...prevState,
+                              shippingErrors: {
+                                ...prevState.shippingErrors,
+                                nameError:
+                                  "Enter alphabetical characters & any spaces or hyphens between words",
+                              },
+                            }));
+                          }
                         }}
                         placeholder="Recipient name"
                         required
@@ -295,7 +313,25 @@ class Shipping extends React.Component {
                       placeholder="Enter city"
                       type="text"
                       onChange={(e) => {
-                        validateNamesAndCityNames(e, "city", "shipping");
+                        setShippingDetails("city", e.target.value);
+                        if (nameOrCityIsValid(e.target.value)) {
+                          this.setState((prevState) => ({
+                            ...prevState,
+                            shippingErrors: {
+                              ...prevState.shippingErrors,
+                              cityError: "",
+                            },
+                          }));
+                        } else {
+                          this.setState((prevState) => ({
+                            ...prevState,
+                            shippingErrors: {
+                              ...prevState.shippingErrors,
+                              cityError:
+                                "Enter alphabetical characters & any spaces between words",
+                            },
+                          }));
+                        }
                       }}
                       required
                       inputMode="text"

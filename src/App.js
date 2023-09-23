@@ -103,39 +103,14 @@ class App extends React.Component {
 
   // Method to validate names of humans & cities:
   // Used on Signup (part of Login), Shipping, Payment
-  validateNamesAndCityNames = (e, field, page) => {
-    let value = e.target.value;
-    this.setState((prevState) => ({
-      ...prevState,
-      [`${page}Details`]: {
-        ...prevState[`${page}Details`],
-        [field]: value,
-      },
-    }));
-    if (
-      /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -.]*$/i.test(value) &&
-      value.replace(/\s/g, "").length &&
-      value.replace(/\./g, "").length &&
-      value.replace(/'/g, "").length &&
-      value.replace(/-/g, "").length
-    ) {
-      this.setState((prevState) => ({
-        ...prevState,
-        [`${page}Errors`]: {
-          ...prevState[`${page}Errors`],
-          [`${field}Error`]: "",
-        },
-      }));
-    } else {
-      this.setState((prevState) => ({
-        ...prevState,
-        [`${page}Errors`]: {
-          ...prevState[`${page}Errors`],
-          [`${field}Error`]:
-            "Enter alphabetical characters & any spaces between words",
-        },
-      }));
-    }
+  nameOrCityIsValid = (name) => {
+    return (
+      /^[a-zA-ZÄäÖöÜüßÉéÍíóÓÑñ -.]*$/i.test(name) &&
+      name.replace(/\s/g, "").length &&
+      name.replace(/\./g, "").length &&
+      name.replace(/'/g, "").length &&
+      name.replace(/-/g, "").length
+    );
   };
   // END UNIVERSAL METHODS
 
@@ -432,6 +407,7 @@ class App extends React.Component {
               setAccountEmailAddress={this.setAccountEmailAddress}
               validateNamesAndCityNames={this.validateNamesAndCityNames}
               postalCodeIsValid={this.postalCodeIsValid}
+              nameOrCityIsValid={this.nameOrCityIsValid}
             />
           )}
           {isLoginComplete && isCartComplete && (
@@ -461,6 +437,7 @@ class App extends React.Component {
               setDeliveryTime={this.setDeliveryTime}
               arePagesComplete={this.state.arePagesComplete}
               postalCodeIsValid={this.postalCodeIsValid}
+              nameOrCityIsValid={this.nameOrCityIsValid}
             />
           )}
           {!isShippingComplete && isPaymentComplete && (
@@ -485,6 +462,7 @@ class App extends React.Component {
               deliveryTime={this.state.deliveryTime}
               paymentDetails={this.state.paymentDetails}
               accountEmailAddress={this.state.accountEmailAddress}
+              nameOrCityIsValid={this.nameOrCityIsValid}
             />
           )}
           {isPaymentComplete && (
