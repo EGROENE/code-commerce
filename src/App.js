@@ -207,7 +207,6 @@ class App extends React.Component {
             <Login
               toNextPage={this.toNextPage}
               setAccountEmailAddress={this.setAccountEmailAddress}
-              validateNamesAndCityNames={this.validateNamesAndCityNames}
               postalCodeIsValid={this.postalCodeIsValid}
               nameOrCityIsValid={this.nameOrCityIsValid}
             />
@@ -226,19 +225,18 @@ class App extends React.Component {
           )}
           {isCartComplete && !isShippingComplete && (
             <Shipping
-              toNextPage={this.toNextPage}
               toPreviousPage={this.toPreviousPage}
+              toNextPage={this.toNextPage}
               itemsInCart={this.state.itemsInCart}
               numberOfItemsInCart={this.state.numberOfItemsInCart}
               discountRate={this.state.discountRate}
               shippingDetails={this.state.shippingDetails}
               setOrderDetails={this.setOrderDetails}
-              validateNamesAndCityNames={this.validateNamesAndCityNames}
+              postalCodeIsValid={this.postalCodeIsValid}
               shippingAndHandling={this.state.shippingAndHandling}
               setShippingAndHandling={this.setShippingAndHandling}
               setDeliveryTime={this.setDeliveryTime}
               arePagesComplete={this.state.arePagesComplete}
-              postalCodeIsValid={this.postalCodeIsValid}
               nameOrCityIsValid={this.nameOrCityIsValid}
             />
           )}
