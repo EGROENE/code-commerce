@@ -254,6 +254,7 @@ class App extends React.Component {
               shippingAndHandling={this.state.shippingAndHandling}
               deliveryTime={this.state.deliveryTime}
               accountEmailAddress={this.state.accountEmailAddress}
+              paymentDetails={this.state.paymentDetails}
             />
           )}
           {isPaymentComplete && (
