@@ -119,6 +119,16 @@ class Shipping extends React.Component {
 
     let cartTotal = cartSubtotal - discount + shippingAndHandling;
 
+    const titles = [
+      { isDisabled: true, isSelected: true, value: "--select--" },
+      { isSelected: shippingDetails.title === "Mr.", value: "Mr." },
+      { isSelected: shippingDetails.title === "Mrs.", value: "Mrs." },
+      { isSelected: shippingDetails.title === "Ms.", value: "Ms." },
+      { isSelected: shippingDetails.title === "Dr.", value: "Dr." },
+      { isSelected: shippingDetails.title === "Lord", value: "Lord" },
+      { isSelected: shippingDetails.title === "Lady", value: "Lady" },
+    ];
+
     const deliveryOptions = [
       {
         id: "expeditedDelivery",
@@ -166,45 +176,16 @@ class Shipping extends React.Component {
                         setOrderDetails("shipping", "title", e.target.value)
                       }
                     >
-                      <option disabled selected>
-                        -- select --
-                      </option>
-                      <option
-                        selected={shippingDetails.title === "Mr."}
-                        value="Mr."
-                      >
-                        Mr.
-                      </option>
-                      <option
-                        selected={shippingDetails.title === "Mrs."}
-                        value="Mrs."
-                      >
-                        Mrs.
-                      </option>
-                      <option
-                        selected={shippingDetails.title === "Ms."}
-                        value="Ms."
-                      >
-                        Ms.
-                      </option>
-                      <option
-                        selected={shippingDetails.title === "Dr."}
-                        value="Dr."
-                      >
-                        Dr.
-                      </option>
-                      <option
-                        selected={shippingDetails.title === "Lord"}
-                        value="Lord"
-                      >
-                        Lord
-                      </option>
-                      <option
-                        selected={shippingDetails.title === "Lady"}
-                        value="Lady"
-                      >
-                        Lady
-                      </option>
+                      {titles.map((option) => (
+                        <option
+                          key={option.value}
+                          disabled={option.isDisabled}
+                          selected={option.isSelected}
+                          value={option.value}
+                        >
+                          {option.value}
+                        </option>
+                      ))}
                     </select>
                   </label>
                   <label id={style.nameField}>
