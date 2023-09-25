@@ -3,7 +3,7 @@ import style from "./Shipping.module.css";
 import { alertFormErrors, roundToHundredth } from "../../methods";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import { usStateOptions } from "../../constants";
-import USStateOption from "../USStateOption";
+import DropdownOption from "../DropdownOption";
 
 class Shipping extends React.Component {
   constructor() {
@@ -345,7 +345,7 @@ class Shipping extends React.Component {
                         --state or territory--
                       </option>
                       {usStateOptions.map((option) => (
-                        <USStateOption
+                        <DropdownOption
                           key={option.value}
                           isDisabled={option.isDisabled}
                           value={option.value}
