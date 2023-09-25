@@ -123,7 +123,6 @@ class Shipping extends React.Component {
     const cartTotal = cartSubtotal - discount + shippingAndHandling;
 
     const titles = [
-      { isDisabled: true, isSelected: true, value: "--select--" },
       { isSelected: shippingDetails.title === "Mr.", value: "Mr." },
       { isSelected: shippingDetails.title === "Mrs.", value: "Mrs." },
       { isSelected: shippingDetails.title === "Ms.", value: "Ms." },
@@ -179,15 +178,15 @@ class Shipping extends React.Component {
                         setOrderDetails("shipping", "title", e.target.value)
                       }
                     >
+                      <option disabled={true} selected={true}>
+                        --select title--
+                      </option>
                       {titles.map((option) => (
-                        <option
+                        <DropdownOption
                           key={option.value}
-                          disabled={option.isDisabled}
-                          selected={option.isSelected}
+                          isSelected={option.value === shippingDetails.title}
                           value={option.value}
-                        >
-                          {option.value}
-                        </option>
+                        />
                       ))}
                     </select>
                   </label>
@@ -353,6 +352,7 @@ class Shipping extends React.Component {
                             option.value === shippingDetails.stateOrTerritory
                           }
                           fullName={option.fullName}
+                          valueAndTextAreDifferent={true}
                         />
                       ))}
                     </select>
