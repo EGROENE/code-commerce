@@ -268,7 +268,7 @@ class Shipping extends React.Component {
                           this.setState((prevState) => ({
                             ...prevState,
                             shippingErrors: {
-                              ...prevState.loginErrors,
+                              ...prevState.shippingErrors,
                               postalCodeError: "",
                             },
                           }));
@@ -276,7 +276,7 @@ class Shipping extends React.Component {
                           this.setState((prevState) => ({
                             ...prevState,
                             shippingErrors: {
-                              ...prevState.loginErrors,
+                              ...prevState.shippingErrors,
                               postalCodeError: "5-digit US postal code",
                             },
                           }));
