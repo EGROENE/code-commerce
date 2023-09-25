@@ -2,7 +2,8 @@ import React from "react";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import style from "./Payment.module.css";
 import { alertFormErrors, roundToHundredth } from "../../methods";
-import { cardRegexPatterns, cardImages } from "../../constants";
+import { cardRegexPatterns, cardImages, months, years } from "../../constants";
+import DropdownOption from "../DropdownOption";
 
 class Payment extends React.Component {
   constructor() {
@@ -93,52 +94,6 @@ class Payment extends React.Component {
     const areNoErrors = Object.values(this.state.paymentErrors).every(
       (element) => element === ""
     );
-
-    const months = [
-      "01",
-      "02",
-      "03",
-      "04",
-      "05",
-      "06",
-      "07",
-      "08",
-      "09",
-      "10",
-      "11",
-      "12",
-    ];
-
-    const years = [
-      "2023",
-      "2024",
-      "2025",
-      "2026",
-      "2027",
-      "2028",
-      "2029",
-      "2030",
-      "2031",
-      "2032",
-      "2033",
-      "2034",
-      "2035",
-      "2036",
-      "2037",
-      "2038",
-      "2039",
-      "2040",
-      "2041",
-      "2042",
-      "2043",
-      "2044",
-      "2045",
-      "2046",
-      "2047",
-      "2048",
-      "2049",
-      "2050",
-    ];
 
     const validateCardNumber = (e) => {
       const value = e.target.value.trim();
@@ -356,9 +311,7 @@ class Payment extends React.Component {
                       Month
                     </option>
                     {months.map((month) => (
-                      <option key={month} value={month}>
-                        {month}
-                      </option>
+                      <DropdownOption key={month} value={month} />
                     ))}
                   </select>
                   <select id="selectExpiryYear" onChange={getExpiryYear}>
@@ -366,9 +319,7 @@ class Payment extends React.Component {
                       Year
                     </option>
                     {years.map((year) => (
-                      <option key={year} value={year}>
-                        {year}
-                      </option>
+                      <DropdownOption key={year} value={year} />
                     ))}
                   </select>
                   {this.state.paymentErrors.expiryError && (
