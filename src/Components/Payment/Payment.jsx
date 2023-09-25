@@ -73,10 +73,11 @@ class Payment extends React.Component {
     } = this.props;
 
     // Calculate totals based on current state values of unit prices & quantity:
-    const cartSubtotal = itemsInCart.map(
-      (item) => item.unitPrice * item.quantity
+    const cartSubtotal = roundToHundredth(
+      itemsInCart
+        .map((item) => item.unitPrice * item.quantity)
+        .reduce((a, b) => a + b)
     );
-    cartSubtotal = roundToHundredth(cartSubtotal.reduce((a, b) => a + b));
 
     const discount = roundToHundredth(cartSubtotal * discountRate);
 
@@ -143,7 +144,7 @@ class Payment extends React.Component {
       const value = e.target.value.trim();
       const errorText = this.checkCardNumberError(value);
       const cardType = this.findDebitCardType(value);
-      const mask = value.split(" ").join("");
+      let mask = value.split(" ").join("");
       // If any input...
       if (mask.length) {
         if (cardType === "AMERICAN_EXPRESS") {
