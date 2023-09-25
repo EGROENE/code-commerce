@@ -260,7 +260,6 @@ class App extends React.Component {
               shippingAndHandling={this.state.shippingAndHandling}
               deliveryTime={this.state.deliveryTime}
               isOrderSummaryDisplayed={this.state.isOrderSummaryDisplayed}
-              showHideOrderDetails={this.showHideOrderDetails}
             />
           )}
         </header>
