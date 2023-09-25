@@ -282,11 +282,11 @@ class Login extends React.Component {
 
     const validateEmailLogin = (e) => {
       let value = e.target.value.trim();
+      setAccountEmailAddress(value);
       let registeredAccount = this.getRegisteredAccount(value);
       // If account exists w/ input email, but no PW has been entered yet
       if (registeredAccount && !this.state.password.length) {
         this.setState((prevState) => ({
-          accountEmailAddress: value,
           loginErrors: {
             ...prevState.loginErrors,
             signupEmailError: "",
@@ -296,7 +296,6 @@ class Login extends React.Component {
         // If input PW matches PW of registered account
       } else if (registeredAccount?.password === this.state.password) {
         this.setState((prevState) => ({
-          accountEmailAddress: value,
           loginErrors: {
             ...prevState.loginErrors,
             signupEmailError: "",
@@ -307,7 +306,6 @@ class Login extends React.Component {
         // If no account was found w/ input email
       } else if (!registeredAccount) {
         this.setState((prevState) => ({
-          accountEmailAddress: value,
           loginErrors: {
             accountEmailAddress: "",
             ...prevState.loginErrors,
@@ -317,7 +315,6 @@ class Login extends React.Component {
         // If input email & PW are not associated
       } else {
         this.setState((prevState) => ({
-          accountEmailAddress: value,
           loginErrors: {
             accountEmailAddress: "",
             ...prevState.loginErrors,
