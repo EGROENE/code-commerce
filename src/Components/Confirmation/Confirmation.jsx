@@ -32,10 +32,11 @@ class Confirmation extends React.Component {
       deliveryTime,
     } = this.props;
 
-    const cartSubtotal = itemsInCart.map(
-      (item) => item.unitPrice * item.quantity
+    const cartSubtotal = roundToHundredth(
+      itemsInCart
+        .map((item) => item.unitPrice * item.quantity)
+        .reduce((a, b) => a + b)
     );
-    cartSubtotal = roundToHundredth(cartSubtotal.reduce((a, b) => a + b));
 
     const discount = roundToHundredth(cartSubtotal * discountRate);
 
