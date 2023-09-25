@@ -271,6 +271,15 @@ a:hover {
   font-size: var(--size-20);
 }
 
+.itemsContainer {
+  margin-right: 0.75rem;
+}
+
+.itemsInCartSummarySeveral {
+  height: 24rem;
+  overflow-y: scroll;
+}
+
 .cartSummaryItem {
   border-top: 2px solid white;
   border-top: 2px solid var(--theme-color);

@@ -36,15 +36,6 @@
     font-size: var(--size-12);
 }
 
-#itemsInCartSummarySeveral {
-    height: 24rem;
-    overflow-y: scroll;
-}
-
-#itemsContainer {
-    margin-right: 0.75rem;
-}
-
 /* MOBILE STYLING */
 @media screen and (max-width: 962px) {
     #deliveryInfoContainer {
