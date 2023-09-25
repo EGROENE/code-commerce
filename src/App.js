@@ -259,7 +259,6 @@ class App extends React.Component {
               cardType={this.state.paymentDetails.cardType}
               shippingAndHandling={this.state.shippingAndHandling}
               deliveryTime={this.state.deliveryTime}
-              isOrderSummaryDisplayed={this.state.isOrderSummaryDisplayed}
             />
           )}
         </header>

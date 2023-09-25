@@ -30,7 +30,6 @@ class Confirmation extends React.Component {
       cardType,
       shippingAndHandling,
       deliveryTime,
-      isOrderSummaryDisplayed,
     } = this.props;
 
     let cartSubtotal = itemsInCart.map(
@@ -69,16 +68,20 @@ class Confirmation extends React.Component {
         </div>
         <div
           id={style.modalContainer}
-          onClick={isOrderSummaryDisplayed && this.showHideOrderDetails}
+          onClick={
+            this.state.isOrderSummaryDisplayed && this.showHideOrderDetails
+          }
           style={
-            isOrderSummaryDisplayed
+            this.state.isOrderSummaryDisplayed
               ? { display: "flex", position: "fixed" }
               : { display: "none", position: "unset" }
           }
         ></div>
         <div
           style={
-            isOrderSummaryDisplayed ? { display: "block" } : { display: "none" }
+            this.state.isOrderSummaryDisplayed
+              ? { display: "block" }
+              : { display: "none" }
           }
           id={style.orderSummaryContainer}
         >
