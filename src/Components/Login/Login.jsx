@@ -121,7 +121,7 @@ class Login extends React.Component {
 
   // Validate password on signup:
   validatePasswordOnSignup = (e) => {
-    let value = e.target.value.trim();
+    const value = e.target.value.trim();
     if (
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/.test(
         value
@@ -148,7 +148,7 @@ class Login extends React.Component {
 
   // Validate passwords:
   validatePasswordConfirmation = (e) => {
-    let value = e.target.value.trim();
+    const value = e.target.value.trim();
     if (this.state.password !== value) {
       this.setState((prevState) => ({
         loginErrors: {
@@ -167,9 +167,11 @@ class Login extends React.Component {
   };
 
   validatePasswordOnLogin = (e) => {
-    let value = e.target.value.trim();
-    let userAccount = this.getRegisteredAccount(this.state.accountEmailAddress);
-    let passwordExists = this.passwordExists(value);
+    const value = e.target.value.trim();
+    const userAccount = this.getRegisteredAccount(
+      this.state.accountEmailAddress
+    );
+    const passwordExists = this.passwordExists(value);
     // User enters PW that is registered w/ at least one account, but there is no email input
     if (passwordExists && !this.state.accountEmailAddress.length) {
       this.setState((prevState) => ({
@@ -244,8 +246,8 @@ class Login extends React.Component {
 
     // Validate email address:
     const validateEmailSignup = (e) => {
-      let value = e.target.value.trim();
-      let userAccount = this.getRegisteredAccount(value);
+      const value = e.target.value.trim();
+      const userAccount = this.getRegisteredAccount(value);
       if (userAccount) {
         setAccountEmailAddress(value);
         this.setState((prevState) => ({
@@ -281,9 +283,9 @@ class Login extends React.Component {
     };
 
     const validateEmailLogin = (e) => {
-      let value = e.target.value.trim();
+      const value = e.target.value.trim();
       setAccountEmailAddress(value);
-      let registeredAccount = this.getRegisteredAccount(value);
+      const registeredAccount = this.getRegisteredAccount(value);
       // If account exists w/ input email, but no PW has been entered yet
       if (registeredAccount && !this.state.password.length) {
         this.setState((prevState) => ({
@@ -489,7 +491,7 @@ class Login extends React.Component {
       },
     ];
 
-    let areNoErrors = Object.values(this.state.loginErrors).every(
+    const areNoErrors = Object.values(this.state.loginErrors).every(
       (element) => element === ""
     );
 

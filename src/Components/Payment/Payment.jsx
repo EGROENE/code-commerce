@@ -28,8 +28,8 @@ class Payment extends React.Component {
 
   // Method to format AmEx numbers:
   formatAmex(inputNumber) {
-    let cleaned = ("" + inputNumber).replace(/\D/g, "");
-    let match = cleaned.match(/^(\d{4})(\d{6})(\d{5})$/);
+    const cleaned = ("" + inputNumber).replace(/\D/g, "");
+    const match = cleaned.match(/^(\d{4})(\d{6})(\d{5})$/);
     if (match) {
       return match[1] + " " + match[2] + " " + match[3];
     }
@@ -73,14 +73,14 @@ class Payment extends React.Component {
     } = this.props;
 
     // Calculate totals based on current state values of unit prices & quantity:
-    let cartSubtotal = itemsInCart.map(
+    const cartSubtotal = itemsInCart.map(
       (item) => item.unitPrice * item.quantity
     );
     cartSubtotal = roundToHundredth(cartSubtotal.reduce((a, b) => a + b));
 
-    let discount = roundToHundredth(cartSubtotal * discountRate);
+    const discount = roundToHundredth(cartSubtotal * discountRate);
 
-    let cartTotal = cartSubtotal - discount + shippingAndHandling;
+    const cartTotal = cartSubtotal - discount + shippingAndHandling;
 
     const summaryTotals = [
       { label: "Cart Subtotal:", value: cartSubtotal },
@@ -89,7 +89,7 @@ class Payment extends React.Component {
       { label: "Cart Total:", value: cartTotal },
     ];
 
-    let areNoErrors = Object.values(this.state.paymentErrors).every(
+    const areNoErrors = Object.values(this.state.paymentErrors).every(
       (element) => element === ""
     );
 
@@ -140,10 +140,10 @@ class Payment extends React.Component {
     ];
 
     const validateCardNumber = (e) => {
-      let value = e.target.value.trim();
-      let errorText = this.checkCardNumberError(value);
-      let cardType = this.findDebitCardType(value);
-      let mask = value.split(" ").join("");
+      const value = e.target.value.trim();
+      const errorText = this.checkCardNumberError(value);
+      const cardType = this.findDebitCardType(value);
+      const mask = value.split(" ").join("");
       // If any input...
       if (mask.length) {
         if (cardType === "AMERICAN_EXPRESS") {
@@ -185,7 +185,7 @@ class Payment extends React.Component {
     const currentYear = new Date().getFullYear();
 
     const getExpiryMonth = (e) => {
-      let value = e.target.value;
+      const value = e.target.value;
       setOrderDetails("payment", "expiryMonth", value);
       if (
         (+value <= currentMonth &&
@@ -212,7 +212,7 @@ class Payment extends React.Component {
     };
 
     const getExpiryYear = (e) => {
-      let value = e.target.value;
+      const value = e.target.value;
       setOrderDetails("payment", "expiryYear", value);
       if (
         (+paymentDetails.expiryMonth !== "" &&
@@ -239,7 +239,7 @@ class Payment extends React.Component {
     };
 
     const validateCVV = (e) => {
-      let value = e.target.value.trim();
+      const value = e.target.value.trim();
       setOrderDetails("payment", "securityCode", value);
       if (/[0-9]$/i.test(value)) {
         this.setState((prevState) => ({

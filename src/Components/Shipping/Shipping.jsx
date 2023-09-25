@@ -18,8 +18,8 @@ class Shipping extends React.Component {
   }
 
   formatPhoneNumber(phoneNumberString) {
-    let cleaned = ("" + phoneNumberString).replace(/\D/g, "");
-    let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    const cleaned = ("" + phoneNumberString).replace(/\D/g, "");
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
     if (match) {
       return "(" + match[1] + ") " + match[2] + "-" + match[3];
     }
@@ -45,7 +45,7 @@ class Shipping extends React.Component {
     } = this.props;
 
     const validateStreetAddress = (e) => {
-      let value = e.target.value;
+      const value = e.target.value;
       setOrderDetails("shipping", "streetAddress", value);
       if (
         /[A-Z0-9#/ '-]+/i.test(value) &&
@@ -72,8 +72,8 @@ class Shipping extends React.Component {
     };
 
     const validatePhoneNumber = (e) => {
-      let value = e.target.value.trim();
-      let phoneNumberMask = this.formatPhoneNumber(value);
+      const value = e.target.value.trim();
+      const phoneNumberMask = this.formatPhoneNumber(value);
 
       setOrderDetails("shipping", "phoneNumber", value);
       setOrderDetails("shipping", "phoneNumberMask", phoneNumberMask);
@@ -110,14 +110,15 @@ class Shipping extends React.Component {
     };
 
     // Calculate totals based on current state values of unit prices & quantity:
-    let cartSubtotal = itemsInCart.map(
-      (item) => item.unitPrice * item.quantity
+    const cartSubtotal = roundToHundredth(
+      itemsInCart
+        .map((item) => item.unitPrice * item.quantity)
+        .reduce((a, b) => a + b)
     );
-    cartSubtotal = roundToHundredth(cartSubtotal.reduce((a, b) => a + b));
 
-    let discount = roundToHundredth(cartSubtotal * discountRate);
+    const discount = roundToHundredth(cartSubtotal * discountRate);
 
-    let cartTotal = cartSubtotal - discount + shippingAndHandling;
+    const cartTotal = cartSubtotal - discount + shippingAndHandling;
 
     const titles = [
       { isDisabled: true, isSelected: true, value: "--select--" },
@@ -149,7 +150,7 @@ class Shipping extends React.Component {
       { label: "Cart Total:", value: cartTotal },
     ];
 
-    let areNoErrors = Object.values(this.state.shippingErrors).every(
+    const areNoErrors = Object.values(this.state.shippingErrors).every(
       (element) => element === ""
     );
 

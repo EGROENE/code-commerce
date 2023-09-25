@@ -32,14 +32,14 @@ class Confirmation extends React.Component {
       deliveryTime,
     } = this.props;
 
-    let cartSubtotal = itemsInCart.map(
+    const cartSubtotal = itemsInCart.map(
       (item) => item.unitPrice * item.quantity
     );
     cartSubtotal = roundToHundredth(cartSubtotal.reduce((a, b) => a + b));
 
-    let discount = roundToHundredth(cartSubtotal * discountRate);
+    const discount = roundToHundredth(cartSubtotal * discountRate);
 
-    let cartTotal = cartSubtotal - discount + shippingAndHandling;
+    const cartTotal = cartSubtotal - discount + shippingAndHandling;
 
     const summaryTotals = [
       { label: "Cart Subtotal:", value: cartSubtotal },
@@ -48,7 +48,7 @@ class Confirmation extends React.Component {
       { label: "Cart Total:", value: cartTotal },
     ];
 
-    let lastDigitsOfCardNumber =
+    const lastDigitsOfCardNumber =
       cardType === "AMERICAN_EXPRESS"
         ? cardNumber.substr(cardNumber.length - 5)
         : cardNumber.substr(cardNumber.length - 4);

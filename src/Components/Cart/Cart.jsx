@@ -24,23 +24,24 @@ class Cart extends React.Component {
     } = this.props;
 
     // Calculate totals based on current state values of unit prices & quantity:
-    let cartSubtotal = itemsInCart.map(
-      (item) => item.unitPrice * item.quantity
+    const cartSubtotal = roundToHundredth(
+      itemsInCart
+        .map((item) => item.unitPrice * item.quantity)
+        .reduce((a, b) => a + b)
     );
-    cartSubtotal = roundToHundredth(cartSubtotal.reduce((a, b) => a + b));
 
-    let cartTotal = roundToHundredth(
+    const cartTotal = roundToHundredth(
       cartSubtotal - cartSubtotal * discountRate
     );
 
     // Runs in onChange of quantity input box of each item in cart
     const updateItemQuantities = (e, itemNameCamelCase) => {
-      let newQuantity = Number(e.target.value.trim());
-      let selectedItem = itemsInCart.filter((item) => {
+      const newQuantity = Number(e.target.value.trim());
+      const selectedItem = itemsInCart.filter((item) => {
         return item.itemNameCamelCase === itemNameCamelCase;
       })[0];
 
-      let selectedItemIndex = itemsInCart.indexOf(selectedItem);
+      const selectedItemIndex = itemsInCart.indexOf(selectedItem);
 
       // Prevent user from manually entering '0' or backspacing and deleting item quantities:
       if (newQuantity !== "" && newQuantity !== 0) {
@@ -56,14 +57,14 @@ class Cart extends React.Component {
 
     // Method that checks if all item.quantities are zero (no items in cart)
     const cartIsEmpty = () => {
-      let allItemQuantities = itemsInCart.map((item) => item.quantity);
+      const allItemQuantities = itemsInCart.map((item) => item.quantity);
       return allItemQuantities.some((quantity) => quantity > 0) ? false : true;
     };
 
     // Set state value inputPromoCode to what user inputs:
     // Needed so field and 'apply' btn don't automatically become disabled when user enters a valid code
     const setInputPromoCode = (e) => {
-      let inputPromoCode = e.target.value.trim().toLowerCase();
+      const inputPromoCode = e.target.value.trim().toLowerCase();
       this.setState((prevState) => ({
         ...prevState,
         inputPromoCode: inputPromoCode,
