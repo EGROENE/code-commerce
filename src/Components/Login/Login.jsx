@@ -325,7 +325,7 @@ class Login extends React.Component {
       }
     };
 
-    const formInputs = [
+    const loginAndSignupFormInputs = [
       {
         id: "signupEmail",
         isHidden: this.state.isLoginMethodSelected,
@@ -514,7 +514,7 @@ class Login extends React.Component {
               toNextPage(e, "Login");
             }}
           >
-            {formInputs.map((input) => (
+            {loginAndSignupFormInputs.map((input) => (
               <label key={input.id} hidden={input.isHidden}>
                 <header key={input.labelText + "1"}>{input.labelText}</header>
                 <div className="inputFieldWithImage">
