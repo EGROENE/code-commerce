@@ -47,9 +47,6 @@ class App extends React.Component {
         securityCode: "",
         cardImage: "",
       },
-
-      // State values for Confirmation
-      isOrderSummaryDisplayed: false,
     };
   }
 
@@ -184,13 +181,6 @@ class App extends React.Component {
   };
   // END SETTERS
 
-  // METHODS FOR CONFIRMATION
-  showHideOrderDetails = () => {
-    !this.state.isOrderSummaryDisplayed
-      ? this.setState({ isOrderSummaryDisplayed: true })
-      : this.setState({ isOrderSummaryDisplayed: false });
-  };
-
   render() {
     let {
       isLoginComplete,
@@ -240,7 +230,7 @@ class App extends React.Component {
               nameOrCityIsValid={this.nameOrCityIsValid}
             />
           )}
-          {!isShippingComplete && !isPaymentComplete && (
+          {isShippingComplete && !isPaymentComplete && (
             <Payment
               setOrderDetails={this.setOrderDetails}
               nameOrCityIsValid={this.nameOrCityIsValid}
@@ -257,7 +247,7 @@ class App extends React.Component {
               paymentDetails={this.state.paymentDetails}
             />
           )}
-          {isPaymentComplete && (
+          {!isPaymentComplete && (
             <Confirmation
               accountEmailAddress={this.state.accountEmailAddress}
               arePagesComplete={this.state.arePagesComplete}

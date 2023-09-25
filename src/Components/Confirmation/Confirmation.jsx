@@ -4,6 +4,19 @@ import style from "./Confirmation.module.css";
 import { roundToHundredth } from "../../methods";
 
 class Confirmation extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      isOrderSummaryDisplayed: false,
+    };
+  }
+
+  showHideOrderDetails = () => {
+    !this.state.isOrderSummaryDisplayed
+      ? this.setState({ isOrderSummaryDisplayed: true })
+      : this.setState({ isOrderSummaryDisplayed: false });
+  };
+
   render() {
     // Destructure props:
     const {
@@ -18,7 +31,6 @@ class Confirmation extends React.Component {
       shippingAndHandling,
       deliveryTime,
       isOrderSummaryDisplayed,
-      showHideOrderDetails,
     } = this.props;
 
     let cartSubtotal = itemsInCart.map(
@@ -50,12 +62,14 @@ class Confirmation extends React.Component {
           <p>It should be arriving within {deliveryTime}.</p>
           <div id={style.confirmationPageBtnContainer}>
             <button>Back to Homepage</button>
-            <button onClick={showHideOrderDetails}>See Order Details</button>
+            <button onClick={this.showHideOrderDetails}>
+              See Order Details
+            </button>
           </div>
         </div>
         <div
           id={style.modalContainer}
-          onClick={isOrderSummaryDisplayed && showHideOrderDetails}
+          onClick={isOrderSummaryDisplayed && this.showHideOrderDetails}
           style={
             isOrderSummaryDisplayed
               ? { display: "flex", position: "fixed" }
@@ -70,7 +84,7 @@ class Confirmation extends React.Component {
         >
           <i
             title="Close Order Summary"
-            onClick={showHideOrderDetails}
+            onClick={this.showHideOrderDetails}
             id={style.closeModalBtn}
             className="fas fa-times"
           ></i>
