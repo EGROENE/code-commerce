@@ -182,7 +182,7 @@ class App extends React.Component {
   // END SETTERS
 
   render() {
-    let {
+    const {
       isLoginComplete,
       isCartComplete,
       isShippingComplete,
