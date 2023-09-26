@@ -196,6 +196,7 @@ class App extends React.Component {
           {!isLoginComplete && (
             <Login
               toNextPage={this.toNextPage}
+              accountEmailAddress={this.state.accountEmailAddress}
               setAccountEmailAddress={this.setAccountEmailAddress}
               postalCodeIsValid={this.postalCodeIsValid}
               nameOrCityIsValid={this.nameOrCityIsValid}
