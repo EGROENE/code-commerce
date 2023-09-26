@@ -370,7 +370,7 @@ class Login extends React.Component {
       {
         id: "loginEmail",
         isHidden: !this.state.isLoginMethodSelected,
-        labelText: "Email Address:",
+        labelText: "E-mail Address:",
         placeholder: "E-mail address",
         inputType: "email",
         onChange: (e) => validateEmail(e, false),
