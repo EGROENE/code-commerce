@@ -9,6 +9,7 @@ class Login extends React.Component {
     super();
     this.state = {
       password: "",
+      confirmationPassword: "",
       isLoginMethodSelected: true,
       isRequired: false,
       passwordPlaceholder: "Enter your password",
@@ -79,9 +80,6 @@ class Login extends React.Component {
       isLoginMethodSelected: true,
       passwordPlaceholder: "Enter your password",
       isRequired: false,
-      signupEmailFieldValue: "",
-      loginEmailFieldValue: undefined,
-      loginPasswordValue: undefined,
     });
   };
 
@@ -90,9 +88,6 @@ class Login extends React.Component {
       isLoginMethodSelected: false,
       passwordPlaceholder: "Create a password",
       isRequired: true,
-      signupEmailFieldValue: undefined,
-      loginEmailFieldValue: "",
-      loginPasswordValue: "",
     });
   };
 
@@ -120,20 +115,44 @@ class Login extends React.Component {
   // Validate password on signup:
   validatePasswordOnSignup = (e) => {
     const value = e.target.value.trim();
+    // If value meets requirements for password:
     if (
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/.test(
         value
       )
     ) {
-      this.setState((prevState) => ({
-        loginErrors: {
-          ...prevState.loginErrors,
-          passwordError: "",
-        },
-        password: value,
-      }));
+      // If value matches the state value of confirmation password (added onChange of confirm PW field):
+      // Causes confirm PW error message to disappear if input value of init pw field matches value of confirm PW field
+      if (this.state.confirmationPassword === value) {
+        this.setState((prevState) => ({
+          ...prevState,
+          loginErrors: {
+            ...prevState.loginErrors,
+            passwordError: "",
+            confirmPasswordError: "",
+          },
+          password: value,
+        }));
+        // If confirm PW field has a value that doesn't equal input value of initial PW field:
+        // Causes confirm pw error to appear if value of init pw field (being changed by this method) doesn't match value of confirm pw field, if it exists
+      } else if (
+        this.state.confirmationPassword.length &&
+        this.state.confirmationPassword !== value
+      ) {
+        this.setState((prevState) => ({
+          ...prevState,
+          loginErrors: {
+            ...prevState.loginErrors,
+            passwordError: "",
+            confirmPasswordError: "Passwords do not match",
+          },
+          password: value,
+        }));
+      }
+      // If input value of initial PW field doesn't meet PW requirements:
     } else {
       this.setState((prevState) => ({
+        ...prevState,
         loginErrors: {
           ...prevState.loginErrors,
           passwordError:
@@ -149,6 +168,8 @@ class Login extends React.Component {
     const value = e.target.value.trim();
     if (this.state.password !== value) {
       this.setState((prevState) => ({
+        ...prevState,
+        confirmationPassword: value,
         loginErrors: {
           ...prevState.loginErrors,
           confirmPasswordError: "Passwords do not match",
@@ -156,6 +177,8 @@ class Login extends React.Component {
       }));
     } else {
       this.setState((prevState) => ({
+        ...prevState,
+        confirmationPassword: value,
         loginErrors: {
           ...prevState.loginErrors,
           confirmPasswordError: "",
@@ -339,7 +362,7 @@ class Login extends React.Component {
         required: !this.state.isLoginMethodSelected,
         inputMode: "email",
         autoComplete: "email",
-        value: this.state.signupEmailFieldValue,
+        value: accountEmailAddress,
       },
       {
         id: "loginEmail",
@@ -352,7 +375,7 @@ class Login extends React.Component {
         required: this.state.isLoginMethodSelected,
         inputMode: "email",
         autoComplete: "email",
-        value: this.state.loginEmailFieldValue,
+        value: accountEmailAddress,
       },
       {
         id: "signupPassword",
