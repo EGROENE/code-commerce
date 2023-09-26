@@ -113,6 +113,7 @@ class Login extends React.Component {
   };
 
   // Validate password on signup:
+  // Run onChange of initial PW field in signup
   validatePasswordOnSignup = (e) => {
     const value = e.target.value.trim();
     // If value meets requirements for password:
@@ -163,7 +164,8 @@ class Login extends React.Component {
     }
   };
 
-  // Validate passwords:
+  // Check that value of PW confirmation field matches value of initial PW field
+  // Run onChange of PW confirmation input in signup
   validatePasswordConfirmation = (e) => {
     const value = e.target.value.trim();
     if (this.state.password !== value) {
@@ -214,7 +216,8 @@ class Login extends React.Component {
       },
     ];
 
-    // Validate email address:
+    // Validate email address
+    // Run onChange of email field of both login & signup
     const validateEmail = (e, isSignup) => {
       const value = e.target.value.trim();
       setAccountEmailAddress(value);
@@ -299,7 +302,7 @@ class Login extends React.Component {
       }
     };
 
-    // Combine PW validation methods here
+    // Run onChange of PW field on login
     const validatePasswordOnLogin = (e) => {
       const value = e.target.value.trim();
       const userAccount = this.getRegisteredAccount(accountEmailAddress);
