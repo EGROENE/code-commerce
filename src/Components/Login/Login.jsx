@@ -3,6 +3,7 @@ import style from "./Login.module.css";
 import { alertFormErrors } from "../../methods";
 import loginStyle from "./Login.module.css";
 import { registeredAccounts } from "../../constants";
+import { nameOrCityIsValid, postalCodeIsValid } from "../../validations";
 
 class Login extends React.Component {
   constructor() {
@@ -191,13 +192,8 @@ class Login extends React.Component {
 
   render() {
     // Destructure props:
-    const {
-      toNextPage,
-      accountEmailAddress,
-      setAccountEmailAddress,
-      postalCodeIsValid,
-      nameOrCityIsValid,
-    } = this.props;
+    const { toNextPage, accountEmailAddress, setAccountEmailAddress } =
+      this.props;
 
     const loginMethodHeaders = [
       {

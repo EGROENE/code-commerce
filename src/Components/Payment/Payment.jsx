@@ -5,6 +5,7 @@ import { alertFormErrors, roundToHundredth } from "../../methods";
 import { cardRegexPatterns, cardImages, months, years } from "../../constants";
 import DropdownOption from "../DropdownOption";
 import OrderSummary from "../OrderSummary";
+import { nameOrCityIsValid } from "../../validations";
 
 class Payment extends React.Component {
   constructor() {
@@ -60,7 +61,6 @@ class Payment extends React.Component {
     // Destructure props:
     const {
       setOrderDetails,
-      nameOrCityIsValid,
       arePagesComplete,
       itemsInCart,
       numberOfItemsInCart,

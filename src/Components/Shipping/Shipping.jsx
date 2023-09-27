@@ -6,6 +6,7 @@ import { usStateOptions } from "../../constants";
 import DropdownOption from "../DropdownOption";
 import OrderSummary from "../OrderSummary";
 import ErrorMessage from "../ErrorMessage";
+import { nameOrCityIsValid, postalCodeIsValid } from "../../validations";
 
 class Shipping extends React.Component {
   constructor() {
@@ -39,12 +40,10 @@ class Shipping extends React.Component {
       discountRate,
       shippingDetails,
       setOrderDetails,
-      postalCodeIsValid,
       shippingAndHandling,
       setShippingAndHandling,
       setDeliveryTime,
       arePagesComplete,
-      nameOrCityIsValid,
     } = this.props;
 
     const validateStreetAddress = (e) => {
