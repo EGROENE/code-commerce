@@ -1,10 +1,14 @@
 import React from "react";
-import ProgressBar from "../ProgressBar/ProgressBar";
 import style from "./Payment.module.css";
-import { alertFormErrors, roundToHundredth } from "../../methods";
-import { cardImages, months, years } from "../../constants";
+
+// Child components
+import ProgressBar from "../ProgressBar/ProgressBar";
 import DropdownOption from "../DropdownOption";
 import OrderSummary from "../OrderSummary";
+import ErrorMessage from "../ErrorMessage";
+
+import { cardImages, months, years } from "../../constants";
+import { alertFormErrors, roundToHundredth } from "../../methods";
 import {
   nameOrCityIsValid,
   cardNumberIsValid,
@@ -13,7 +17,6 @@ import {
   isYearValid,
   cvvIsValid,
 } from "../../validations";
-import ErrorMessage from "../ErrorMessage";
 
 class Payment extends React.Component {
   // Method to format AmEx numbers:
