@@ -5,13 +5,13 @@ import ProgressBar from "../ProgressBar/ProgressBar";
 import { usStateOptions } from "../../constants";
 import DropdownOption from "../DropdownOption";
 import OrderSummary from "../OrderSummary";
+import ErrorMessage from "../ErrorMessage";
 
 class Shipping extends React.Component {
   constructor() {
     super();
     this.state = {
       shippingErrors: {
-        nameError: "",
         streetAddressError: "",
         postalCodeError: "",
         cityError: "",
@@ -200,24 +200,6 @@ class Shipping extends React.Component {
                         type="text"
                         onChange={(e) => {
                           setOrderDetails("shipping", "name", e.target.value);
-                          if (nameOrCityIsValid(e.target.value)) {
-                            this.setState((prevState) => ({
-                              ...prevState,
-                              shippingErrors: {
-                                ...prevState.shippingErrors,
-                                nameError: "",
-                              },
-                            }));
-                          } else {
-                            this.setState((prevState) => ({
-                              ...prevState,
-                              shippingErrors: {
-                                ...prevState.shippingErrors,
-                                nameError:
-                                  "Enter alphabetical characters & any spaces or hyphens between words",
-                              },
-                            }));
-                          }
                         }}
                         placeholder="Recipient name"
                         required
@@ -226,11 +208,13 @@ class Shipping extends React.Component {
                         autoComplete="on"
                       />
                     </div>
-                    {this.state.shippingErrors.nameError !== "" && (
-                      <p id={style.nameErrorMessage}>
-                        {this.state.shippingErrors.nameError}
-                      </p>
-                    )}
+                    {shippingDetails.name !== "" &&
+                      !nameOrCityIsValid(shippingDetails.name) && (
+                        <ErrorMessage
+                          id={style.nameErrorMessage}
+                          message="Enter alphabetical characters & any spaces or hyphens between words"
+                        />
+                      )}
                   </label>
                 </div>
                 <label>
