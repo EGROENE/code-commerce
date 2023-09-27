@@ -1,11 +1,14 @@
 import React from "react";
 import style from "./Shipping.module.css";
-import { alertFormErrors, roundToHundredth } from "../../methods";
-import ProgressBar from "../ProgressBar/ProgressBar";
 import { usStateOptions } from "../../constants";
+
+// Child components:
 import DropdownOption from "../DropdownOption";
 import OrderSummary from "../OrderSummary";
 import ErrorMessage from "../ErrorMessage";
+import ProgressBar from "../ProgressBar/ProgressBar";
+
+import { alertFormErrors, roundToHundredth } from "../../methods";
 import {
   nameOrCityIsValid,
   phoneNumberIsValid,
