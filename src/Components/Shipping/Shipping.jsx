@@ -6,21 +6,14 @@ import { usStateOptions } from "../../constants";
 import DropdownOption from "../DropdownOption";
 import OrderSummary from "../OrderSummary";
 import ErrorMessage from "../ErrorMessage";
-import { nameOrCityIsValid, postalCodeIsValid } from "../../validations";
+import {
+  nameOrCityIsValid,
+  phoneNumberIsValid,
+  postalCodeIsValid,
+  streetAddressIsValid,
+} from "../../validations";
 
 class Shipping extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      shippingErrors: {
-        streetAddressError: "",
-        postalCodeError: "",
-        cityError: "",
-        phoneNumberError: "",
-      },
-    };
-  }
-
   formatPhoneNumber(phoneNumberString) {
     const cleaned = ("" + phoneNumberString).replace(/\D/g, "");
     const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
@@ -45,61 +38,6 @@ class Shipping extends React.Component {
       setDeliveryTime,
       arePagesComplete,
     } = this.props;
-
-    const validateStreetAddress = (e) => {
-      const value = e.target.value;
-      setOrderDetails("shipping", "streetAddress", value);
-      if (
-        /[A-Z0-9#/ '-]+/i.test(value) &&
-        value.replace(/\s/g, "").length &&
-        value.replace(/'/g, "").length &&
-        value.replace(/-/g, "").length
-      ) {
-        this.setState((prevState) => ({
-          ...prevState,
-          shippingErrors: {
-            ...prevState.shippingErrors,
-            streetAddressError: "",
-          },
-        }));
-      } else {
-        this.setState((prevState) => ({
-          ...prevState,
-          shippingErrors: {
-            ...prevState.shippingErrors,
-            streetAddressError: "Please enter a valid address",
-          },
-        }));
-      }
-    };
-
-    const validatePhoneNumber = (e) => {
-      const value = e.target.value.trim();
-      const phoneNumberMask = this.formatPhoneNumber(value);
-
-      setOrderDetails("shipping", "phoneNumber", value);
-      setOrderDetails("shipping", "phoneNumberMask", phoneNumberMask);
-
-      if (
-        /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/i.test(value)
-      ) {
-        this.setState((prevState) => ({
-          ...prevState,
-          shippingErrors: {
-            ...prevState.shippingErrors,
-            phoneNumberError: "",
-          },
-        }));
-      } else {
-        this.setState((prevState) => ({
-          ...prevState,
-          shippingErrors: {
-            ...prevState.shippingErrors,
-            phoneNumberError: "Enter 10-digit, US number",
-          },
-        }));
-      }
-    };
 
     const handleDeliveryOptionSelection = (e) => {
       if (e.target.id === "expeditedDelivery") {
@@ -151,9 +89,17 @@ class Shipping extends React.Component {
       { label: "Cart Total:", value: cartTotal },
     ];
 
-    const areNoErrors = Object.values(this.state.shippingErrors).every(
-      (element) => element === ""
-    );
+    const validators = {
+      nameIsValid: nameOrCityIsValid(shippingDetails.name),
+      streetAddressIsValid: streetAddressIsValid(shippingDetails.streetAddress),
+      cityIsValid: nameOrCityIsValid(shippingDetails.city),
+      postalCodeIsValid: postalCodeIsValid(shippingDetails.postalCode),
+      phoneNumberIsValid: phoneNumberIsValid(shippingDetails.phoneNumber),
+    };
+
+    const areNoErrors =
+      Object.values(validators).every((validator) => validator === true) &&
+      shippingDetails.stateOrTerritory !== "";
 
     return (
       <div id="shippingAndPayment">
@@ -207,13 +153,12 @@ class Shipping extends React.Component {
                         autoComplete="on"
                       />
                     </div>
-                    {shippingDetails.name !== "" &&
-                      !nameOrCityIsValid(shippingDetails.name) && (
-                        <ErrorMessage
-                          id={style.nameErrorMessage}
-                          message="Enter alphabetical characters & any spaces or hyphens between words"
-                        />
-                      )}
+                    {shippingDetails.name !== "" && !validators.nameIsValid && (
+                      <ErrorMessage
+                        id={style.nameErrorMessage}
+                        message="Enter alphabetical characters & any spaces or hyphens between words"
+                      />
+                    )}
                   </label>
                 </div>
                 <label>
@@ -224,14 +169,21 @@ class Shipping extends React.Component {
                     type="text"
                     required
                     placeholder="Delivery address"
-                    onChange={validateStreetAddress}
+                    onChange={(e) =>
+                      setOrderDetails(
+                        "shipping",
+                        "streetAddress",
+                        e.target.value
+                      )
+                    }
                     inputMode="text"
                     minLength="1"
                     autoComplete="street-address"
                   />
-                  {this.state.shippingErrors.streetAddressError !== "" && (
-                    <p>{this.state.shippingErrors.streetAddressError}</p>
-                  )}
+                  {shippingDetails.streetAddress !== "" &&
+                    !validators.streetAddressIsValid && (
+                      <ErrorMessage message="Please enter a valid address" />
+                    )}
                 </label>
                 <div id={style.moreAddressDetails}>
                   <label>
@@ -247,23 +199,6 @@ class Shipping extends React.Component {
                           "postalCode",
                           e.target.value
                         );
-                        if (postalCodeIsValid(e.target.value)) {
-                          this.setState((prevState) => ({
-                            ...prevState,
-                            shippingErrors: {
-                              ...prevState.shippingErrors,
-                              postalCodeError: "",
-                            },
-                          }));
-                        } else {
-                          this.setState((prevState) => ({
-                            ...prevState,
-                            shippingErrors: {
-                              ...prevState.shippingErrors,
-                              postalCodeError: "5-digit US postal code",
-                            },
-                          }));
-                        }
                       }}
                       required
                       inputMode="numeric"
@@ -271,9 +206,10 @@ class Shipping extends React.Component {
                       maxLength="5"
                       autoComplete="postal-code"
                     />
-                    {this.state.shippingErrors.postalCodeError !== "" && (
-                      <p>{this.state.shippingErrors.postalCodeError}</p>
-                    )}
+                    {shippingDetails.postalCode !== "" &&
+                      !validators.postalCodeIsValid && (
+                        <ErrorMessage message="5-digit US postal code" />
+                      )}
                   </label>
                   <label>
                     <header>City: </header>
@@ -285,31 +221,13 @@ class Shipping extends React.Component {
                       type="text"
                       onChange={(e) => {
                         setOrderDetails("shipping", "city", e.target.value);
-                        if (nameOrCityIsValid(e.target.value)) {
-                          this.setState((prevState) => ({
-                            ...prevState,
-                            shippingErrors: {
-                              ...prevState.shippingErrors,
-                              cityError: "",
-                            },
-                          }));
-                        } else {
-                          this.setState((prevState) => ({
-                            ...prevState,
-                            shippingErrors: {
-                              ...prevState.shippingErrors,
-                              cityError:
-                                "Enter alphabetical characters & any spaces between words",
-                            },
-                          }));
-                        }
                       }}
                       required
                       inputMode="text"
                       autoComplete="on"
                     />
-                    {this.state.shippingErrors.cityError !== "" && (
-                      <p>{this.state.shippingErrors.cityError}</p>
+                    {shippingDetails.city !== "" && !validators.cityIsValid && (
+                      <ErrorMessage message="Enter a valid city" />
                     )}
                   </label>
                   <label>
@@ -348,7 +266,18 @@ class Shipping extends React.Component {
                     id="phoneNumber"
                     placeholder="US phone number"
                     type="text"
-                    onChange={validatePhoneNumber}
+                    onChange={(e) => {
+                      setOrderDetails(
+                        "shipping",
+                        "phoneNumber",
+                        e.target.value
+                      );
+                      setOrderDetails(
+                        "shipping",
+                        "phoneNumberMask",
+                        this.formatPhoneNumber(e.target.value)
+                      );
+                    }}
                     inputMode="numeric"
                     minLength="14"
                     maxLength="14"
@@ -356,9 +285,10 @@ class Shipping extends React.Component {
                     required
                     autoComplete="tel-national"
                   />
-                  {this.state.shippingErrors.phoneNumberError !== "" && (
-                    <p>{this.state.shippingErrors.phoneNumberError}</p>
-                  )}
+                  {shippingDetails.phoneNumber !== "" &&
+                    !validators.phoneNumberIsValid && (
+                      <ErrorMessage message="10-digit, US number" />
+                    )}
                 </label>
               </form>
               <div id={style.deliveryOptions}>
@@ -392,17 +322,9 @@ class Shipping extends React.Component {
                 </button>
                 <button
                   form="shippingForm"
-                  type={
-                    !areNoErrors || shippingDetails.stateOrTerritory === ""
-                      ? "button"
-                      : "submit"
-                  }
+                  type={!areNoErrors ? "button" : "submit"}
                   title="To Payment"
-                  onClick={
-                    !areNoErrors || shippingDetails.stateOrTerritory === ""
-                      ? alertFormErrors
-                      : undefined
-                  }
+                  onClick={!areNoErrors ? alertFormErrors : undefined}
                 >
                   To Payment
                 </button>
