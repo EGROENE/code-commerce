@@ -175,14 +175,14 @@ class App extends React.Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1>codeCommerce</h1>
-          {isLoginComplete && (
+          {!isLoginComplete && (
             <Login
               toNextPage={this.toNextPage}
               accountEmailAddress={this.state.accountEmailAddress}
               setAccountEmailAddress={this.setAccountEmailAddress}
             />
           )}
-          {isLoginComplete && isCartComplete && (
+          {isLoginComplete && !isCartComplete && (
             <Cart
               toNextPage={this.toNextPage}
               setItemsAndNumberOfItemsInCart={
@@ -194,7 +194,7 @@ class App extends React.Component {
               setDiscountRate={this.setDiscountRate}
             />
           )}
-          {!isCartComplete && !isShippingComplete && (
+          {isCartComplete && !isShippingComplete && (
             <Shipping
               toPreviousPage={this.toPreviousPage}
               toNextPage={this.toNextPage}
