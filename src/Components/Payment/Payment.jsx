@@ -141,7 +141,8 @@ class Payment extends React.Component {
                   placeholder="Name on card"
                   autoComplete="cc-name"
                 />
-                {paymentDetails.cardHolder !== "" &&
+                {hasFailedSubmission &&
+                  paymentDetails.cardHolder !== "" &&
                   !validators.cardHolderIsValid && (
                     <ErrorMessage message="Enter name as it appears on card" />
                   )}
@@ -187,7 +188,8 @@ class Payment extends React.Component {
                     />
                   )}
                 </div>
-                {paymentDetails.cardNumber !== "" &&
+                {hasFailedSubmission &&
+                  paymentDetails.cardNumber !== "" &&
                   !validators.cardNumberIsValid && (
                     <ErrorMessage message="Invalid card number" />
                   )}
@@ -271,7 +273,8 @@ class Payment extends React.Component {
                     value={paymentDetails.securityCode}
                     autoComplete="cc-csc"
                   />
-                  {paymentDetails.securityCode !== "" &&
+                  {hasFailedSubmission &&
+                    paymentDetails.securityCode !== "" &&
                     !validators.cvvIsValid && (
                       <ErrorMessage message="Invalid CVV" />
                     )}

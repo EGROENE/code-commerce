@@ -165,12 +165,14 @@ class Shipping extends React.Component {
                         autoComplete="on"
                       />
                     </div>
-                    {shippingDetails.name !== "" && !validators.nameIsValid && (
-                      <ErrorMessage
-                        id={style.nameErrorMessage}
-                        message="Enter alphabetical characters & any spaces or hyphens between words"
-                      />
-                    )}
+                    {hasFailedSubmission &&
+                      shippingDetails.name !== "" &&
+                      !validators.nameIsValid && (
+                        <ErrorMessage
+                          id={style.nameErrorMessage}
+                          message="Enter alphabetical characters & any spaces or hyphens between words"
+                        />
+                      )}
                   </label>
                 </div>
                 <label>
@@ -199,7 +201,8 @@ class Shipping extends React.Component {
                     minLength="1"
                     autoComplete="street-address"
                   />
-                  {shippingDetails.streetAddress !== "" &&
+                  {hasFailedSubmission &&
+                    shippingDetails.streetAddress !== "" &&
                     !validators.streetAddressIsValid && (
                       <ErrorMessage message="Please enter a valid address" />
                     )}
@@ -232,7 +235,8 @@ class Shipping extends React.Component {
                       maxLength="5"
                       autoComplete="postal-code"
                     />
-                    {shippingDetails.postalCode !== "" &&
+                    {hasFailedSubmission &&
+                      shippingDetails.postalCode !== "" &&
                       !validators.postalCodeIsValid && (
                         <ErrorMessage message="5-digit US postal code" />
                       )}
@@ -258,9 +262,11 @@ class Shipping extends React.Component {
                       inputMode="text"
                       autoComplete="on"
                     />
-                    {shippingDetails.city !== "" && !validators.cityIsValid && (
-                      <ErrorMessage message="Enter a valid city" />
-                    )}
+                    {hasFailedSubmission &&
+                      shippingDetails.city !== "" &&
+                      !validators.cityIsValid && (
+                        <ErrorMessage message="Enter a valid city" />
+                      )}
                   </label>
                   <label>
                     <header>State/Territory: </header>
@@ -330,7 +336,8 @@ class Shipping extends React.Component {
                     required
                     autoComplete="tel-national"
                   />
-                  {shippingDetails.phoneNumber !== "" &&
+                  {hasFailedSubmission &&
+                    shippingDetails.phoneNumber !== "" &&
                     !validators.phoneNumberIsValid && (
                       <ErrorMessage message="10-digit, US number" />
                     )}
