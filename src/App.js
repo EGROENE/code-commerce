@@ -8,8 +8,6 @@ import { ITEMS_IN_CART } from "./constants";
 import Shipping from "./Components/Shipping/Shipping";
 import Payment from "./Components/Payment/Payment";
 
-// Get rid of constructor
-// Put methods specific to components in those components themselves. Use setters (defined here) to change any state values.
 class App extends React.Component {
   constructor(props) {
     super(props);
