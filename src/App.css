@@ -136,7 +136,8 @@ input {
   font-family: var(--theme-font);
 }
 
-input.inputWhenError {
+input.inputWhenError,
+select.inputWhenError {
   border: 2px solid red;
 }
 
