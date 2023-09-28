@@ -7,6 +7,7 @@ import {
   passwordIsValid,
   nameOrCityIsValid,
   postalCodeIsValid,
+  emailIsValid,
 } from "../../validations";
 
 class Login extends React.Component {
@@ -162,11 +163,7 @@ class Login extends React.Component {
               accountEmailError: "E-mail address already in use",
             },
           }));
-        } else if (
-          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-            value.trim()
-          )
-        ) {
+        } else if (emailIsValid(value.trim())) {
           // Update email error state value to "". Will need to access previous state values.
           this.setState((prevState) => ({
             loginErrors: {
@@ -184,11 +181,7 @@ class Login extends React.Component {
           }));
         }
       } else {
-        if (
-          !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-            value.trim()
-          )
-        ) {
+        if (!emailIsValid(value.trim())) {
           this.setState((prevState) => ({
             loginErrors: {
               ...prevState.loginErrors,
@@ -289,50 +282,54 @@ class Login extends React.Component {
       }
     };
 
-    // Validate password on signup:
-    // Run onChange of initial PW field in signup
     const validatePasswordOnSignup = (e) => {
       const value = e.target.value.trim();
       setLoginData("password", value);
 
-      // If value meets requirements for password:
       if (passwordIsValid(value)) {
-        // If value matches the state value of confirmation password (added onChange of confirm PW field):
-        // Causes confirm PW error message to disappear if input value of init pw field matches value of confirm PW field
-        if (loginData.confirmationPassword === value) {
-          this.setState((prevState) => ({
-            ...prevState,
-            loginErrors: {
-              ...prevState.loginErrors,
-              passwordError: "",
-              confirmationPasswordError: "",
-            },
-          }));
-          // If confirm PW field has a value that doesn't equal input value of initial PW field:
-          // Causes confirm pw error to appear if value of init pw field (being changed by this method) doesn't match value of confirm pw field, if it exists
-        } else if (
-          loginData.confirmationPassword.length &&
-          loginData.confirmationPassword !== value
-        ) {
-          this.setState((prevState) => ({
-            ...prevState,
-            loginErrors: {
-              ...prevState.loginErrors,
-              passwordError: "",
-              confirmationPasswordError: "Passwords do not match",
-            },
-          }));
-        } else {
-          this.setState((prevState) => ({
-            ...prevState,
-            loginErrors: {
-              ...prevState.loginErrors,
-              passwordError: "",
-            },
-          }));
-        }
-        // If input value of initial PW field doesn't meet PW requirements:
-      } else {
+        this.setState((prevState) => ({
+          ...prevState,
+          loginErrors: {
+            ...prevState.loginErrors,
+            passwordError: "",
+          },
+        }));
+      }
+      if (
+        loginData.confirmationPassword.length &&
+        loginData.confirmationPassword !== value
+      ) {
+        this.setState((prevState) => ({
+          ...prevState,
+          loginErrors: {
+            ...prevState.loginErrors,
+            confirmationPasswordError: "Passwords do not match",
+          },
+        }));
+      }
+      if (
+        loginData.confirmationPassword.length &&
+        loginData.confirmationPassword === value
+      ) {
+        this.setState((prevState) => ({
+          ...prevState,
+          loginErrors: {
+            ...prevState.loginErrors,
+            confirmationPasswordError: "",
+          },
+        }));
+      }
+      if (passwordIsValid(value) && loginData.confirmationPassword === value) {
+        this.setState((prevState) => ({
+          ...prevState,
+          loginErrors: {
+            ...prevState.loginErrors,
+            confirmationPasswordError: "",
+            passwordError: "",
+          },
+        }));
+      }
+      if (!passwordIsValid(value)) {
         this.setState((prevState) => ({
           ...prevState,
           loginErrors: {
@@ -344,12 +341,11 @@ class Login extends React.Component {
       }
     };
 
-    // Check that value of PW confirmation field matches value of initial PW field
-    // Run onChange of PW confirmation input in signup
     const validatePasswordConfirmation = (e) => {
       const value = e.target.value.trim();
       setLoginData("confirmationPassword", value);
-      if (loginData.password !== value) {
+
+      if (loginData.password.length && loginData.password !== value) {
         this.setState((prevState) => ({
           ...prevState,
           loginErrors: {
@@ -357,24 +353,23 @@ class Login extends React.Component {
             confirmationPasswordError: "Passwords do not match",
           },
         }));
-      } else if (
-        passwordIsValid(loginData.password) &&
-        loginData.password === value
-      ) {
+      }
+      if (loginData.password.length && loginData.password === value) {
+        this.setState((prevState) => ({
+          ...prevState,
+          loginErrors: {
+            ...prevState.loginErrors,
+            confirmationPasswordError: "",
+          },
+        }));
+      }
+      if (passwordIsValid(loginData.password) && loginData.password === value) {
         this.setState((prevState) => ({
           ...prevState,
           loginErrors: {
             ...prevState.loginErrors,
             confirmationPasswordError: "",
             passwordError: "",
-          },
-        }));
-      } else if (passwordIsValid(value)) {
-        this.setState((prevState) => ({
-          ...prevState,
-          loginErrors: {
-            ...prevState.loginErrors,
-            confirmationPasswordError: "",
           },
         }));
       }
@@ -610,7 +605,10 @@ class Login extends React.Component {
                     ?, !, @, $, %, ^, &, *, -), & be 8-20 characters long
                   </p>
                 ) : (
-                  <p>{this.state.loginErrors[`${input.field}Error`]}</p>
+                  <p>
+                    {hasFailedSubmission &&
+                      this.state.loginErrors[`${input.field}Error`]}
+                  </p>
                 )}
               </label>
             ))}
