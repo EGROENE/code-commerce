@@ -20,7 +20,7 @@ class Confirmation extends React.Component {
   render() {
     // Destructure props:
     const {
-      accountEmailAddress,
+      accountEmail,
       arePagesComplete,
       itemsInCart,
       numberOfItemsInCart,
@@ -164,7 +164,7 @@ class Confirmation extends React.Component {
                   {shippingDetails.postalCode}
                 </p>
                 <p>Phone: {shippingDetails.phoneNumberMask}</p>
-                <p>E-mail: {accountEmailAddress}</p>
+                <p>E-mail: {accountEmail}</p>
               </div>
             </div>
           </div>
