@@ -7,6 +7,7 @@ import Cart from "./Components/Cart/Cart";
 import { ITEMS_IN_CART } from "./constants";
 import Shipping from "./Components/Shipping/Shipping";
 import Payment from "./Components/Payment/Payment";
+import { alertFormErrors } from "./methods";
 
 class App extends React.Component {
   constructor(props) {
@@ -78,9 +79,7 @@ class App extends React.Component {
       ...prevState,
       hasFailedSubmission: true,
     }));
-    alert(
-      "Please fix any errors & make sure all fields are complete & without errors before proceeding to the next page."
-    );
+    alertFormErrors();
   };
 
   // Method to go to previous page:
@@ -220,6 +219,8 @@ class App extends React.Component {
           )}
           {isCartComplete && !isShippingComplete && (
             <Shipping
+              handleRejection={this.handleRejection}
+              hasFailedSubmission={this.state.hasFailedSubmission}
               toPreviousPage={this.toPreviousPage}
               toNextPage={this.toNextPage}
               itemsInCart={this.state.itemsInCart}
@@ -235,6 +236,8 @@ class App extends React.Component {
           )}
           {isShippingComplete && !isPaymentComplete && (
             <Payment
+              handleRejection={this.handleRejection}
+              hasFailedSubmission={this.state.hasFailedSubmission}
               setOrderDetails={this.setOrderDetails}
               arePagesComplete={this.state.arePagesComplete}
               itemsInCart={this.state.itemsInCart}
