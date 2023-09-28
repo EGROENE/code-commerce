@@ -8,7 +8,7 @@ import OrderSummary from "../OrderSummary";
 import ErrorMessage from "../ErrorMessage";
 
 import { cardImages, months, years } from "../../constants";
-import { alertFormErrors, roundToHundredth } from "../../methods";
+import { roundToHundredth } from "../../methods";
 import {
   nameOrCityIsValid,
   cardNumberIsValid,
@@ -32,6 +32,8 @@ class Payment extends React.Component {
   render() {
     // Destructure props:
     const {
+      handleRejection,
+      hasFailedSubmission,
       setOrderDetails,
       arePagesComplete,
       itemsInCart,
@@ -120,6 +122,13 @@ class Payment extends React.Component {
               <label>
                 <header>Cardholder Name: </header>
                 <input
+                  className={
+                    hasFailedSubmission &&
+                    (!validators.cardHolderIsValid ||
+                      paymentDetails.cardHolder === "")
+                      ? "inputWhenError"
+                      : undefined
+                  }
                   value={paymentDetails.cardHolder}
                   id="cardholderName"
                   minLength="1"
@@ -144,6 +153,13 @@ class Payment extends React.Component {
                 </header>
                 <div className="inputFieldWithImage">
                   <input
+                    className={
+                      hasFailedSubmission &&
+                      (!validators.cardNumberIsValid ||
+                        paymentDetails.cardNumber === "")
+                        ? "inputWhenError"
+                        : undefined
+                    }
                     id="cardNumber"
                     onChange={handleCardNumberInput}
                     type="text"
@@ -180,6 +196,16 @@ class Payment extends React.Component {
                 <label>
                   <header>Expiry Date: </header>
                   <select
+                    className={
+                      hasFailedSubmission &&
+                      (paymentDetails.expiryMonth === "" ||
+                        (paymentDetails.expiryMonth !== "" &&
+                          paymentDetails.expiryYear !== "" &&
+                          !validators.monthIsValid &&
+                          !validators.yearIsValid))
+                        ? "inputWhenError"
+                        : undefined
+                    }
                     id="selectExpiryMonth"
                     onChange={(e) =>
                       setOrderDetails("payment", "expiryMonth", e.target.value)
@@ -193,6 +219,16 @@ class Payment extends React.Component {
                     ))}
                   </select>
                   <select
+                    className={
+                      hasFailedSubmission &&
+                      (paymentDetails.expiryYear === "" ||
+                        (paymentDetails.expiryMonth !== "" &&
+                          paymentDetails.expiryYear !== "" &&
+                          !validators.monthIsValid &&
+                          !validators.yearIsValid))
+                        ? "inputWhenError"
+                        : undefined
+                    }
                     id="selectExpiryYear"
                     onChange={(e) =>
                       setOrderDetails("payment", "expiryYear", e.target.value)
@@ -215,6 +251,13 @@ class Payment extends React.Component {
                 <label>
                   <header>CVV:</header>
                   <input
+                    className={
+                      hasFailedSubmission &&
+                      (!validators.cvvIsValid ||
+                        paymentDetails.securityCode === "")
+                        ? "inputWhenError"
+                        : undefined
+                    }
                     id={style.securityCode}
                     onChange={(e) =>
                       setOrderDetails("payment", "securityCode", e.target.value)
@@ -246,7 +289,7 @@ class Payment extends React.Component {
                 <button
                   title="Pay & Place Order"
                   type={!areNoErrors ? "button" : "submit"}
-                  onClick={!areNoErrors ? alertFormErrors : undefined}
+                  onClick={!areNoErrors ? handleRejection : undefined}
                 >
                   Pay $
                   {cartTotal.toLocaleString(undefined, {
