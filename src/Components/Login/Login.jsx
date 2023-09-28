@@ -151,7 +151,7 @@ class Login extends React.Component {
 
     // Validate email address
     // Run onChange of email field of both login & signup
-    const validateEmail = (e, isSignup) => {
+    const handleEmailInput = (e, isSignup) => {
       const value = e.target.value.trim();
       setLoginData("accountEmail", value);
       const registeredAccount = this.getRegisteredAccount(value);
@@ -228,7 +228,7 @@ class Login extends React.Component {
     };
 
     // Run onChange of PW field on login
-    const validatePasswordOnLogin = (e) => {
+    const handlePasswordInputOnLogin = (e) => {
       const value = e.target.value.trim();
       const userAccount = this.getRegisteredAccount(loginData.accountEmail);
       const passwordExists = this.passwordExists(value);
@@ -282,7 +282,7 @@ class Login extends React.Component {
       }
     };
 
-    const validatePasswordOnSignup = (e) => {
+    const handlePasswordInputOnSignup = (e) => {
       const value = e.target.value.trim();
       setLoginData("password", value);
 
@@ -341,7 +341,7 @@ class Login extends React.Component {
       }
     };
 
-    const validatePasswordConfirmation = (e) => {
+    const handlePasswordConfirmation = (e) => {
       const value = e.target.value.trim();
       setLoginData("confirmationPassword", value);
 
@@ -382,7 +382,7 @@ class Login extends React.Component {
         labelText: "E-mail Address:",
         placeholder: "E-mail address",
         inputType: "signupEmail",
-        onChange: (e) => validateEmail(e, true),
+        onChange: (e) => handleEmailInput(e, true),
         field: "accountEmail",
         required: !this.state.isLoginMethodSelected,
         inputMode: "email",
@@ -395,7 +395,7 @@ class Login extends React.Component {
         labelText: "E-mail Address:",
         placeholder: "E-mail address",
         inputType: "email",
-        onChange: (e) => validateEmail(e, false),
+        onChange: (e) => handleEmailInput(e, false),
         field: "accountEmail",
         required: this.state.isLoginMethodSelected,
         inputMode: "email",
@@ -408,7 +408,7 @@ class Login extends React.Component {
         labelText: "Password:",
         placeholder: this.state.passwordPlaceholder,
         inputType: this.state.passwordFieldInputType,
-        onChange: validatePasswordOnSignup,
+        onChange: handlePasswordInputOnSignup,
         field: "password",
         required: !this.state.isLoginMethodSelected,
         inputMode: "password",
@@ -420,7 +420,7 @@ class Login extends React.Component {
         labelText: "Confirm Password:",
         placeholder: "Confirm Password",
         inputType: this.state.passwordFieldInputType,
-        onChange: validatePasswordConfirmation,
+        onChange: handlePasswordConfirmation,
         field: "confirmationPassword",
         required: this.state.isRequired,
         inputMode: "password",
@@ -433,7 +433,7 @@ class Login extends React.Component {
         labelText: "Password:",
         placeholder: this.state.passwordPlaceholder,
         inputType: this.state.passwordFieldInputType,
-        onChange: validatePasswordOnLogin,
+        onChange: handlePasswordInputOnLogin,
         field: "password",
         required: this.state.isLoginMethodSelected,
         inputMode: "password",
