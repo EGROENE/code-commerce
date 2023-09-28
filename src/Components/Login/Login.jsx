@@ -415,7 +415,7 @@ class Login extends React.Component {
         value: loginData.password,
       },
       {
-        id: "signupconfirmationPassword",
+        id: "confirmationPassword",
         isHidden: this.state.isLoginMethodSelected,
         labelText: "Confirm Password:",
         placeholder: "Confirm Password",
@@ -441,7 +441,7 @@ class Login extends React.Component {
         value: loginData.password,
       },
       {
-        id: "loginFirstName",
+        id: "signupFirstName",
         isHidden: this.state.isLoginMethodSelected,
         labelText: "First Name:",
         placeholder: "Enter first name",
@@ -474,7 +474,7 @@ class Login extends React.Component {
         value: loginData.firstName,
       },
       {
-        id: "loginLastName",
+        id: "signupLastName",
         isHidden: this.state.isLoginMethodSelected,
         labelText: "Last Name:",
         placeholder: "Enter last name",
@@ -507,7 +507,7 @@ class Login extends React.Component {
         value: loginData.lastName,
       },
       {
-        id: "loginPostalCode",
+        id: "signupPostalCode",
         isHidden: this.state.isLoginMethodSelected,
         labelText: "Postal Code:",
         placeholder: "5-digit US ZIP",
