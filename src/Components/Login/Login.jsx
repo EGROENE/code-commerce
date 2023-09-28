@@ -29,7 +29,7 @@ class Login extends React.Component {
       loginErrors: {
         accountEmailError: "",
         passwordError: "",
-        confirmPasswordError: "",
+        confirmationPasswordError: "",
         firstNameError: "",
         lastNameError: "",
         postalCodeError: "",
@@ -71,7 +71,7 @@ class Login extends React.Component {
       loginErrors: {
         accountEmailError: "",
         passwordError: "",
-        confirmPasswordError: "",
+        confirmationPasswordError: "",
         firstNameError: "",
         lastNameError: "",
         postalCodeError: "",
@@ -305,7 +305,7 @@ class Login extends React.Component {
             loginErrors: {
               ...prevState.loginErrors,
               passwordError: "",
-              confirmPasswordError: "",
+              confirmationPasswordError: "",
             },
           }));
           // If confirm PW field has a value that doesn't equal input value of initial PW field:
@@ -319,7 +319,7 @@ class Login extends React.Component {
             loginErrors: {
               ...prevState.loginErrors,
               passwordError: "",
-              confirmPasswordError: "Passwords do not match",
+              confirmationPasswordError: "Passwords do not match",
             },
           }));
         } else {
@@ -354,7 +354,7 @@ class Login extends React.Component {
           ...prevState,
           loginErrors: {
             ...prevState.loginErrors,
-            confirmPasswordError: "Passwords do not match",
+            confirmationPasswordError: "Passwords do not match",
           },
         }));
       } else if (
@@ -365,7 +365,7 @@ class Login extends React.Component {
           ...prevState,
           loginErrors: {
             ...prevState.loginErrors,
-            confirmPasswordError: "",
+            confirmationPasswordError: "",
             passwordError: "",
           },
         }));
@@ -374,7 +374,7 @@ class Login extends React.Component {
           ...prevState,
           loginErrors: {
             ...prevState.loginErrors,
-            confirmPasswordError: "",
+            confirmationPasswordError: "",
           },
         }));
       }
@@ -420,13 +420,13 @@ class Login extends React.Component {
         value: loginData.password,
       },
       {
-        id: "signupConfirmPassword",
+        id: "signupconfirmationPassword",
         isHidden: this.state.isLoginMethodSelected,
         labelText: "Confirm Password:",
         placeholder: "Confirm Password",
         inputType: this.state.passwordFieldInputType,
         onChange: validatePasswordConfirmation,
-        field: "confirmPassword",
+        field: "confirmationPassword",
         required: this.state.isRequired,
         inputMode: "password",
         autoComplete: "off",
