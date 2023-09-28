@@ -149,10 +149,8 @@ class Login extends React.Component {
       },
     ];
 
-    // Validate email address
-    // Run onChange of email field of both login & signup
     const handleEmailInput = (e, isSignup) => {
-      const value = e.target.value.trim();
+      const value = e.target.value.trim().toLowerCase();
       setLoginData("accountEmail", value);
       const registeredAccount = this.getRegisteredAccount(value);
       if (isSignup) {
