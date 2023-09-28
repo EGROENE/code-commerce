@@ -8,7 +8,7 @@ import OrderSummary from "../OrderSummary";
 import ErrorMessage from "../ErrorMessage";
 import ProgressBar from "../ProgressBar/ProgressBar";
 
-import { alertFormErrors, roundToHundredth } from "../../methods";
+import { roundToHundredth } from "../../methods";
 import {
   nameOrCityIsValid,
   phoneNumberIsValid,
@@ -29,6 +29,8 @@ class Shipping extends React.Component {
   render() {
     // Destructure props:
     const {
+      hasFailedSubmission,
+      handleRejection,
       toPreviousPage,
       toNextPage,
       itemsInCart,
@@ -143,6 +145,13 @@ class Shipping extends React.Component {
                     <div>
                       <header>Name: </header>
                       <input
+                        className={
+                          hasFailedSubmission &&
+                          (!validators.nameIsValid ||
+                            shippingDetails.name === "")
+                            ? "inputWhenError"
+                            : undefined
+                        }
                         value={shippingDetails.name}
                         id="name"
                         type="text"
@@ -167,6 +176,13 @@ class Shipping extends React.Component {
                 <label>
                   <header>Street Address: </header>
                   <input
+                    className={
+                      hasFailedSubmission &&
+                      (!validators.streetAddressIsValid ||
+                        shippingDetails.streetAddress === "")
+                        ? "inputWhenError"
+                        : undefined
+                    }
                     value={shippingDetails.streetAddress}
                     id="streetAddress"
                     type="text"
@@ -192,6 +208,13 @@ class Shipping extends React.Component {
                   <label>
                     <header>ZIP Code: </header>
                     <input
+                      className={
+                        hasFailedSubmission &&
+                        (!validators.postalCodeIsValid ||
+                          shippingDetails.postalCode === "")
+                          ? "inputWhenError"
+                          : undefined
+                      }
                       value={shippingDetails.postalCode}
                       id="postalCode"
                       placeholder="5-digit ZIP code"
@@ -217,6 +240,12 @@ class Shipping extends React.Component {
                   <label>
                     <header>City: </header>
                     <input
+                      className={
+                        hasFailedSubmission &&
+                        (!validators.cityIsValid || shippingDetails.city === "")
+                          ? "inputWhenError"
+                          : undefined
+                      }
                       value={shippingDetails.city}
                       minLength="1"
                       id="city"
@@ -236,6 +265,12 @@ class Shipping extends React.Component {
                   <label>
                     <header>State/Territory: </header>
                     <select
+                      className={
+                        hasFailedSubmission &&
+                        shippingDetails.stateOrTerritory === ""
+                          ? "inputWhenError"
+                          : undefined
+                      }
                       id="stateOrTerritory"
                       onChange={(e) =>
                         setOrderDetails(
@@ -266,6 +301,13 @@ class Shipping extends React.Component {
                 <label id={style.phoneField}>
                   <header>Phone: </header>
                   <input
+                    className={
+                      hasFailedSubmission &&
+                      (!validators.phoneNumberIsValid ||
+                        shippingDetails.phoneNumber === "")
+                        ? "inputWhenError"
+                        : undefined
+                    }
                     id="phoneNumber"
                     placeholder="US phone number"
                     type="text"
@@ -327,7 +369,7 @@ class Shipping extends React.Component {
                   form="shippingForm"
                   type={!areNoErrors ? "button" : "submit"}
                   title="To Payment"
-                  onClick={!areNoErrors ? alertFormErrors : undefined}
+                  onClick={!areNoErrors ? handleRejection : undefined}
                 >
                   To Payment
                 </button>
