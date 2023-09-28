@@ -136,6 +136,10 @@ input {
   font-family: var(--theme-font);
 }
 
+input.inputWhenError {
+  border: 2px solid red;
+}
+
 input:disabled {
   background-color: black;
   color: rgb(73, 72, 72);

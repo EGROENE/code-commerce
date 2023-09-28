@@ -12,6 +12,12 @@ export function isEmailValid(value) {
   return !!value.match(regex);
 }
 
+export const passwordIsValid = (value) => {
+  return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/.test(
+    value
+  );
+};
+
 export const postalCodeIsValid = (value) => {
   return /[0-9]$/i.test(value) && value.length === 5;
 };

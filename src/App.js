@@ -21,7 +21,15 @@ class App extends React.Component {
         isPaymentComplete: false,
         isConfirmationComplete: false,
       },
-      accountEmailAddress: "",
+      // Define here so data can be passed to child props
+      loginData: {
+        accountEmail: "",
+        password: "",
+        confirmationPassword: "",
+        firstName: "",
+        lastName: "",
+        postalCode: "",
+      },
       itemsInCart: ITEMS_IN_CART,
       numberOfItemsInCart: ITEMS_IN_CART.length,
       discountRate: 0,
@@ -47,6 +55,7 @@ class App extends React.Component {
         securityCode: "",
         cardImage: "",
       },
+      hasFailedSubmission: false,
     };
   }
 
@@ -58,11 +67,22 @@ class App extends React.Component {
 
     this.setState((prevState) => ({
       ...prevState,
+      hasFailedSubmission: false,
       arePagesComplete: {
         ...prevState.arePagesComplete,
         [`is${pageCompleted}Complete`]: true,
       },
     }));
+  };
+
+  handleRejection = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      hasFailedSubmission: true,
+    }));
+    alert(
+      "Please fix any errors & make sure all fields are complete & without errors before proceeding to the next page."
+    );
   };
 
   // Method to go to previous page:
@@ -71,6 +91,7 @@ class App extends React.Component {
     e.preventDefault();
 
     this.setState((prevState) => ({
+      ...prevState,
       arePagesComplete: {
         ...prevState.arePagesComplete,
         [`is${prevPage}Complete`]: false,
@@ -82,10 +103,13 @@ class App extends React.Component {
 
   // SETTERS
   // Pass to Login:
-  setAccountEmailAddress = (value) => {
+  setLoginData = (key, value) => {
     this.setState((prevState) => ({
       ...prevState,
-      accountEmailAddress: value,
+      loginData: {
+        ...prevState.loginData,
+        [`${key}`]: value,
+      },
     }));
   };
 
@@ -177,9 +201,11 @@ class App extends React.Component {
           <h1>codeCommerce</h1>
           {!isLoginComplete && (
             <Login
+              handleRejection={this.handleRejection}
+              hasFailedSubmission={this.state.hasFailedSubmission}
               toNextPage={this.toNextPage}
-              accountEmailAddress={this.state.accountEmailAddress}
-              setAccountEmailAddress={this.setAccountEmailAddress}
+              loginData={this.state.loginData}
+              setLoginData={this.setLoginData}
             />
           )}
           {isLoginComplete && !isCartComplete && (
@@ -221,13 +247,13 @@ class App extends React.Component {
               shippingDetails={this.state.shippingDetails}
               shippingAndHandling={this.state.shippingAndHandling}
               deliveryTime={this.state.deliveryTime}
-              accountEmailAddress={this.state.accountEmailAddress}
+              accountEmail={this.state.accountEmail}
               paymentDetails={this.state.paymentDetails}
             />
           )}
           {isPaymentComplete && (
             <Confirmation
-              accountEmailAddress={this.state.accountEmailAddress}
+              accountEmail={this.state.loginData.accountEmail}
               arePagesComplete={this.state.arePagesComplete}
               itemsInCart={this.state.itemsInCart}
               numberOfItemsInCart={this.state.numberOfItemsInCart}
