@@ -66,12 +66,12 @@ class Shipping extends React.Component {
     const cartTotal = cartSubtotal - discount + shippingAndHandling;
 
     const titles = [
-      { isSelected: shippingDetails.title === "Mr.", value: "Mr." },
-      { isSelected: shippingDetails.title === "Mrs.", value: "Mrs." },
-      { isSelected: shippingDetails.title === "Ms.", value: "Ms." },
-      { isSelected: shippingDetails.title === "Dr.", value: "Dr." },
-      { isSelected: shippingDetails.title === "Lord", value: "Lord" },
-      { isSelected: shippingDetails.title === "Lady", value: "Lady" },
+      { value: "Mr." },
+      { value: "Mrs." },
+      { value: "Ms." },
+      { value: "Dr." },
+      { value: "Lord" },
+      { value: "Lady" },
     ];
 
     const deliveryOptions = [
@@ -129,13 +129,10 @@ class Shipping extends React.Component {
                         setOrderDetails("shipping", "title", e.target.value)
                       }
                     >
-                      <option disabled={true} selected={true}>
-                        --select title--
-                      </option>
+                      <option value="">--select title--</option>
                       {titles.map((option) => (
                         <DropdownOption
                           key={option.value}
-                          isSelected={option.value === shippingDetails.title}
                           value={option.value}
                         />
                       ))}
@@ -286,17 +283,12 @@ class Shipping extends React.Component {
                         )
                       }
                     >
-                      <option disabled={true} selected={true}>
-                        --state or territory--
-                      </option>
+                      <option value="">--state or territory--</option>
                       {usStateOptions.map((option) => (
                         <DropdownOption
                           key={option.value}
                           isDisabled={option.isDisabled}
                           value={option.value}
-                          isSelected={
-                            option.value === shippingDetails.stateOrTerritory
-                          }
                           fullName={option.fullName}
                           valueAndTextAreDifferent={true}
                         />

@@ -213,9 +213,7 @@ class Payment extends React.Component {
                       setOrderDetails("payment", "expiryMonth", e.target.value)
                     }
                   >
-                    <option disabled selected>
-                      Month
-                    </option>
+                    <option value="">Month</option>
                     {months.map((month) => (
                       <DropdownOption key={month} value={month} />
                     ))}
@@ -236,9 +234,7 @@ class Payment extends React.Component {
                       setOrderDetails("payment", "expiryYear", e.target.value)
                     }
                   >
-                    <option disabled selected>
-                      Year
-                    </option>
+                    <option value="">Year</option>
                     {years.map((year) => (
                       <DropdownOption key={year} value={year} />
                     ))}
