@@ -332,6 +332,7 @@ class Shipping extends React.Component {
                     inputMode="numeric"
                     minLength="14"
                     maxLength="14"
+                    /* Value produces warning that the input is changing from controlled to uncontrolled. This is because it is set to the state value of another component. Disregard this warning, as app functions properly this way. */
                     value={shippingDetails.phoneNumberMask}
                     required
                     autoComplete="tel-national"
