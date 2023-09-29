@@ -102,7 +102,7 @@
     z-index: 2;
 }
 
-#detailsContainer div:nth-child(2) {
+#detailsContainer div {
     margin-top: 2rem;
     text-align: right;
 }
@@ -115,11 +115,6 @@
 #detailsContainer p {
     margin: 0.5rem;
     font-size: 1rem;
-}
-
-#orderTotalsContainer,
-#orderShipmentDetails {
-    text-align: right;
 }
 
 /* MOBILE STYLING */
@@ -166,8 +161,8 @@
         flex-direction: column;
     }
 
-    #orderTotalsContainer, 
-    #orderShipmentDetails {
+    #detailsContainer div {
+        margin-top: 2rem;
         text-align: center;
     }
 }

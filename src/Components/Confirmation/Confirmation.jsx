@@ -139,7 +139,7 @@ class Confirmation extends React.Component {
               )}
             </div>
             <div id={style.detailsContainer}>
-              <div id={style.orderTotalsContainer}>
+              <div>
                 <header>Cart Totals:</header>
                 {summaryTotals.map((total) => (
                   <p key={total.label}>
@@ -151,7 +151,7 @@ class Confirmation extends React.Component {
                   </p>
                 ))}
               </div>
-              <div id={style.ordershippingDetails}>
+              <div>
                 <header>Delivering To:</header>
                 <p>
                   {shippingDetails.title !== "" && shippingDetails.title}{" "}
