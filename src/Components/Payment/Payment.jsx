@@ -243,7 +243,8 @@ class Payment extends React.Component {
                       <DropdownOption key={year} value={year} />
                     ))}
                   </select>
-                  {paymentDetails.expiryMonth !== "" &&
+                  {hasFailedSubmission &&
+                    paymentDetails.expiryMonth !== "" &&
                     paymentDetails.expiryYear !== "" &&
                     !validators.monthIsValid &&
                     !validators.yearIsValid && (
