@@ -1,12 +1,16 @@
 import React from "react";
 import logo from "./new-logo.png";
 import "./App.css";
-import ClassConfirmation from "./Components/Confirmation/ClassConfirmation";
+
+// Child components:
 import ClassLogin from "./Components/Login/ClassLogin";
 import ClassCart from "./Components/Cart/ClassCart";
-import { ITEMS_IN_CART } from "./constants";
 import ClassShipping from "./Components/Shipping/ClassShipping";
 import ClassPayment from "./Components/Payment/ClassPayment";
+import ClassConfirmation from "./Components/Confirmation/ClassConfirmation";
+
+// Constants & methods:
+import { ITEMS_IN_CART } from "./constants";
 import { alertFormErrors } from "./methods";
 
 class App extends React.Component {
