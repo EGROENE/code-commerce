@@ -2,10 +2,10 @@ import React from "react";
 import style from "./Payment.module.css";
 
 // Child components
-import ProgressBar from "../ProgressBar/ProgressBar";
-import DropdownOption from "../DropdownOption";
-import OrderSummary from "../OrderSummary";
-import ErrorMessage from "../ErrorMessage";
+import ClassProgressBar from "../ProgressBar/ClassProgressBar";
+import ClassDropdownOption from "../DropdownOption/ClassDropdownOption";
+import ClassOrderSummary from "../OrderSummary/ClassOrderSummary";
+import ClassErrorMessage from "../ErrorMessage/ClassErrorMessage";
 
 import { cardImages, months, years } from "../../constants";
 import { roundToHundredth } from "../../methods";
@@ -110,7 +110,7 @@ class ClassPayment extends React.Component {
     return (
       <div id="paymentAndConfirmation">
         <div className="checkoutPageContainer">
-          <ProgressBar arePagesComplete={arePagesComplete} />
+          <ClassProgressBar arePagesComplete={arePagesComplete} />
           <header className="pageHeader">Payment</header>
           <div className="checkoutPageMainItems">
             <form
@@ -144,7 +144,7 @@ class ClassPayment extends React.Component {
                 {hasFailedSubmission &&
                   paymentDetails.cardHolder !== "" &&
                   !validators.cardHolderIsValid && (
-                    <ErrorMessage message="Enter name as it appears on card" />
+                    <ClassErrorMessage message="Enter name as it appears on card" />
                   )}
               </label>
               <label>
@@ -191,7 +191,7 @@ class ClassPayment extends React.Component {
                 {hasFailedSubmission &&
                   paymentDetails.cardNumber !== "" &&
                   !validators.cardNumberIsValid && (
-                    <ErrorMessage message="Invalid card number" />
+                    <ClassErrorMessage message="Invalid card number" />
                   )}
               </label>
               <div id={style.expiryAndCVV}>
@@ -215,7 +215,7 @@ class ClassPayment extends React.Component {
                   >
                     <option value="">Month</option>
                     {months.map((month) => (
-                      <DropdownOption key={month} value={month} />
+                      <ClassDropdownOption key={month} value={month} />
                     ))}
                   </select>
                   <select
@@ -236,7 +236,7 @@ class ClassPayment extends React.Component {
                   >
                     <option value="">Year</option>
                     {years.map((year) => (
-                      <DropdownOption key={year} value={year} />
+                      <ClassDropdownOption key={year} value={year} />
                     ))}
                   </select>
                   {hasFailedSubmission &&
@@ -244,7 +244,7 @@ class ClassPayment extends React.Component {
                     paymentDetails.expiryYear !== "" &&
                     !validators.monthIsValid &&
                     !validators.yearIsValid && (
-                      <ErrorMessage message="Invalid date" />
+                      <ClassErrorMessage message="Invalid date" />
                     )}
                 </label>
                 <label>
@@ -273,7 +273,7 @@ class ClassPayment extends React.Component {
                   {hasFailedSubmission &&
                     paymentDetails.securityCode !== "" &&
                     !validators.cvvIsValid && (
-                      <ErrorMessage message="Invalid CVV" />
+                      <ClassErrorMessage message="Invalid CVV" />
                     )}
                 </label>
               </div>
@@ -320,7 +320,7 @@ class ClassPayment extends React.Component {
                 <p>- Delivery within {deliveryTime} of placing order -</p>
               </div>
             </form>
-            <OrderSummary
+            <ClassOrderSummary
               numberOfItemsInCart={numberOfItemsInCart}
               itemsInCart={itemsInCart}
               summaryTotals={summaryTotals}

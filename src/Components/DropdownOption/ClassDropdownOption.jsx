@@ -1,6 +1,6 @@
 import React from "react";
 
-class DropdownOption extends React.Component {
+class ClassDropdownOption extends React.Component {
   render() {
     const { value, fullName, valueAndTextAreDifferent } = this.props;
     return (
@@ -11,4 +11,4 @@ class DropdownOption extends React.Component {
   }
 }
 
-export default DropdownOption;
+export default ClassDropdownOption;

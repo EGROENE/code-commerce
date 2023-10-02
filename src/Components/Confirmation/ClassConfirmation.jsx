@@ -1,5 +1,5 @@
 import React from "react";
-import ProgressBar from "../ProgressBar/ProgressBar";
+import ClassProgressBar from "../ProgressBar/ClassProgressBar";
 import style from "./Confirmation.module.css";
 import { roundToHundredth } from "../../methods";
 
@@ -56,7 +56,7 @@ class ClassConfirmation extends React.Component {
 
     return (
       <div className="checkoutPageContainer">
-        <ProgressBar arePagesComplete={arePagesComplete} />
+        <ClassProgressBar arePagesComplete={arePagesComplete} />
         <div id={style.confirmationMessageContainer}>
           <header>Thanks for your order!</header>
           <p>It should be arriving within {deliveryTime}.</p>

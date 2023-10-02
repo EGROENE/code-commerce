@@ -3,10 +3,10 @@ import style from "./Shipping.module.css";
 import { usStateOptions } from "../../constants";
 
 // Child components:
-import DropdownOption from "../DropdownOption";
-import OrderSummary from "../OrderSummary";
-import ErrorMessage from "../ErrorMessage";
-import ProgressBar from "../ProgressBar/ProgressBar";
+import ClassDropdownOption from "../DropdownOption/ClassDropdownOption";
+import ClassOrderSummary from "../OrderSummary/ClassOrderSummary";
+import ClassErrorMessage from "../ErrorMessage/ClassErrorMessage";
+import ClassProgressBar from "../ProgressBar/ClassProgressBar";
 
 import { roundToHundredth } from "../../methods";
 import {
@@ -109,7 +109,7 @@ class ClassShipping extends React.Component {
     return (
       <div id="shippingAndPayment">
         <div className="checkoutPageContainer">
-          <ProgressBar arePagesComplete={arePagesComplete} />
+          <ClassProgressBar arePagesComplete={arePagesComplete} />
           <header className="pageHeader">Shipping</header>
           <div className="checkoutPageMainItems">
             <div>
@@ -131,7 +131,7 @@ class ClassShipping extends React.Component {
                     >
                       <option value="">--select title--</option>
                       {titles.map((option) => (
-                        <DropdownOption
+                        <ClassDropdownOption
                           key={option.value}
                           value={option.value}
                         />
@@ -165,7 +165,7 @@ class ClassShipping extends React.Component {
                     {hasFailedSubmission &&
                       shippingDetails.name !== "" &&
                       !validators.nameIsValid && (
-                        <ErrorMessage
+                        <ClassErrorMessage
                           id={style.nameErrorMessage}
                           message="Enter alphabetical characters & any spaces or hyphens between words"
                         />
@@ -201,7 +201,7 @@ class ClassShipping extends React.Component {
                   {hasFailedSubmission &&
                     shippingDetails.streetAddress !== "" &&
                     !validators.streetAddressIsValid && (
-                      <ErrorMessage message="Please enter a valid address" />
+                      <ClassErrorMessage message="Please enter a valid address" />
                     )}
                 </label>
                 <div id={style.moreAddressDetails}>
@@ -235,7 +235,7 @@ class ClassShipping extends React.Component {
                     {hasFailedSubmission &&
                       shippingDetails.postalCode !== "" &&
                       !validators.postalCodeIsValid && (
-                        <ErrorMessage message="5-digit US postal code" />
+                        <ClassErrorMessage message="5-digit US postal code" />
                       )}
                   </label>
                   <label>
@@ -262,7 +262,7 @@ class ClassShipping extends React.Component {
                     {hasFailedSubmission &&
                       shippingDetails.city !== "" &&
                       !validators.cityIsValid && (
-                        <ErrorMessage message="Enter a valid city" />
+                        <ClassErrorMessage message="Enter a valid city" />
                       )}
                   </label>
                   <label>
@@ -285,7 +285,7 @@ class ClassShipping extends React.Component {
                     >
                       <option value="">--state or territory--</option>
                       {usStateOptions.map((option) => (
-                        <DropdownOption
+                        <ClassDropdownOption
                           key={option.value}
                           isDisabled={option.isDisabled}
                           value={option.value}
@@ -332,7 +332,7 @@ class ClassShipping extends React.Component {
                   {hasFailedSubmission &&
                     shippingDetails.phoneNumber !== "" &&
                     !validators.phoneNumberIsValid && (
-                      <ErrorMessage message="10-digit, US number" />
+                      <ClassErrorMessage message="10-digit, US number" />
                     )}
                 </label>
               </form>
@@ -375,7 +375,7 @@ class ClassShipping extends React.Component {
                 </button>
               </div>
             </div>
-            <OrderSummary
+            <ClassOrderSummary
               numberOfItemsInCart={numberOfItemsInCart}
               itemsInCart={itemsInCart}
               summaryTotals={summaryTotals}

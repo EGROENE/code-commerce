@@ -1,7 +1,7 @@
 import React from "react";
-import { roundToHundredth } from "../methods";
+import { roundToHundredth } from "../../methods";
 
-class OrderSummary extends React.Component {
+class ClassOrderSummary extends React.Component {
   render() {
     const { numberOfItemsInCart, itemsInCart, summaryTotals } = this.props;
     return (
@@ -76,4 +76,4 @@ class OrderSummary extends React.Component {
   }
 }
 
-export default OrderSummary;
+export default ClassOrderSummary;

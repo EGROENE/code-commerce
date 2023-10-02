@@ -1,6 +1,6 @@
 import React from "react";
 
-class ProgressBar extends React.Component {
+class ClassProgressBar extends React.Component {
   render() {
     // Destructure props:
     const { arePagesComplete } = this.props;
@@ -63,4 +63,4 @@ class ProgressBar extends React.Component {
   }
 }
 
-export default ProgressBar;
+export default ClassProgressBar;
