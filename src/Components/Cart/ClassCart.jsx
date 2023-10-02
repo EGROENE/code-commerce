@@ -3,7 +3,7 @@ import style from "./Cart.module.css";
 import { promoInfos } from "../../constants";
 import { roundToHundredth } from "../../methods";
 
-class Cart extends React.Component {
+class ClassCart extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -263,4 +263,4 @@ class Cart extends React.Component {
   }
 }
 
-export default Cart;
+export default ClassCart;

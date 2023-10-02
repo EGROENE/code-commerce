@@ -3,7 +3,7 @@ import ProgressBar from "../ProgressBar/ProgressBar";
 import style from "./Confirmation.module.css";
 import { roundToHundredth } from "../../methods";
 
-class Confirmation extends React.Component {
+class ClassConfirmation extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -174,4 +174,4 @@ class Confirmation extends React.Component {
   }
 }
 
-export default Confirmation;
+export default ClassConfirmation;

@@ -18,7 +18,7 @@ import {
   cvvIsValid,
 } from "../../validations";
 
-class Payment extends React.Component {
+class ClassPayment extends React.Component {
   // Method to format AmEx numbers:
   formatAmex(inputNumber) {
     const cleaned = ("" + inputNumber).replace(/\D/g, "");
@@ -332,4 +332,4 @@ class Payment extends React.Component {
   }
 }
 
-export default Payment;
+export default ClassPayment;

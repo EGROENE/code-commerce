@@ -10,7 +10,7 @@ import {
   emailIsValid,
 } from "../../validations";
 
-class Login extends React.Component {
+class ClassLogin extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -643,4 +643,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default ClassLogin;

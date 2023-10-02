@@ -16,7 +16,7 @@ import {
   streetAddressIsValid,
 } from "../../validations";
 
-class Shipping extends React.Component {
+class ClassShipping extends React.Component {
   formatPhoneNumber(phoneNumberString) {
     const cleaned = ("" + phoneNumberString).replace(/\D/g, "");
     const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
@@ -387,4 +387,4 @@ class Shipping extends React.Component {
   }
 }
 
-export default Shipping;
+export default ClassShipping;

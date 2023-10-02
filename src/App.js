@@ -1,12 +1,12 @@
 import React from "react";
 import logo from "./new-logo.png";
 import "./App.css";
-import Confirmation from "./Components/Confirmation/Confirmation";
-import Login from "./Components/Login/Login";
-import Cart from "./Components/Cart/Cart";
+import ClassConfirmation from "./Components/Confirmation/ClassConfirmation";
+import ClassLogin from "./Components/Login/ClassLogin";
+import ClassCart from "./Components/Cart/ClassCart";
 import { ITEMS_IN_CART } from "./constants";
-import Shipping from "./Components/Shipping/Shipping";
-import Payment from "./Components/Payment/Payment";
+import ClassShipping from "./Components/Shipping/ClassShipping";
+import ClassPayment from "./Components/Payment/ClassPayment";
 import { alertFormErrors } from "./methods";
 
 class App extends React.Component {
@@ -197,7 +197,7 @@ class App extends React.Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1>codeCommerce</h1>
           {!isLoginComplete && (
-            <Login
+            <ClassLogin
               handleRejection={this.handleRejection}
               hasFailedSubmission={this.state.hasFailedSubmission}
               toNextPage={this.toNextPage}
@@ -206,7 +206,7 @@ class App extends React.Component {
             />
           )}
           {isLoginComplete && !isCartComplete && (
-            <Cart
+            <ClassCart
               toNextPage={this.toNextPage}
               setItemsAndNumberOfItemsInCart={
                 this.setItemsAndNumberOfItemsInCart
@@ -218,7 +218,7 @@ class App extends React.Component {
             />
           )}
           {isCartComplete && !isShippingComplete && (
-            <Shipping
+            <ClassShipping
               handleRejection={this.handleRejection}
               hasFailedSubmission={this.state.hasFailedSubmission}
               toPreviousPage={this.toPreviousPage}
@@ -235,7 +235,7 @@ class App extends React.Component {
             />
           )}
           {isShippingComplete && !isPaymentComplete && (
-            <Payment
+            <ClassPayment
               handleRejection={this.handleRejection}
               hasFailedSubmission={this.state.hasFailedSubmission}
               setOrderDetails={this.setOrderDetails}
@@ -253,7 +253,7 @@ class App extends React.Component {
             />
           )}
           {isPaymentComplete && (
-            <Confirmation
+            <ClassConfirmation
               accountEmail={this.state.loginData.accountEmail}
               arePagesComplete={this.state.arePagesComplete}
               itemsInCart={this.state.itemsInCart}
