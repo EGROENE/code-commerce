@@ -103,6 +103,22 @@ class App extends React.Component {
   // END UNIVERSAL METHODS
 
   // SETTERS
+
+  // Call onClick of version-selection buttons:
+  handleVersionSelection = (e) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      userHasSelectedVersion: true,
+    }));
+    const version = e.target.id;
+    if (version === "classVersion") {
+      this.setState((prevState) => ({
+        ...prevState,
+        classVersionIsSelected: true,
+      }));
+    }
+  };
+
   // Pass to Login:
   setLoginData = (key, value) => {
     this.setState((prevState) => ({
@@ -200,7 +216,23 @@ class App extends React.Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1>codeCommerce</h1>
-          {!isLoginComplete && (
+          {!this.state.userHasSelectedVersion && (
+            <div id="selectVersionContainer">
+              <h2>Please select app version to use:</h2>
+              <div>
+                <button onClick={this.handleVersionSelection} id="classVersion">
+                  Class Version
+                </button>
+                <button
+                  onClick={this.handleVersionSelection}
+                  id="functionalVersion"
+                >
+                  Functional Version
+                </button>
+              </div>
+            </div>
+          )}
+          {!isLoginComplete && this.state.userHasSelectedVersion && (
             <ClassLogin
               handleRejection={this.handleRejection}
               hasFailedSubmission={this.state.hasFailedSubmission}

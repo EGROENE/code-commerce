@@ -72,6 +72,18 @@ main {
   margin: 1.5rem auto;
 }
 
+#selectVersionContainer div {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#selectVersionContainer button {
+  padding: 1rem;
+  background: transparent;
+  border: 3px solid var(--theme-color);
+  color: white;
+}
+
 a {
   text-decoration: none;
 }
