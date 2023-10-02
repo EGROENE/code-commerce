@@ -1,6 +1,5 @@
 import React from "react";
 import style from "./Login.module.css";
-//import { alertFormErrors } from "../../methods";
 import loginStyle from "./Login.module.css";
 import { registeredAccounts } from "../../constants";
 import {
