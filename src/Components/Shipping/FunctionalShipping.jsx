@@ -7,7 +7,7 @@ import FunctionalOrderSummary from "../OrderSummary/FunctionalOrderSummary";
 import FunctionalErrorMessage from "../ErrorMessage/FunctionalErrorMessage";
 import FunctionalProgressBar from "../ProgressBar/FunctionalProgressBar";
 
-import { roundToHundredth } from "../../methods";
+import { roundToHundredth, formatPhoneNumber } from "../../methods";
 import {
   nameOrCityIsValid,
   phoneNumberIsValid,
@@ -291,7 +291,7 @@ const FunctionalShipping = ({
                     setOrderDetails(
                       "shipping",
                       "phoneNumberMask",
-                      this.formatPhoneNumber(e.target.value)
+                      formatPhoneNumber(e.target.value)
                     );
                   }}
                   inputMode="numeric"

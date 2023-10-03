@@ -8,7 +8,7 @@ import ClassOrderSummary from "../OrderSummary/ClassOrderSummary";
 import ClassErrorMessage from "../ErrorMessage/ClassErrorMessage";
 import ClassProgressBar from "../ProgressBar/ClassProgressBar";
 
-import { roundToHundredth } from "../../methods";
+import { roundToHundredth, formatPhoneNumber } from "../../methods";
 import {
   nameOrCityIsValid,
   phoneNumberIsValid,
@@ -17,15 +17,6 @@ import {
 } from "../../validations";
 
 class ClassShipping extends React.Component {
-  formatPhoneNumber(phoneNumberString) {
-    const cleaned = ("" + phoneNumberString).replace(/\D/g, "");
-    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-    if (match) {
-      return "(" + match[1] + ") " + match[2] + "-" + match[3];
-    }
-    return undefined;
-  }
-
   render() {
     // Destructure props:
     const {
@@ -318,7 +309,7 @@ class ClassShipping extends React.Component {
                       setOrderDetails(
                         "shipping",
                         "phoneNumberMask",
-                        this.formatPhoneNumber(e.target.value)
+                        formatPhoneNumber(e.target.value)
                       );
                     }}
                     inputMode="numeric"
