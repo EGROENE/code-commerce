@@ -53,7 +53,7 @@ const FunctionalConfirmation = ({
         <p>It should be arriving within {deliveryTime}.</p>
         <div id={style.confirmationPageBtnContainer}>
           <button>Back to Homepage</button>
-          <button onClick={this.showHideOrderDetails}>See Order Details</button>
+          <button onClick={showHideOrderDetails}>See Order Details</button>
         </div>
       </div>
       <div
@@ -73,7 +73,7 @@ const FunctionalConfirmation = ({
       >
         <i
           title="Close Order Summary"
-          onClick={this.showHideOrderDetails}
+          onClick={showHideOrderDetails}
           id={style.closeModalBtn}
           className="fas fa-times"
         ></i>
