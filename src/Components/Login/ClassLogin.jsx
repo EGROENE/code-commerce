@@ -100,7 +100,7 @@ class ClassLogin extends React.Component {
     return registeredAccounts.find((account) => account.email === email);
   };
 
-  passwordExists = (password) => {
+  passwordDoesExist = (password) => {
     return registeredAccounts
       .map((account) => account.password)
       .includes(password);
@@ -228,7 +228,7 @@ class ClassLogin extends React.Component {
     const handlePasswordInputOnLogin = (e) => {
       const value = e.target.value.trim();
       const userAccount = this.getRegisteredAccount(loginData.accountEmail);
-      const passwordExists = this.passwordExists(value);
+      const passwordExists = this.passwordDoesExist(value);
       setLoginData("password", value);
       // User enters PW that is registered w/ at least one account, but there is no email input
       if (passwordExists && !loginData.accountEmail.length) {
