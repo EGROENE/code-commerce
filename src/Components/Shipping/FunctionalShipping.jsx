@@ -268,6 +268,9 @@ const FunctionalShipping = ({
                         value={option.value}
                         fullName={option.fullName}
                         valueAndTextAreDifferent={true}
+                        selected={
+                          shippingDetails.stateOrTerritory === option.value
+                        }
                       />
                     ))}
                   </select>

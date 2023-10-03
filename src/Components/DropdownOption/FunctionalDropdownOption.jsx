@@ -2,9 +2,12 @@ const FunctionalDropdownOption = ({
   value,
   fullName,
   valueAndTextAreDifferent,
+  selected,
 }) => {
   return (
-    <option value={value}>{valueAndTextAreDifferent ? fullName : value}</option>
+    <option value={value} selected={selected}>
+      {valueAndTextAreDifferent ? fullName : value}
+    </option>
   );
 };
 

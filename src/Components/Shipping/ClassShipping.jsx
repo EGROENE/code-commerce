@@ -282,6 +282,9 @@ class ClassShipping extends React.Component {
                           value={option.value}
                           fullName={option.fullName}
                           valueAndTextAreDifferent={true}
+                          selected={
+                            shippingDetails.stateOrTerritory === option.value
+                          }
                         />
                       ))}
                     </select>

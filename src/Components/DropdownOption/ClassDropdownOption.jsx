@@ -2,9 +2,9 @@ import React from "react";
 
 class ClassDropdownOption extends React.Component {
   render() {
-    const { value, fullName, valueAndTextAreDifferent } = this.props;
+    const { value, fullName, valueAndTextAreDifferent, selected } = this.props;
     return (
-      <option value={value}>
+      <option value={value} selected={selected}>
         {valueAndTextAreDifferent ? fullName : value}
       </option>
     );
