@@ -4,10 +4,15 @@ import "./App.css";
 
 // Child components:
 import ClassLogin from "./Components/Login/ClassLogin";
+import FunctionalLogin from "./Components/Login/FunctionalLogin";
 import ClassCart from "./Components/Cart/ClassCart";
+import FunctionalCart from "./Components/Cart/FunctionalCart";
 import ClassShipping from "./Components/Shipping/ClassShipping";
+import FunctionalShipping from "./Components/Shipping/FunctionalShipping";
 import ClassPayment from "./Components/Payment/ClassPayment";
+import FunctionalPayment from "./Components/Payment/FunctionalPayment";
 import ClassConfirmation from "./Components/Confirmation/ClassConfirmation";
+import FunctionalConfirmation from "./Components/Confirmation/FunctionalConfirmation";
 
 // Constants & methods:
 import { ITEMS_IN_CART } from "./constants";
@@ -232,76 +237,150 @@ class App extends React.Component {
               </div>
             </div>
           )}
-          {!isLoginComplete && this.state.userHasSelectedVersion && (
-            <ClassLogin
-              handleRejection={this.handleRejection}
-              hasFailedSubmission={this.state.hasFailedSubmission}
-              toNextPage={this.toNextPage}
-              loginData={this.state.loginData}
-              setLoginData={this.setLoginData}
-            />
-          )}
-          {isLoginComplete && !isCartComplete && (
-            <ClassCart
-              toNextPage={this.toNextPage}
-              setItemsAndNumberOfItemsInCart={
-                this.setItemsAndNumberOfItemsInCart
-              }
-              itemsInCart={this.state.itemsInCart}
-              numberOfItemsInCart={this.state.itemsInCart.length}
-              discountRate={this.state.discountRate}
-              setDiscountRate={this.setDiscountRate}
-            />
-          )}
-          {isCartComplete && !isShippingComplete && (
-            <ClassShipping
-              handleRejection={this.handleRejection}
-              hasFailedSubmission={this.state.hasFailedSubmission}
-              toPreviousPage={this.toPreviousPage}
-              toNextPage={this.toNextPage}
-              itemsInCart={this.state.itemsInCart}
-              numberOfItemsInCart={this.state.numberOfItemsInCart}
-              discountRate={this.state.discountRate}
-              shippingDetails={this.state.shippingDetails}
-              setOrderDetails={this.setOrderDetails}
-              shippingAndHandling={this.state.shippingAndHandling}
-              setShippingAndHandling={this.setShippingAndHandling}
-              setDeliveryTime={this.setDeliveryTime}
-              arePagesComplete={this.state.arePagesComplete}
-            />
-          )}
-          {isShippingComplete && !isPaymentComplete && (
-            <ClassPayment
-              handleRejection={this.handleRejection}
-              hasFailedSubmission={this.state.hasFailedSubmission}
-              setOrderDetails={this.setOrderDetails}
-              arePagesComplete={this.state.arePagesComplete}
-              itemsInCart={this.state.itemsInCart}
-              numberOfItemsInCart={this.state.numberOfItemsInCart}
-              discountRate={this.state.discountRate}
-              toNextPage={this.toNextPage}
-              toPreviousPage={this.toPreviousPage}
-              shippingDetails={this.state.shippingDetails}
-              shippingAndHandling={this.state.shippingAndHandling}
-              deliveryTime={this.state.deliveryTime}
-              accountEmail={this.state.accountEmail}
-              paymentDetails={this.state.paymentDetails}
-            />
-          )}
-          {isPaymentComplete && (
-            <ClassConfirmation
-              accountEmail={this.state.loginData.accountEmail}
-              arePagesComplete={this.state.arePagesComplete}
-              itemsInCart={this.state.itemsInCart}
-              numberOfItemsInCart={this.state.numberOfItemsInCart}
-              discountRate={this.state.discountRate}
-              shippingDetails={this.state.shippingDetails}
-              cardNumber={this.state.paymentDetails.cardNumber}
-              cardType={this.state.paymentDetails.cardType}
-              shippingAndHandling={this.state.shippingAndHandling}
-              deliveryTime={this.state.deliveryTime}
-            />
-          )}
+          {!isLoginComplete &&
+            this.state.userHasSelectedVersion &&
+            (this.state.classVersionIsSelected ? (
+              <ClassLogin
+                handleRejection={this.handleRejection}
+                hasFailedSubmission={this.state.hasFailedSubmission}
+                toNextPage={this.toNextPage}
+                loginData={this.state.loginData}
+                setLoginData={this.setLoginData}
+              />
+            ) : (
+              <FunctionalLogin
+                handleRejection={this.handleRejection}
+                hasFailedSubmission={this.state.hasFailedSubmission}
+                toNextPage={this.toNextPage}
+                loginData={this.state.loginData}
+                setLoginData={this.setLoginData}
+              />
+            ))}
+          {isLoginComplete &&
+            !isCartComplete &&
+            (this.state.classVersionIsSelected ? (
+              <ClassCart
+                toNextPage={this.toNextPage}
+                setItemsAndNumberOfItemsInCart={
+                  this.setItemsAndNumberOfItemsInCart
+                }
+                itemsInCart={this.state.itemsInCart}
+                numberOfItemsInCart={this.state.itemsInCart.length}
+                discountRate={this.state.discountRate}
+                setDiscountRate={this.setDiscountRate}
+              />
+            ) : (
+              <FunctionalCart
+                toNextPage={this.toNextPage}
+                setItemsAndNumberOfItemsInCart={
+                  this.setItemsAndNumberOfItemsInCart
+                }
+                itemsInCart={this.state.itemsInCart}
+                numberOfItemsInCart={this.state.itemsInCart.length}
+                discountRate={this.state.discountRate}
+                setDiscountRate={this.setDiscountRate}
+              />
+            ))}
+          {isCartComplete &&
+            !isShippingComplete &&
+            (this.state.classVersionIsSelected ? (
+              <ClassShipping
+                handleRejection={this.handleRejection}
+                hasFailedSubmission={this.state.hasFailedSubmission}
+                toPreviousPage={this.toPreviousPage}
+                toNextPage={this.toNextPage}
+                itemsInCart={this.state.itemsInCart}
+                numberOfItemsInCart={this.state.numberOfItemsInCart}
+                discountRate={this.state.discountRate}
+                shippingDetails={this.state.shippingDetails}
+                setOrderDetails={this.setOrderDetails}
+                shippingAndHandling={this.state.shippingAndHandling}
+                setShippingAndHandling={this.setShippingAndHandling}
+                setDeliveryTime={this.setDeliveryTime}
+                arePagesComplete={this.state.arePagesComplete}
+              />
+            ) : (
+              <FunctionalShipping
+                handleRejection={this.handleRejection}
+                hasFailedSubmission={this.state.hasFailedSubmission}
+                toPreviousPage={this.toPreviousPage}
+                toNextPage={this.toNextPage}
+                itemsInCart={this.state.itemsInCart}
+                numberOfItemsInCart={this.state.numberOfItemsInCart}
+                discountRate={this.state.discountRate}
+                shippingDetails={this.state.shippingDetails}
+                setOrderDetails={this.setOrderDetails}
+                shippingAndHandling={this.state.shippingAndHandling}
+                setShippingAndHandling={this.setShippingAndHandling}
+                setDeliveryTime={this.setDeliveryTime}
+                arePagesComplete={this.state.arePagesComplete}
+              />
+            ))}
+          {isShippingComplete &&
+            !isPaymentComplete &&
+            (this.state.classVersionIsSelected ? (
+              <ClassPayment
+                handleRejection={this.handleRejection}
+                hasFailedSubmission={this.state.hasFailedSubmission}
+                setOrderDetails={this.setOrderDetails}
+                arePagesComplete={this.state.arePagesComplete}
+                itemsInCart={this.state.itemsInCart}
+                numberOfItemsInCart={this.state.numberOfItemsInCart}
+                discountRate={this.state.discountRate}
+                toNextPage={this.toNextPage}
+                toPreviousPage={this.toPreviousPage}
+                shippingDetails={this.state.shippingDetails}
+                shippingAndHandling={this.state.shippingAndHandling}
+                deliveryTime={this.state.deliveryTime}
+                accountEmail={this.state.accountEmail}
+                paymentDetails={this.state.paymentDetails}
+              />
+            ) : (
+              <FunctionalPayment
+                handleRejection={this.handleRejection}
+                hasFailedSubmission={this.state.hasFailedSubmission}
+                setOrderDetails={this.setOrderDetails}
+                arePagesComplete={this.state.arePagesComplete}
+                itemsInCart={this.state.itemsInCart}
+                numberOfItemsInCart={this.state.numberOfItemsInCart}
+                discountRate={this.state.discountRate}
+                toNextPage={this.toNextPage}
+                toPreviousPage={this.toPreviousPage}
+                shippingDetails={this.state.shippingDetails}
+                shippingAndHandling={this.state.shippingAndHandling}
+                deliveryTime={this.state.deliveryTime}
+                accountEmail={this.state.accountEmail}
+                paymentDetails={this.state.paymentDetails}
+              />
+            ))}
+          {isPaymentComplete &&
+            (this.state.classVersionIsSelected ? (
+              <ClassConfirmation
+                accountEmail={this.state.loginData.accountEmail}
+                arePagesComplete={this.state.arePagesComplete}
+                itemsInCart={this.state.itemsInCart}
+                numberOfItemsInCart={this.state.numberOfItemsInCart}
+                discountRate={this.state.discountRate}
+                shippingDetails={this.state.shippingDetails}
+                cardNumber={this.state.paymentDetails.cardNumber}
+                cardType={this.state.paymentDetails.cardType}
+                shippingAndHandling={this.state.shippingAndHandling}
+                deliveryTime={this.state.deliveryTime}
+              />
+            ) : (
+              <FunctionalConfirmation
+                accountEmail={this.state.loginData.accountEmail}
+                arePagesComplete={this.state.arePagesComplete}
+                itemsInCart={this.state.itemsInCart}
+                numberOfItemsInCart={this.state.numberOfItemsInCart}
+                discountRate={this.state.discountRate}
+                shippingDetails={this.state.shippingDetails}
+                cardNumber={this.state.paymentDetails.cardNumber}
+                cardType={this.state.paymentDetails.cardType}
+                shippingAndHandling={this.state.shippingAndHandling}
+                deliveryTime={this.state.deliveryTime}
+              />
+            ))}
         </header>
       </div>
     );
