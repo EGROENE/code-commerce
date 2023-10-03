@@ -8,7 +8,7 @@ import ClassOrderSummary from "../OrderSummary/ClassOrderSummary";
 import ClassErrorMessage from "../ErrorMessage/ClassErrorMessage";
 
 import { cardImages, months, years } from "../../constants";
-import { roundToHundredth } from "../../methods";
+import { roundToHundredth, formatAmex } from "../../methods";
 import {
   nameOrCityIsValid,
   cardNumberIsValid,
@@ -19,16 +19,6 @@ import {
 } from "../../validations";
 
 class ClassPayment extends React.Component {
-  // Method to format AmEx numbers:
-  formatAmex(inputNumber) {
-    const cleaned = ("" + inputNumber).replace(/\D/g, "");
-    const match = cleaned.match(/^(\d{4})(\d{6})(\d{5})$/);
-    if (match) {
-      return match[1] + " " + match[2] + " " + match[3];
-    }
-    return null;
-  }
-
   render() {
     // Destructure props:
     const {
@@ -74,7 +64,7 @@ class ClassPayment extends React.Component {
       // If any input...
       if (mask.length) {
         if (cardType === "AMERICAN_EXPRESS") {
-          mask = this.formatAmex(value);
+          mask = formatAmex(value);
         } else {
           // Add space after every fourth character:
           mask = mask.match(new RegExp(".{1,4}", "g")).join(" ");

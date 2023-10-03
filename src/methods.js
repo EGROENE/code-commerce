@@ -11,3 +11,12 @@ export const alertFormErrors = () => {
     "Please fix any errors & make sure all fields are complete & without errors before proceeding to the next page."
   );
 };
+
+export const formatAmex = (inputNumber) => {
+  const cleaned = ("" + inputNumber).replace(/\D/g, "");
+  const match = cleaned.match(/^(\d{4})(\d{6})(\d{5})$/);
+  if (match) {
+    return match[1] + " " + match[2] + " " + match[3];
+  }
+  return null;
+};
