@@ -38,30 +38,30 @@ const FunctionalLogin = ({
     postalCodeError: "",
   });
 
-  const showHidePassword = () => {
-    if (isOpenEye) {
-      setIsOpenEye(false);
-      setEyeLogo(
-        <i
-          id="slashedEye"
-          className={`far fa-eye-slash ${loginStyle.eye}`}
-          title="Hide Password"
-          onClick={showHidePassword}
-        ></i>
-      );
-      setPasswordFieldInputType("text");
-    } else {
-      setIsOpenEye(true);
-      setEyeLogo(
-        <i
-          id="openEye"
-          className={`far fa-eye ${loginStyle.eye}`}
-          title="Show Password"
-          onClick={showHidePassword}
-        ></i>
-      );
-      setPasswordFieldInputType("password");
-    }
+  const showPassword = () => {
+    setIsOpenEye(false);
+    setEyeLogo(
+      <i
+        id="slashedEye"
+        className={`far fa-eye-slash ${loginStyle.eye}`}
+        title="Hide Password"
+        onClick={hidePassword}
+      ></i>
+    );
+    setPasswordFieldInputType("text");
+  };
+
+  const hidePassword = () => {
+    setIsOpenEye(true);
+    setEyeLogo(
+      <i
+        id="openEye"
+        className={`far fa-eye ${loginStyle.eye}`}
+        title="Show Password"
+        onClick={showPassword}
+      ></i>
+    );
+    setPasswordFieldInputType("password");
   };
 
   const [eyeLogo, setEyeLogo] = useState(
@@ -69,7 +69,7 @@ const FunctionalLogin = ({
       id="openEye"
       className={`far fa-eye ${loginStyle.eye}`}
       title="Show Password"
-      onClick={showHidePassword}
+      onClick={hidePassword}
     ></i>
   );
 
@@ -107,8 +107,8 @@ const FunctionalLogin = ({
   const selectLoginMethod = (e) => {
     clearLoginData();
     clearLoginErrors();
-    if (isOpenEye) {
-      showHidePassword();
+    if (!isOpenEye) {
+      hidePassword();
     }
     e.target.id === "logIn" ? userSelectsLogin() : userSelectsSignUp();
   };
