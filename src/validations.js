@@ -12,15 +12,10 @@ export const emailIsValid = (value) => {
   return !!value.match(regex);
 } */
 
-export const passwordIsValid = (value) => {
-  return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/.test(
-    value
-  );
-};
+export const passwordIsValid = (value) =>
+  /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/.test(value);
 
-export const postalCodeIsValid = (value) => {
-  return /[0-9]$/i.test(value) && value.length === 5;
-};
+export const postalCodeIsValid = (value) => /[0-9]$/i.test(value) && value.length === 5;
 
 export const nameOrCityIsValid = (name) => {
   if (
@@ -37,9 +32,8 @@ export const nameOrCityIsValid = (name) => {
     name.replace(/-/g, "").length
   ) {
     return true;
-  } else {
-    return false;
   }
+  return false;
 };
 
 export const streetAddressIsValid = (value) => {
@@ -50,14 +44,12 @@ export const streetAddressIsValid = (value) => {
     value.replace(/-/g, "").length
   ) {
     return true;
-  } else {
-    return false;
   }
+  return false;
 };
 
-export const phoneNumberIsValid = (value) => {
-  return /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/i.test(value);
-};
+export const phoneNumberIsValid = (value) =>
+  /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/i.test(value);
 
 // If input of card number field matches any RegEx patterns of accepted cards, the card type (AmEx, Visa, etc.) is returned. If not, nothing is returned.
 export const findDebitCardType = (cardNumber) => {
@@ -76,9 +68,7 @@ export const cardNumberIsValid = (cardNumber) => {
     if (cardNumber.replace(/[^\d]/g, "").match(cardRegexPatterns[card])) {
       if (cardNumber) {
         return cardNumber &&
-          /^[1-6]{1}[0-9]{14,15}$/i.test(
-            cardNumber.replace(/[^\d]/g, "").trim()
-          )
+          /^[1-6]{1}[0-9]{14,15}$/i.test(cardNumber.replace(/[^\d]/g, "").trim())
           ? true
           : false;
       }
@@ -96,9 +86,8 @@ export const isMonthValid = (month, year) => {
     (+year !== "" && +year < currentYear)
   ) {
     return false;
-  } else {
-    return true;
   }
+  return true;
 };
 
 export const isYearValid = (month, year) => {
@@ -110,11 +99,9 @@ export const isYearValid = (month, year) => {
     +year < currentYear
   ) {
     return false;
-  } else {
-    return true;
   }
+  return true;
 };
 
-export const cvvIsValid = (value) => {
-  return /[0-9]$/i.test(value) && value.length === 3 ? true : false;
-};
+export const cvvIsValid = (value) =>
+  /[0-9]$/i.test(value) && value.length === 3 ? true : false;
