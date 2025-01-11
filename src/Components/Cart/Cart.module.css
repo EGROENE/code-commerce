@@ -4,10 +4,6 @@
   width: 96vw;
 }
 
-#cartIsEmpty {
-  /* width: 42rem; */
-}
-
 #itemsInCartCouple {
   border: 2px solid var(--theme-color);
   display: flex;
