@@ -7,10 +7,12 @@ class ClassCart extends React.Component {
   constructor() {
     super();
     this.state = {
-      inputPromoCode: "",
-      acceptedPromoCode: "",
+      //acceptedPromoCode: "",
+      isInvalidPromo: false,
     };
   }
+
+  promoCodeInput = React.createRef();
 
   render() {
     // Destructure props:
@@ -25,14 +27,10 @@ class ClassCart extends React.Component {
 
     // Calculate totals based on current state values of unit prices & quantity:
     const cartSubtotal = roundToHundredth(
-      itemsInCart
-        .map((item) => item.unitPrice * item.quantity)
-        .reduce((a, b) => a + b)
+      itemsInCart.map((item) => item.unitPrice * item.quantity).reduce((a, b) => a + b)
     );
 
-    const cartTotal = roundToHundredth(
-      cartSubtotal - cartSubtotal * discountRate
-    );
+    const cartTotal = roundToHundredth(cartSubtotal - cartSubtotal * discountRate);
 
     // Runs in onChange of quantity input box of each item in cart
     const updateItemQuantities = (e, itemNameCamelCase) => {
@@ -63,27 +61,28 @@ class ClassCart extends React.Component {
 
     // Set state value inputPromoCode to what user inputs:
     // Needed so field and 'apply' btn don't automatically become disabled when user enters a valid code
-    const setInputPromoCode = (e) => {
+    /* const setInputPromoCode = (e) => {
       const inputPromoCode = e.target.value.trim().toLowerCase();
       this.setState((prevState) => ({
         ...prevState,
         inputPromoCode: inputPromoCode,
       }));
-    };
+    }; */
 
     // Check input promo code to see if it matches an available promo, then apply appropriate discount:
     const checkPromoCode = () => {
+      const inputPromoCode = this.promoCodeInput.current.value.trim();
       // Returns object containing passed promo code, if it exists...
       const getMatchingPromo = (promoCode) =>
         promoInfos.find((promo) => promo.code === promoCode);
 
-      const matchingPromo = getMatchingPromo(this.state.inputPromoCode);
+      const matchingPromo = getMatchingPromo(inputPromoCode);
 
       if (matchingPromo) {
         setDiscountRate(matchingPromo.discountRate);
         this.setState((prevState) => ({
           ...prevState,
-          acceptedPromoCode: this.state.inputPromoCode,
+          acceptedPromoCode: inputPromoCode,
           isInvalidPromo: false,
         }));
       } else {
@@ -128,10 +127,7 @@ class ClassCart extends React.Component {
                         key={item.itemNameCamelCase}
                       >
                         <div className={style.itemMainInfoContainer}>
-                          <p
-                            className={style.deleteItemButton}
-                            title="Remove from cart"
-                          >
+                          <p className={style.deleteItemButton} title="Remove from cart">
                             <i
                               onClick={(e) => {
                                 deleteItem(e, item.itemNameCamelCase);
@@ -141,9 +137,7 @@ class ClassCart extends React.Component {
                           </p>
                           <img alt="" src={item.itemImage} />
                           <div className={style.itemInfo}>
-                            <p className={style.productTitle}>
-                              {item.itemName}
-                            </p>
+                            <p className={style.productTitle}>{item.itemName}</p>
                             <p>Category: {item.category}</p>
                             <p>Language: {item.language}</p>
                           </div>
@@ -190,17 +184,17 @@ class ClassCart extends React.Component {
               <label>
                 <p>Do you have a promo code?</p>
                 <input
+                  ref={this.promoCodeInput}
                   placeholder="Enter promo code"
                   disabled={discountRate > 0 || cartIsEmpty()}
-                  onChange={(e) => {
+                  /* onChange={(e) => {
                     setInputPromoCode(e);
-                  }}
+                  }} */
                   type="text"
                   inputMode="text"
                   id="promoCode"
                 />
-                {this.state.isInvalidPromo &&
-                  this.state.inputPromoCode !== "" && <p>Invalid code</p>}
+                {this.state.isInvalidPromo && <p>Invalid code</p>}
                 <button
                   disabled={discountRate > 0}
                   title="Apply promo code"
