@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6717330b.css",
+    "main.js": "/static/js/main.fccb8d4c.js",
+    "static/js/787.f34a4063.chunk.js": "/static/js/787.f34a4063.chunk.js",
+    "static/media/amex.png": "/static/media/amex.ccde3bdfd214fb1dd52a.png",
+    "static/media/visa.png": "/static/media/visa.65efbe1835b35a0510d0.png",
+    "static/media/discover.png": "/static/media/discover.521ef0656e612926112b.png",
+    "static/media/masterCard.png": "/static/media/masterCard.a2c9a08f323242429695.png",
+    "index.html": "/index.html",
+    "main.6717330b.css.map": "/static/css/main.6717330b.css.map",
+    "main.fccb8d4c.js.map": "/static/js/main.fccb8d4c.js.map",
+    "787.f34a4063.chunk.js.map": "/static/js/787.f34a4063.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6717330b.css",
+    "static/js/main.fccb8d4c.js"
+  ]
+}
